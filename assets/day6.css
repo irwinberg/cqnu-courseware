@@ -38,7 +38,7 @@
 .d6-wxm>i{width:38px;height:38px;border-radius:8px;background:#111;flex:none}
 .d6-fc{background:#fff;border-radius:8px;padding:10px;display:flex;gap:10px;align-items:center;width:178px}
 .d6-fc b{display:block;font:600 15px/1.3 var(--sans)}.d6-fc small{font:400 12px/1.3 var(--sans);color:#888}
-.d6-fz{width:42px;height:50px;border-radius:6px;background:var(--yl);display:grid;place-items:center;font:700 13px/1 "Inter Tight",var(--sans);flex:none}
+.d6-fz{width:42px;height:50px;border-radius:6px;background:var(--yl);display:grid;place-items:center;font:700 13px/1 var(--num);flex:none}
 .d6-pk-r{list-style:none;display:flex;flex-direction:column;gap:20px;padding:0;margin:0}
 .d6-pk-r li{display:flex;align-items:center;gap:22px}
 .d6-pk-r h3{font:700 32px/1.2 var(--sans)}
@@ -50,3 +50,29 @@
 .d6-pc p{font:400 20px/1.6 var(--sans);color:#555}
 .gbtn.cases{background:var(--yl);color:#111;border:0;border-radius:999px;padding:9px 16px;margin-right:12px;text-decoration:none;font-weight:700}
 .gbtn.cases:hover{background:#111;color:var(--yl)}
+
+/* —— 字体分工（课件内页）：标题用宋体黑（Noto Serif SC Black），数字用 DIN，正文用阿里巴巴普惠体 —— */
+:root{--num:"CQ Num","Inter Tight","CQ Sans",sans-serif;--title:"Inter Tight","CQ Serif","Songti SC",serif}
+.sl h2{font-family:var(--title);font-weight:900;letter-spacing:.01em}
+.sl.cover h2{font-family:var(--title);font-weight:900}
+.sl .num,.cnt,.side .ch b,.side .day{font-family:var(--num);letter-spacing:0}
+.sl .num{font-weight:700}
+.vb h3{letter-spacing:.01em}
+.vb p{letter-spacing:.01em}
+.d-ag-i b,.d4-tl-i b,.d2-pd-b b,.d5-pod-b b,.d5-nm b,.d-hm-n b{font-family:var(--num)}
+.d5-pe-a b,.d5-qt b,.d-us-s b{font-family:var(--title);font-weight:900}
+
+/* 讲师用的计时：小号、低调，不抢画面 */
+.vb .d-tm{font:500 15px/1 var(--sans);color:#999;padding:10px 18px;border-radius:999px;border:1px solid #ddd;background:none}
+.vb .d-tm:hover{color:#111;border-color:#111}
+.d-ok:has(.d-tm){grid-template-columns:1fr}.d-ok:has(.d-tm) .d-ok-b{position:absolute;right:0;bottom:-10px}
+
+.gbtn.dl{border-radius:999px;padding:9px 16px;text-decoration:none;font-weight:700;color:#111;border:1px solid #d6d3c9;margin-right:10px}
+.gbtn.dl:hover{background:#111;color:var(--yl);border-color:#111}
+
+.d6-dl{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+.d6-dl-i{background:#fff;border-radius:28px;padding:28px 24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 16px 36px -22px rgba(0,0,0,.35);color:#111;text-decoration:none;transition:transform .3s}
+.d6-dl-i:hover{transform:translateY(-6px)}
+.d6-dl-i h3{font:800 26px/1.25 var(--sans)}.d6-dl-i p{font:400 17px/1.5 var(--sans);color:#666;flex:1}
+.d6-dl-i b{align-self:flex-start;background:var(--yl);border-radius:999px;padding:10px 18px;font:700 17px/1 var(--sans);margin-top:10px}
+.d6-dl-b{display:flex;justify-content:space-between;align-items:center;margin-top:36px}

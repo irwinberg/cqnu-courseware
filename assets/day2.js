@@ -99,8 +99,9 @@
 
   /* ================= 篇二 AI 生图的关键 ================= */
   VIZ['同一主题的两种出图'] = function (el) {
-    var T = [['校徽由 AI 凭空绘制，与官方文件不符', '只有一句话，构图和风格不可控'], ['提示词写明主体、构图和风格', '标题文字逐字核对', '校徽使用官方文件叠加']];
-    el.innerHTML = '<div class="d2-two" data-s="0"><div class="a"><span class="d-pill t">一句话直接出图</span><div class="d2-pf">' + img('poster-fakebadge') + '</div><div class="d2-tl">' + T[0].map(function (t, i) { return '<span class="d-pill r" style="--i:' + i + '">✕ ' + t + '</span>'; }).join('') + '</div></div><div class="b"><span class="d-pill y">规范流程</span><div class="d2-pf">' + poster('poster-base') + '</div><div class="d2-tl">' + T[1].map(function (t, i) { return '<span class="d-pill g" style="--i:' + i + '">✓ ' + t + '</span>'; }).join('') + '</div></div></div>';
+    var T = [['没有提供素材图，校徽由 AI 凭空绘制', '与官方校徽不符，不能发布'], ['上传官方校徽图片，要求直接使用', '提示词写明主体、构图和风格', '标题文字逐字核对']];
+    el.innerHTML = '<div class="d2-two" data-s="0"><div class="a"><span class="d-pill t">未提供素材图</span><div class="d2-pf">' + img('poster-fakebadge') + '</div><div class="d2-tl">' + T[0].map(function (t, i) { return '<span class="d-pill r" style="--i:' + i + '">✕ ' + t + '</span>'; }).join('') + '</div></div><div class="b"><span class="d-pill y">提供官方素材图</span><div class="d2-pf" data-good="1">' + poster('poster-base') + '</div><div class="d2-tl">' + T[1].map(function (t, i) { return '<span class="d-pill g" style="--i:' + i + '">✓ ' + t + '</span>'; }).join('') + '</div></div></div>';
+    var gd = new Image(); gd.onload = function () { q('[data-good]', el).innerHTML = '<img class="zimg" src="' + gd.src + '" alt="" style="width:100%;height:100%;object-fit:cover">'; }; gd.src = G('poster-good');   // 讲师生成的成品图放到 img/d2/poster-good.jpg 就替换
     VK.steps(el, 3, function (i) { q('.d2-two', el).setAttribute('data-s', i); });
   };
   /* 扩散模型示意：同一团噪点逐步去掉；换提示词、换随机种子。只用叠加绘制，不读像素（双击打开 file:// 时也能用） */
@@ -171,7 +172,7 @@
   VIZ['选择合适的应用'] = function (el) {
     el.innerHTML = '<div class="d-ws"><div>' + VK.lap(VK.shot(G('rh-search'), 1), 700) + '</div><div class="d-rw">' + [['次', '运行次数', '用的人越多，效果越稳定'], ['藏', '收藏数', '收藏多说明值得反复使用'], ['例', '示例作品', '看示例是否接近你要的效果'], ['标', '标签', '确认功能，例如“修复上色”“高清放大”']].map(function (r, i) { return '<div class="in" style="--i:' + i + '"><span class="d2-ci">' + r[0] + '</span><div><h3>' + r[1] + '</h3><p>' + r[2] + '</p></div></div>'; }).join('') + '<div class="d-tip in" style="--i:5;margin-top:6px"><b>建议</b>先用一张图试跑，效果满意再批量使用。</div></div></div>';
   };
-  VIZ['账号检查'] = function (el) { el.innerHTML = '<div class="d-ok"><div>' + cks(['已登录：右上角显示个人头像', '已领取积分', '已收藏今天要用的三个应用']) + '</div><div class="d-ok-b"><button class="d-big" data-g="timer:8" data-gt="账号检查" data-gn="登录、领取积分、收藏应用">计时<small>8 分钟</small></button></div></div>'; bindCk(el); };
+  VIZ['账号检查'] = function (el) { el.innerHTML = '<div class="d-ok"><div>' + cks(['已登录：右上角显示个人头像', '已领取积分', '已收藏今天要用的三个应用']) + '</div><div class="d-ok-b"><button class="d-tm" data-g="timer:8" data-gt="账号检查" data-gn="登录、领取积分、收藏应用">计时</button></div></div>'; bindCk(el); };
 
   /* ================= 篇四 案例一：老照片修复 ================= */
   var C1 = '案例一：老照片修复｜';

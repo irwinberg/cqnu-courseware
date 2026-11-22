@@ -4,5 +4,6 @@
 @font-face{font-family:"CQ Sans";src:url(../fonts/sans-400.woff2) format("woff2");font-weight:100 500;font-display:swap}
 @font-face{font-family:"CQ Sans";src:url(../fonts/sans-700.woff2) format("woff2");font-weight:600 900;font-display:swap}
 @font-face{font-family:"CQ Big";src:url(../fonts/sans-900.woff2) format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:"CQ Num";src:url(../fonts/din.woff2) format("woff2");font-weight:100 900;font-display:swap;unicode-range:U+0000-007F,U+00B7,U+2013,U+2014}
 @font-face{font-family:"CQ Serif";src:url(../fonts/serif-400.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"CQ Serif";src:url(../fonts/serif-900.woff2) format("woff2");font-weight:900;font-display:swap}

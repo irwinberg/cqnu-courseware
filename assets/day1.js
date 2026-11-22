@@ -139,13 +139,14 @@
   var TK = ['重庆', '师范', '大学', '的', '办学', '历史', '可', '追溯', '至'], ATT = [.09, .07, .05, .01, .2, .26, .02, .3];
   var CH = [{ c: [['1906', .58], ['1954', .24], ['1902', .08], ['1936', .06], ['1898', .04]], aft: ['年', '创办', '的'] }, { c: [['官立川东师范学堂', .52], ['重庆师范学堂', .22], ['四川省立师范学校', .14], ['川东道立师范', .12]], aft: ['，', '学校', '于'] }, { c: [['1954', .61], ['1906', .2], ['1950', .11], ['1960', .08]], aft: ['年', '建校', '。'] }];
   VIZ['大模型的生成原理'] = function (el) {
-    var ST = ['切分', '关联上文', '计算概率', '选取并接上'], CAP = ['输入的文字先被切分为<b>词元</b>，每个词元对应一个编号。', '生成下一个词之前，模型会<b>关联上文</b>的每一个词；线越粗，关联越强。', '模型为词表中的每个词计算<b>出现概率</b>，并不判断内容是否属实。', '按概率<b>选取一个词</b>接在句末，再重复上述过程，逐词生成全文。'];
-    var N = 6, picks = [], busy = false, s;                    // 第 0–3 步是四个环节，第 3、4、5 步各选取一次
+    var ST = ['切分', '关联上文', '计算概率', '选取并接上'], CAP = ['输入的文字先被切分为<b>词元</b>，每个词元对应一个编号。', '生成下一个词之前，模型会<b>关联上文</b>的每一个词；线越粗，关联越强。', '模型为词表中的每个词计算<b>出现概率</b>，并不判断内容是否属实。', '按概率<b>选取一个词</b>接在句末；每接上一个词，都重新计算一次概率，逐词生成全文。'];
+    var N = 6, picks = [], busy = false, tail = 3, s;          // tail：最后一轮选完后，后面的词已逐个生成了几个
+    var ALT = { '年': '月', '创办': '成立', '的': '了', '，': '。', '学校': '后来', '于': '在', '建校': '更名', '。': '，' };                    // 第 0–3 步是四个环节，第 3、4、5 步各选取一次
     el.innerHTML = '<div class="d-md"><div class="d-md-t">' + ST.map(function (t, i) { return '<button data-i="' + i + '"><b>' + (i + 1) + '</b>' + t + '</button>'; }).join('') + '</div><div class="d-md-m"><div class="d-md-s"><svg></svg><div class="d-tk"></div><div class="d-md-c"></div></div><div class="d-md-r"><div class="d-k"><span>下一个词的候选</span><em>概率为示意</em></div><div class="d-cds"></div><div class="d-tp"><span>随机性 低</span><input type="range" min="0.3" max="2" step="0.05" value="1"><span>高</span></div></div></div></div>';
     var toks = q('.d-tk', el), svg = q('svg', el), tmp = q('input', el), cds = q('.d-cds', el), cap = q('.d-md-c', el);
     function probs(r) { var c = CH[r].c, T = +tmp.value, p = c.map(function (x) { return Math.pow(x[1], 1 / T); }), z = p.reduce(function (a, b) { return a + b; }, 0); return p.map(function (x) { return x / z; }); }
     function sample(r) { var p = probs(r), x = Math.random(), a = 0; for (var i = 0; i < p.length; i++) { a += p[i]; if (x < a) return i; } return 0; }
-    function seq(r) { var a = TK.map(function (t) { return { t: t }; }); for (var k = 0; k < r; k++) { a.push({ t: CH[k].c[picks[k]][0], n: 1, bad: picks[k] !== 0 }); CH[k].aft.forEach(function (t) { a.push({ t: t, n: 1 }); }); } return a; }
+    function seq(r) { var a = TK.map(function (t) { return { t: t }; }); for (var k = 0; k < r; k++) { a.push({ t: CH[k].c[picks[k]][0], n: 1, bad: picks[k] !== 0 }); CH[k].aft.slice(0, k === r - 1 ? tail : 3).forEach(function (t) { a.push({ t: t, n: 1 }); }); } return a; }
     function draw(i, hi) {
       var stg = Math.min(i, 3), r = i < 3 ? 0 : i - 3, shown = i < 3 ? 0 : (busy ? r : r + 1), a = seq(shown), small = a.length > 11, done = i === N - 1 && !busy;
       qa('.d-md-t button', el).forEach(function (b, k) { b.className = k === stg ? 'on' : k < stg ? 'done' : ''; });
@@ -156,15 +157,16 @@
         els.forEach(function (e, k) { if (k >= els.length - 1) return; var w = ATT[k], f = c(e), my = to[1] - 40 - (to[0] - f[0]) * .2; h += '<path style="animation-delay:' + (k * 120) + 'ms" d="M' + f[0] + ' ' + f[1] + ' Q' + (f[0] + to[0]) / 2 + ' ' + my + ' ' + to[0] + ' ' + to[1] + '" fill="none" stroke="' + (w > .15 ? '#111' : '#b5b2a8') + '" stroke-width="' + (1.5 + w * 24).toFixed(1) + '" opacity="' + (.4 + w * 2).toFixed(2) + '"/>'; }); svg.innerHTML = h; }
       var bad = picks.slice(0, shown).filter(function (x) { return x !== 0; }).length;
       cap.className = 'd-md-c' + (done && bad ? ' bad' : ''); cap.innerHTML = done ? (bad ? '生成结果有 <b>' + bad + ' 处与事实不符</b>，语句却依然通顺——这就是“幻觉”。' : '本次生成结果与事实一致。<b>调高随机性</b>后重新生成，结果可能不同。') : CAP[stg];
+      if (i >= 3 && !busy && tail < 3) { var at = CH[r].aft[tail]; cds.innerHTML = [[at, .96], [ALT[at] || '…', .04]].map(function (x, k) { return '<div class="d-cd' + (k ? '' : ' pk') + '"><span>' + x[0] + '</span><i><u style="width:' + x[1] * 100 + '%"></u></i><em>' + x[1] * 100 + '%</em></div>'; }).join(''); return; }
       var p = probs(r); cds.innerHTML = CH[r].c.map(function (x, k) { var pk = i >= 3 && !busy && picks[r] === k; return '<div class="d-cd' + (hi === k ? ' hi' : '') + (pk ? ' pk' + (k ? ' bad' : '') : '') + '" style="opacity:' + (stg >= 2 ? 1 : .35) + '"><span>' + x[0] + '</span><i><u style="width:' + (p[k] * 100).toFixed(1) + '%"></u></i><em>' + (p[k] * 100).toFixed(0) + '%</em></div>'; }).join('');
     }
     s = VK.steps(el, N, function (i, d) {
       for (var k = 0; k <= i - 3; k++) if (picks[k] == null) picks[k] = sample(k);
       if (i >= 3 && d > 0) { var r = i - 3, pk = picks[r] = sample(r), n = CH[r].c.length, c = 0, total = n * 2 + pk; picks.length = r + 1; busy = true; draw(i, 0);      // 候选上的高亮一格一格慢下来，停在选中的那个
-        (function hop() { if (c >= total) { busy = false; VK.later(function () { draw(i); }, 450); return; } draw(i, c % n); c++; VK.later(hop, 120 + c * c * 2.2); })(); return; }
-      busy = false; draw(i);
+        tail = 0; (function hop() { if (c >= total) { busy = false; VK.later(function () { draw(i); (function nx() { if (tail >= 3) { draw(i); return; } VK.later(function () { draw(i); tail++; VK.later(function () { draw(i); nx(); }, 380); }, 520); })(); }, 450); return; } draw(i, c % n); c++; VK.later(hop, 120 + c * c * 2.2); })(); return; }
+      busy = false; tail = 3; draw(i);
     });
-    var step = window.VIZ_STEP; window.VIZ_STEP = function (d) { if (busy) return true; return step(d); };
+    var step = window.VIZ_STEP; window.VIZ_STEP = function (d) { if (busy || tail < 3) return true; return step(d); };
     qa('.d-md-t button', el).forEach(function (b, k) { b.addEventListener('click', function () { if (!busy) { picks = []; s.go(k); } }); });
     tmp.addEventListener('input', function () { if (!busy) draw(s.at()); }); tmp.addEventListener('change', function () { tmp.blur(); });
   };
@@ -179,14 +181,13 @@
     });
     qa('.d-hl-s button', el).forEach(function (b, k) { b.addEventListener('click', function () { s.go(k); }); });
   };
-  VIZ['课堂互动：指令接力'] = function (el) {
-    var ADD = ['读者是学院教师，篇幅一页；包含主旨、要点、关键数字和可引用的原话。', '依据工作空间中的讲话稿原文，不补充稿件以外的内容。', '直接生成 Word 文档，保存到当前工作空间。', '动手之前先列出处理思路，经我确认后再执行。', '完成后对照原文，核对职务、日期、数字和引用的原话。', '将以上要求保存为技能“一页简报”，供以后直接调用。'];
-    el.innerHTML = '<div class="d-rg"><div class="d-rg-p"><div class="d-k">每轮抽取一位老师，为这条指令补充一项要素</div><p>帮我把王书记的讲话做个简报。</p><div class="d-rg-l"></div></div><div class="d-rg-r"><div class="d-ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50"/><circle class="v" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"/></svg><b><span>0</span><small>/ 6 项要素</small></b></div><div class="d-rg-f">' + SW.map(function (x) { return '<span class="d-pill">' + x[1] + '</span>'; }).join('') + '</div><div style="display:flex;gap:10px"><button class="d-btn" data-g="wheel:num" data-gt="抽取发言人">抽取发言人</button><button class="d-btn w" data-g="timer:1" data-gt="每人 1 分钟">计时</button></div></div></div>';
-    q('.d-rg-l', el).style.cssText = 'display:grid;gap:10px';
-    VK.steps(el, 7, function (i, d) {
-      var L = q('.d-rg-l', el); L.innerHTML = ADD.slice(0, i).map(function (t, k) { return '<div class="d-rg-a" style="animation:' + (k === i - 1 && d > 0 ? '' : 'none') + '"><span class="d-pill y">' + SW[k][1] + '</span><span>' + t + '</span></div>'; }).join('');
-      qa('.d-rg-f .d-pill', el).forEach(function (p, k) { p.classList.toggle('on', k < i); }); q('.d-ring .v', el).style.strokeDashoffset = 314.16 * (1 - i / 6); q('.d-ring span', el).textContent = i;
-    });
+  VIZ['课堂互动：缺了哪一项'] = function (el) {
+    var R = [['帮我把王书记的讲话做个简报。', '写了三页，不知道写给谁看', 0, [0, 2, 5]], ['帮我把王书记的讲话做成一页简报，读者是学院的老师。', '出现“约 20 万名”，原文中没有这个数字', 1, [3, 1, 4]], ['请依据工作空间中的讲话稿原文，做成一页简报，读者是学院的老师。', '结果只在对话里，还要自己复制到 Word 排版', 2, [2, 5, 0]], ['请依据讲话稿原文，做成一页简报，直接生成 Word 文档。', '交出去才发现，引用的原话与原稿有出入', 4, [1, 4, 3]]];
+    el.innerHTML = '<div class="d-qz"><div class="d-qz-l"><div class="d-qz-n"></div><div class="d-qz-q"><span class="d-k">指令</span><p></p></div><div class="d-qz-r"><span class="d-k">结果</span><p></p></div></div><div class="d-qz-o"><div class="d-k">缺了哪一项？</div><div class="d-qz-b"></div><button class="d-btn w" data-g="wheel:num" data-gt="抽取一位老师回答">抽取</button></div></div>';
+    VK.steps(el, R.length * 2, function (k) { var r = R[k >> 1], show = k & 1;
+      q('.d-qz-n', el).innerHTML = R.map(function (_, j) { return '<i class="' + (j === k >> 1 ? 'on' : j < k >> 1 ? 'ok' : '') + '">' + (j + 1) + '</i>'; }).join('');
+      q('.d-qz-q p', el).textContent = r[0]; q('.d-qz-r p', el).textContent = r[1];
+      q('.d-qz-b', el).innerHTML = r[3].map(function (o, j) { return '<div class="d-qz-c' + (show ? (o === r[2] ? ' ok' : ' no') : '') + '"><b>' + 'ABC'[j] + '</b>' + ic(SW[o][0]) + '<div><h3>' + SW[o][1] + '</h3><p>' + SW[o][2] + '</p></div></div>'; }).join(''); });
   };
 
   /* ================= 篇三 认识 WorkBuddy（画面为官方文档截图，可用同名文件替换 img/wb/ 里的图） ================= */
@@ -204,25 +205,25 @@
     qa('.d-ls li', el).forEach(function (p) { p.addEventListener('click', function () { s.go(+p.getAttribute('data-i')); }); });
   };
   VIZ['版本与费用'] = function (el) {
-    var T = [['体验版', '免费', '', '', '500', '3 个', '系统自动选择', '课堂使用', 'y'], ['标准版', '99', '元 / 月', '连续包月 70 元 / 月', '4,000', '15 个', '全部可选', '五天实训推荐', 'k'], ['高级版', '199', '元 / 月', '连续包月 140 元 / 月', '9,000', '30 个', '全部可选', '', ''], ['旗舰版', '999', '元 / 月', '连续包月 700 元 / 月', '50,000', '99 个', '全部可选', '', '']];
-    el.innerHTML = '<div class="d-pl">' + T.map(function (t, i) { return '<div class="d-pl-c in ' + t[8] + '" style="--i:' + i + '">' + (t[7] ? '<span class="tg">' + t[7] + '</span>' : '') + '<h3>' + t[0] + '</h3><div class="pp">' + t[1] + '<small>' + t[2] + '</small></div><div class="ps">' + t[3] + '</div><dl><dt>每月积分</dt><dd><b>' + t[4] + '</b></dd><dt>定时任务</dt><dd>' + t[5] + '</dd><dt>模型</dt><dd>' + t[6] + '</dd></dl></div>'; }).join('') + '</div><div class="d-line in" style="--i:5;margin-top:30px">课堂使用体验版即可；需完成五天全部案例的，建议开通一个月标准版。<b>积分当月有效，连续包月请留意到期取消。</b></div>';
+    var T = [['体验版', '免费', '', '', '500', '3 个', '系统自动选择', '课堂使用', 'y'], ['标准版', '99', '元 / 月', '连续包月 70 元 / 月', '4,000<small>基础 2,000 + 赠送 2,000</small>', '15 个', '全部可选', '五天实训推荐', 'k'], ['高级版', '199', '元 / 月', '连续包月 140 元 / 月', '9,000<small>基础 4,000 + 赠送 5,000</small>', '30 个', '全部可选', '', ''], ['旗舰版', '999', '元 / 月', '连续包月 700 元 / 月', '50,000<small>基础 20,000 + 赠送 30,000</small>', '99 个', '全部可选', '', '']];
+    el.innerHTML = '<div class="d-pl">' + T.map(function (t, i) { return '<div class="d-pl-c in ' + t[8] + '" style="--i:' + i + '">' + (t[7] ? '<span class="tg">' + t[7] + '</span>' : '') + '<h3>' + t[0] + '</h3><div class="pp">' + t[1] + '<small>' + t[2] + '</small></div><div class="ps">' + t[3] + '</div><dl><dt>每月积分</dt><dd><b>' + t[4] + '</b></dd><dt>定时任务</dt><dd>' + t[5] + '</dd><dt>模型</dt><dd>' + t[6] + '</dd></dl></div>'; }).join('') + '</div><div class="d-line in" style="--i:5;margin-top:30px">课堂使用体验版即可；需完成五天全部案例的，建议开通一个月标准版。<b>积分按月发放、当月有效；经邀请链接注册可额外获得积分。</b></div>';
   };
   var FD = '<svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/></svg>';
   VIZ['工作空间'] = function (el) {
-    el.innerHTML = '<div class="d-ws"><div>' + VK.lap(VK.shot('img/wb/workspace.jpg', 1), 660) + '</div><div><div class="d-fd in"><span class="r">' + FD + '我的AI工作台</span>' + ['资料包', '01_简报', '02_早报', '03_汇报稿', '04_技能'].map(function (f) { return '<span>' + FD + f + '</span>'; }).join('') + '</div>' + st([['在桌面新建“我的AI工作台”，将资料包解压到其中'], ['在输入框下方选择“选择工作空间”→“打开本地文件夹”'], ['输入：这个文件夹里有什么', 'WorkBuddy 能列出以上子文件夹，即配置成功', 1]]) + '</div></div>';
+    el.innerHTML = '<div class="d-ws"><div>' + VK.lap('<img class="vshot" src="img/wb/home-win.jpg" alt=""><img class="d-wsd" src="img/wb/ws-drop.jpg" alt=""><i class="d-wsb"></i>', 660, 1520) + '</div><div><div class="d-fd in"><span class="r">' + FD + '我的AI工作台</span>' + ['资料包', '01_简报', '02_早报', '03_汇报稿', '04_技能'].map(function (f) { return '<span>' + FD + f + '</span>'; }).join('') + '</div>' + st([['在桌面新建“我的AI工作台”，将资料包解压到其中'], ['在输入框下方选择“选择工作空间”→“打开本地文件夹”'], ['输入：这个文件夹里有什么', 'WorkBuddy 能列出以上子文件夹，即配置成功', 1]]) + '</div></div>';
   };
   VIZ['模式、模型与权限'] = function (el) {
     var C = [['img/wb/mode.jpg', '模式', ['默认', '计划', '仅问答'], 0, '日常使用默认模式；任务复杂时先用“计划”，确认思路后再执行。'], ['', '模型', ['快速', '均衡', '极致'], 1, '一般选择“均衡”。模型越强，消耗的积分越多。'], ['img/wb/perm.jpg', '权限', ['默认权限', '完全访问'], 0, '保持默认权限：删除文件、运行程序等操作会先征求确认。']];
     el.innerHTML = '<div class="d-o3">' + C.map(function (c, i) { return '<div class="d-o3-c in" style="--i:' + i + '"><div class="d-o3-i' + (c[0] ? ' zimg' : '') + '">' + (c[0] ? '<img src="' + c[0] + '" alt="">' : '<div class="d-m3"><span>快速<small>简单、明确的任务</small></span><span class="on">均衡<small>绝大多数任务</small></span><span>极致<small>复杂、需反复验证的任务</small></span></div>') + '</div><h3>' + c[1] + '</h3><div class="d-o3-o">' + c[2].map(function (o, k) { return '<span class="d-pill' + (k === c[3] ? ' y' : ' t') + '">' + o + '</span>'; }).join('') + '</div><p>' + c[4] + '</p></div>'; }).join('') + '</div>';
   };
   VIZ['技能'] = function (el) {
-    el.innerHTML = '<div class="d-ws"><div>' + VK.lap(VK.shot('img/wb/skills.jpg', 1), 760) + '</div><div style="display:flex;flex-direction:column"><div class="d-rw">' + [['store', '从技能市场安装', '左侧进入“专家·技能·连接器”，点击 + 号安装'], ['say', '由 WorkBuddy 推荐', '例如：“帮我找一个能把网页转成 PDF 的技能”'], ['save', '将自己的做法保存为技能', '下午每完成一个案例，保存一个技能']].map(function (r, i) { return '<div class="in" style="--i:' + i + '">' + ic(r[0]) + '<div><h3>' + r[1] + '</h3><p>' + r[2] + '</p></div></div>'; }).join('') + '</div><div class="d-tip in" style="--i:4"><b>安全提示</b>优先选用官方推荐的技能；第三方技能先核实来源。</div></div></div>';
+    el.innerHTML = '<div class="d-ws"><div>' + VK.lap(VK.shot('img/wb/skills-win.jpg'), 760, 1072) + '</div><div style="display:flex;flex-direction:column"><div class="d-rw">' + [['store', '从技能市场安装', '左侧进入“专家·技能·连接器”，点击 + 号安装'], ['say', '由 WorkBuddy 推荐', '例如：“帮我找一个能把网页转成 PDF 的技能”'], ['save', '将自己的做法保存为技能', '下午每完成一个案例，保存一个技能']].map(function (r, i) { return '<div class="in" style="--i:' + i + '">' + ic(r[0]) + '<div><h3>' + r[1] + '</h3><p>' + r[2] + '</p></div></div>'; }).join('') + '</div><div class="d-tip in" style="--i:4"><b>安全提示</b>优先选用官方推荐的技能；第三方技能先核实来源。</div></div></div>';
   };
   VIZ['定时任务与手机助理'] = function (el) {
-    el.innerHTML = '<div class="d-2"><div class="in"><div class="d-stage" style="--b:360px">' + VK.lap(VK.shot('img/wb/auto-new.jpg', 1), 600) + '</div><h3>定时任务</h3><p>设定名称、指令和执行时间，到点自动运行。本地任务需保持电脑开机；云端任务不受开关机影响，但无法读取本机文件。</p></div><div class="in" style="--i:1"><div class="d-stage" style="--b:360px">' + VK.lap(VK.shot('img/wb/wechat.jpg', 1), 600) + '</div><h3>手机助理</h3><p>扫码绑定微信后，可在手机上下达任务，电脑端的 WorkBuddy 执行完成后将结果发回微信。</p></div></div>';
+    el.innerHTML = '<div class="d-2"><div class="in"><div class="d-stage" style="--b:360px">' + VK.lap('<img class="vshot" src="img/wb/home-win.jpg" alt=""><div class="d-dim"><img src="img/wb/auto-new.jpg" alt=""></div>', 600, 1520) + '</div><h3>定时任务</h3><p>设定名称、指令和执行时间，到点自动运行。本地任务需保持电脑开机；云端任务不受开关机影响，但无法读取本机文件。</p></div><div class="in" style="--i:1"><div class="d-stage d-pcph" style="--b:360px">' + VK.lap(VK.shot('img/wb/assist-pc.jpg'), 600, 1122) + VK.pho('<img src="img/wb/assist-phone.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top">', 150) + '</div><h3>手机助理</h3><p>扫码绑定微信后，可在手机上下达任务，电脑端的 WorkBuddy 执行完成后将结果发回微信。</p></div></div>';
   };
   VIZ['安装检查'] = function (el) {
-    el.innerHTML = '<div class="d-ok"><div>' + cks(['已登录：左下角显示个人头像', '已选择工作空间：输入框下方显示“我的AI工作台”', '已验证：WorkBuddy 能列出文件夹中的内容']) + '</div><div class="d-ok-b"><button class="d-big" data-g="timer:8" data-gt="安装检查" data-gn="完成登录、选择工作空间并验证">计时<small>8 分钟</small></button></div></div>'; bindCk(el);
+    el.innerHTML = '<div class="d-ok"><div>' + cks(['已登录：左下角显示个人头像', '已选择工作空间：输入框下方显示“我的AI工作台”', '已验证：WorkBuddy 能列出文件夹中的内容']) + '</div><div class="d-ok-b"><button class="d-tm" data-g="timer:8" data-gt="安装检查" data-gn="完成登录、选择工作空间并验证">计时</button></div></div>'; bindCk(el);
   };
 
   /* ================= 案例的通用页 ================= */

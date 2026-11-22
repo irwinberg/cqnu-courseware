@@ -30,18 +30,14 @@
 
   /* ================= 篇一 开场 ================= */
   VIZ['今日安排'] = function (el) {
-    var A = [['上午', [['10:00', '开场', '校史闯关'], ['10:10', 'DeepSeek', '开源模型怎么选'], ['10:55', 'Harness', '六个核心部件']]], ['下午', [['14:00', '案例', '做一只 AI 宠物'], ['15:20', '路演', '每组 3 分钟'], ['16:00', '成果与颁奖', '合影'], ['16:35', '课后', '怎么继续用']]]];
+    var A = [['上午', [['10:00', '开场', '三维校园'], ['10:15', 'DeepSeek', '开源模型怎么选'], ['10:55', 'Harness', '六个核心部件']]], ['下午', [['14:00', '案例', '做一只 AI 宠物'], ['15:20', '路演', '每组 3 分钟'], ['16:00', '成果与颁奖', '合影'], ['16:35', '课后', '怎么继续用']]]];
     el.innerHTML = '<div class="d-ag">' + A.map(function (r, k) { return '<div class="d-ag-r in" style="--i:' + k * 2 + '"><span class="d-ag-k">' + r[0] + '</span><div class="d-ag-l">' + r[1].map(function (t) { return '<div class="d-ag-i"><b>' + t[0] + '</b><h3>' + t[1] + '</h3><p>' + t[2] + '</p></div>'; }).join('') + '</div></div>'; }).join('') +
       '<div class="d-ag-o in" style="--i:5"><span class="d-k">今日成果</span><span class="d-pill y">AI 宠物</span><span class="d-pill y">路演作品</span><span class="d-pill k">AI 种子教师</span></div></div>';
   };
-  VIZ['校史闯关'] = function (el) {
-    var OP = ['文行忠信', '厚德博学', '求是创新', '博学笃行'];
-    function scr(i) {
-      if (i < 2) return '<div class="d5-gm"><div class="d5-gm-h"><b>校史闯关</b><span>第 1 关 / 共 5 关</span></div><img src="img/old/o2.jpg" alt=""><h4>重庆师范大学的校训是？</h4>' + OP.map(function (o, k) { return '<div class="d5-op' + (i && k === 0 ? ' ok' : '') + '">' + 'ABCD'[k] + '. ' + o + '</div>'; }).join('') + (i ? '<div class="d5-gm-s">回答正确 +100</div>' : '') + '</div>';
-      return '<div class="d5-gm"><div class="d5-gm-h"><b>实时排行</b><span>按小组</span></div>' + [['第 3 组', 1460], ['第 1 组', 1320], ['第 5 组', 1280], ['第 2 组', 1150], ['第 4 组', 990]].map(function (r, k) { return '<div class="d5-rk"><i>' + (k + 1) + '</i><b>' + r[0] + '</b><span>' + r[1] + '</span></div>'; }).join('') + '</div>';
-    }
-    el.innerHTML = '<div class="d5-op1"><div class="d5-op1-p"></div><div class="d5-op1-r"><div class="d5-qr in">' + G('<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2zM16 16h2v2h-2z"/>') + '<span>扫码参与</span></div><div class="d5-rv"><span class="d-k">这个游戏，是用</span><b>DeepSeek Harness</b><span class="d-k">做的</span></div></div></div>';
-    VK.steps(el, 4, function (i) { q('.d5-op1-p', el).innerHTML = VK.pho(scr(Math.min(i, 2)), 270); q('.d5-rv', el).classList.toggle('on', i === 3); });
+  VIZ['代码已经能做到这一步'] = function (el) {
+    var U = 'https://cqnu-ai-cases.vercel.app/cqnu-3d-campus/index.html';
+    el.innerHTML = '<div class="d5-3d"><div class="d5-3d-f in">' + VK.lap('<img class="vshot" src="img/d5/campus3d.jpg" alt=""><button class="d5-3d-p" data-live="1">▶ 进入三维校园</button>', 940, 1440) + '</div><div class="d5-3d-t in" style="--i:2"><span class="d-pill">楼宇、湖面、道路</span><span class="d-pill">飞行、步行、坐校车</span><span class="d-pill y">全部由 AI 写代码完成</span><a class="d-btn w" href="' + U + '" target="_blank" rel="noopener">新窗口打开 ↗</a></div></div>';
+    q('[data-live]', el).addEventListener('click', function (e) { e.stopPropagation(); q('.d5-3d-f .vp', el).innerHTML = '<iframe src="' + U + '" allow="fullscreen" style="width:100%;height:100%;border:0"></iframe>'; });
   };
 
   /* ================= 篇二 DeepSeek：模型（内容同 BRP 第 3 天前半段） ================= */

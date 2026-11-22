@@ -12,7 +12,7 @@
   if (d === 0) { location.replace('day.html?d=1'); return; }
   document.body.classList.add('d' + d);                       // “开课”这一块不要了，主页已经讲过
   var vol = V[TABS[d][1]], chapters = vol.books.map(function (i) { return B[i]; });
-  if (d === 6) chapters = chapters.filter(function (b) { return ['工牌怎么玩', '比赛规则', '每天的资料包', '学员课前准备'].indexOf(b.name) >= 0; });   // 资料页签只留这四页
+  if (d === 6) chapters = chapters.filter(function (b) { return ['工牌怎么玩', '比赛规则', '每天的资料包', '学员课前准备', '课程素材包'].indexOf(b.name) >= 0; });   // 资料页签只留这四页
 
   var slides = [];
   chapters.forEach(function (b, ci) {
@@ -25,6 +25,8 @@
   /* 顶栏、侧栏 */
   $('#tabs').innerHTML = TABS.map(function (t, i) { return i === 0 ? '' : '<a href="day.html?d=' + i + '"' + (i === d ? ' class="on"' : '') + '>' + t[0] + '</a>'; }).join('');
   $('#dayK').textContent = TABS[d][0];
+  var DL = ['', '第1天_WorkBuddy', '第2天_RunningHub', '第3天_RunningHub视频', '第4天_活动出整套与黑客松', '第5天_DeepSeek_Harness'];   // 课程素材包：tools/pack.py 打包到 downloads/
+  if ($('#dlBtn')) { if (d >= 1 && d <= 5) { $('#dlBtn').href = 'downloads/' + DL[d] + '.zip'; $('#dlBtn').setAttribute('download', ''); } else { $('#dlBtn').href = 'downloads/全部课程素材.zip'; $('#dlBtn').textContent = '下载全部素材 ↓'; } }
   $('#dayT').textContent = d === 0 ? '为什么办 · 学什么 · 五天做什么' : d === 6 ? '工牌、比赛、课前准备' : vol.title;
   $('#dayS').textContent = d === 0 ? '第 1 天 10:00–11:00' : d === 6 ? '课上和课后用得到的资料' : vol.sub.replace(/ · 第 \d 天/, '');
   $('#chs').innerHTML = chapters.map(function (b, ci) {

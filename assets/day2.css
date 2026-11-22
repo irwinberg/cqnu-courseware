@@ -84,7 +84,7 @@
 .d2-pd-ph{position:absolute;inset:0;display:grid;place-items:center;background:#F3F0E7}
 .d2-pd-ph .d-ic{width:90px;height:90px;background:#E4E0D4}.d2-pd-ph .d-ic svg{width:44px;height:44px;stroke:#9a968a}
 .d2-pd-b{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:0 0 24px 24px;background:#111;color:#fff}
-.d2-pd-b b{font:800 64px/1 "Inter Tight",var(--sans)}.d2-pd-b span{font:600 19px/1 var(--sans);color:#bbb}
+.d2-pd-b b{font:800 64px/1 var(--num)}.d2-pd-b span{font:600 19px/1 var(--sans);color:#bbb}
 .d2-pd-c.r1 .d2-pd-b{height:190px;background:var(--yl);color:#111}.d2-pd-c.r1 .d2-pd-b span{color:#5a4700}
 .d2-pd-c.r2 .d2-pd-b{height:140px}.d2-pd-c.r3 .d2-pd-b{height:110px}
 
@@ -153,7 +153,7 @@
 .d2-gm-two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .d2-gm-c{position:relative;height:400px;border-radius:24px;overflow:hidden;box-shadow:0 24px 50px -30px rgba(0,0,0,.45);outline:6px solid transparent;outline-offset:-6px;transition:outline-color .4s}
 .d2-gm-c img{width:100%;height:100%;object-fit:cover}
-.d2-gm-c>b{position:absolute;left:16px;top:16px;width:50px;height:50px;border-radius:50%;background:#111;color:var(--yl);display:grid;place-items:center;font:800 24px/1 "Inter Tight",var(--sans)}
+.d2-gm-c>b{position:absolute;left:16px;top:16px;width:50px;height:50px;border-radius:50%;background:#111;color:var(--yl);display:grid;place-items:center;font:800 24px/1 var(--num)}
 .d2-gm-c .d-pill{position:absolute;right:16px;top:20px;font-size:19px;animation:vin .5s both}
 .d2-gm-c.ai{outline-color:#D9483B}.d2-gm-c.real{outline-color:#1E9E4A}
 .d2-gm-r p{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:center;font:500 19px/1.45 var(--sans);color:#444;padding:8px 0}
@@ -227,7 +227,7 @@
 .d2-sm h3{font:700 30px/1.2 var(--sans)}.d2-sm p{font:400 20px/1.4 var(--sans);color:#666}
 .d2-gp{display:flex;gap:22px;margin-bottom:26px}
 .d2-gp>div{width:170px;height:170px;border-radius:50%;background:#fff;box-shadow:0 24px 44px -26px rgba(0,0,0,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
-.d2-gp b{font:800 46px/1 "Inter Tight",var(--sans)}.d2-gp span{font:600 18px/1 var(--sans);color:#666}
+.d2-gp b{font:800 46px/1 var(--num)}.d2-gp span{font:600 18px/1 var(--sans);color:#666}
 .d2-gp>div:first-child{background:var(--yl)}
 
 /* —— 修版 1 —— */

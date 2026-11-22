@@ -44,4 +44,10 @@
   VIZ['学员课前准备'] = function (el) {
     el.innerHTML = '<div class="d6-pre">' + PRE.map(function (p, i) { return '<div class="d6-pc in" style="--i:' + i + '">' + ico(p[2]) + '<h3>' + p[0] + '</h3><p>' + p[1].replace(/\n/g, '<br>') + '</p></div>'; }).join('') + '</div>';
   };
+
+  /* ---------- 五、课程素材包（下载） ---------- */
+  var DLS = [['第 1 天', 'WorkBuddy', '一页简报 · 热点早报 · 汇报材料', '第1天_WorkBuddy'], ['第 2 天', 'RunningHub 生图', '老照片修复 · 活动海报 · 吉祥物', '第2天_RunningHub'], ['第 3 天', 'RunningHub 视频', '老照片动起来 · 校园短片 · 苏轼讲课', '第3天_RunningHub视频'], ['第 4 天', '活动出整套', '活动出整套 · 数字员工 · 黑客松', '第4天_活动出整套与黑客松'], ['第 5 天', 'DeepSeek Harness', 'AI 宠物', '第5天_DeepSeek_Harness']];
+  VIZ['课程素材包'] = function (el) {
+    el.innerHTML = '<div style="width:100%"><div class="d6-dl">' + DLS.map(function (d, i) { return '<a class="d6-dl-i in" style="--i:' + i + '" href="downloads/' + d[3] + '.zip" download><span class="d-k">' + d[0] + '</span><h3>' + d[1] + '</h3><p>' + d[2] + '</p><b>下载 ↓</b></a>'; }).join('') + '</div><div class="d6-dl-b in" style="--i:6"><div class="d-chips" style="justify-content:flex-start"><span class="d-pill">素材</span><span class="d-pill">成品</span><span class="d-pill">提示词</span></div><a class="d-btn" href="downloads/全部课程素材.zip" download>下载全部 ↓</a></div></div>';
+  };
 })();
