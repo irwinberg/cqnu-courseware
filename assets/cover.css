@@ -1,0 +1,201 @@
+/* 封面：弧形书架（几何照 "Leon Vasari: Curved VHS Archive" 的说明）+ 立体的《AI 新篇》+ 掀开封面。
+   页面本身不滚动（没有滚动条）：滚轮和触控板的手势一次走一步，由 cover.js 管。 */
+:root{
+  --paper:#F1F0EC; --sheet:#FAFAF7; --ink:#111111; --muted:#6B6963; --cobalt:#111111; --yl:#FFC400; --red:#B8321F; --rule:rgba(20,20,20,.9);
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --H:min(47vh,33vw); --cy:41%;
+  --a:0;                                   /* 书架退场的进度 0→1，cover.js 每帧写 */
+  --sans:"Inter Tight","CQ Sans","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --serif:"CQ Serif","Songti SC","STSong",Georgia,serif;
+}
+@media (max-width:767px){ :root{ --H:min(68vw,40svh); --cy:43%; } }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--paper)}
+body{color:var(--ink);font-family:var(--sans);user-select:none;-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0}
+body.cur, body.cur *{cursor:none !important}
+.probe{position:fixed;left:-9px;top:0;width:1px;height:var(--H);visibility:hidden;pointer-events:none}
+
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;mix-blend-mode:multiply;opacity:.6;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .42  0 0 0 0 .38  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+.lbl{font:600 11.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase}
+
+/* 顶栏 */
+.top{position:fixed;left:0;right:0;top:0;height:76px;padding:0 36px;display:flex;align-items:center;justify-content:space-between;color:var(--cobalt);z-index:80;border-bottom:1px solid transparent;transition:background-color .4s,border-color .4s,height .5s var(--ease),color .4s}
+.top.solid{background:var(--sheet);border-bottom-color:rgba(17,17,17,.2);height:58px}
+.brand{display:flex;align-items:center;gap:16px}
+.brand i{display:block;width:40px;height:1px;background:currentColor}
+.top nav{display:flex;align-items:center;gap:26px}
+.top nav a{position:relative;padding:6px 0}
+.top nav a:not(.cta)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:0 50%;transition:transform .45s var(--ease)}
+.top nav a.on::after,.top nav a:not(.cta):hover::after{transform:scaleX(1)}
+.top .cta{display:inline-flex;align-items:center;height:32px;padding:0 14px;background:var(--yl);color:#111;box-shadow:0 0 0 1.5px #111}
+.brand .qm{height:32px;width:auto;display:block;margin-right:-2px}
+.brand .cq{height:30px;width:auto;display:block;filter:brightness(0)}
+
+/* 两侧大字：描边 + 扫描线，一道黄光慢慢扫过；旁边两行小字像档案编号。退场时往两边滑出去 */
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(17,17,17,.05) 1px,transparent 1px) 0 0/100% 56px,linear-gradient(90deg,rgba(17,17,17,.05) 1px,transparent 1px) 0 0/56px 100%;
+  -webkit-mask:radial-gradient(70% 60% at 50% 42%,transparent 30%,#000);mask:radial-gradient(70% 60% at 50% 42%,transparent 30%,#000)}
+.kanji{position:fixed;z-index:1;pointer-events:none}   /* 画布：cover.js 把字拆成小方块画上去，下半截往外散开 */
+.kl{left:0;top:0;transform:translateX(calc(var(--a) * -34vw))}
+.kr{left:0;top:0;transform:translateX(calc(var(--a) * 34vw))}
+.hud{position:fixed;z-index:2;pointer-events:none;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-weight:500;font-size:10.5px;line-height:1.8;letter-spacing:.16em;color:var(--ink);opacity:.72}
+.hud i{display:block;width:8px;height:8px;background:#111;animation:blink 1.6s steps(2,jump-none) infinite}
+@keyframes blink{50%{background:transparent}}
+.hl{left:2.7vw;top:calc(13vh + min(40vh,26vw));transform:translateX(calc(var(--a) * -34vw))}
+.hl i{margin-bottom:9px}
+.hr{right:2.7vw;top:calc(9vh + min(59vh,39vw));text-align:right;transform:translateX(calc(var(--a) * 34vw))}
+.hr i{margin:9px 0 0 auto}
+
+.floor{position:fixed;left:50%;top:calc(var(--cy) + var(--H) * .47);width:min(96vw,calc(var(--H) * 3.6));height:calc(var(--H) * .26);margin-left:calc(min(96vw,calc(var(--H) * 3.6)) / -2);z-index:2;pointer-events:none;will-change:transform;
+  background:radial-gradient(50% 50% at 50% 40%,rgba(40,32,20,.30),rgba(40,32,20,.10) 55%,transparent 72%)}
+
+/* 书架 */
+.shelf{position:fixed;left:0;right:0;top:calc(var(--cy) - var(--H) / 2 - 50px);height:calc(var(--H) + 100px);perspective:1400px;perspective-origin:50% 50%;z-index:10;touch-action:none}
+.stage{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d}
+.tape{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d;will-change:transform}
+.sp,.cv,.bk{position:absolute;top:calc(var(--H) / -2);height:var(--H);backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:2px;overflow:hidden;background:var(--c);color:var(--k)}
+.sp{left:calc(var(--ws) / -2);width:var(--ws);transform:translateZ(calc(var(--d) / 2))}
+.cv{left:calc(var(--d) / -2);width:var(--d);transform:rotateY(90deg) translateZ(calc(var(--ws) / 2));box-shadow:0 34px 60px -30px rgba(20,16,10,.6)}
+.bk{left:calc(var(--d) / -2);width:var(--d);transform:rotateY(-90deg) translateZ(calc(var(--ws) / 2))}
+.bk .art{transform:scaleX(-1);opacity:.5}
+.sp::after,.cv::after,.bk::after{content:"";position:absolute;inset:0;background:#000;opacity:var(--shade,0);pointer-events:none}
+.wear{position:absolute;inset:0;background:url(../img/shelf/wear.jpg) center/cover;mix-blend-mode:overlay;opacity:.7;pointer-events:none}
+.edge{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 0 .9em rgba(0,0,0,.22)}
+
+/* 书脊 */
+.lit{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.20),rgba(255,255,255,.07) 28%,rgba(0,0,0,0) 58%,rgba(0,0,0,.24));pointer-events:none}
+.pic{position:absolute;left:1.5em;right:1.5em;top:2.2em;height:15.5em;background-size:auto 250%;background-repeat:no-repeat;border:1px solid currentColor}
+.ttl{position:absolute;left:0;right:0;top:21em;bottom:19.5em;display:flex;align-items:center;justify-content:flex-start;writing-mode:vertical-rl;text-orientation:upright;font-family:var(--serif);font-weight:900;line-height:1;letter-spacing:.06em;white-space:nowrap}
+.ttl span{margin:0 auto}
+.sp small,.hsp small{position:absolute;left:0;right:0;bottom:11.6em;text-align:center;font:600 1.55em/1 var(--sans);letter-spacing:.2em;padding-left:.2em;opacity:.9}
+.yr{position:absolute;left:50%;bottom:4em;transform:translateX(-50%);font:600 2.5em/1 var(--sans);letter-spacing:.04em;padding:.28em .32em;border:1px solid currentColor}
+
+/* 封面 */
+.art{position:absolute;inset:0;background-size:cover;background-position:center}
+.cvt{position:absolute;left:5em;right:5em;top:6em;text-align:center}
+.cvt small{display:block;font:600 1.75em/1 var(--sans);letter-spacing:.24em;padding-left:.24em}
+.cvt b{display:block;margin-top:.34em;font-family:var(--serif);font-weight:900;line-height:1.12;letter-spacing:.02em;white-space:nowrap}
+.bdg{position:absolute;right:4em;bottom:4em;font:600 2.7em/1 var(--sans);letter-spacing:.06em;padding:.3em .42em;border:1.5px solid currentColor;background:var(--c)}
+
+/* 立体的《AI 新篇》：一个有六个面的盒子，封面沿书脊那条边掀开 */
+.hb{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d;display:none;will-change:transform;--c:#FFC400;--k:#111;color:var(--k)}
+/* 今年这一卷：把蓝色的画转成黑色，叠在黄色封面上 */
+.crs .art,.crs .pic{filter:grayscale(1) contrast(1.55) brightness(1.2);mix-blend-mode:multiply}
+.crs .wear{opacity:.35}
+.hb.on{display:block}
+.hb>*,.hcv>*{position:absolute;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.hf{left:calc(var(--d) / -2);top:calc(var(--H) / -2);width:var(--d);height:var(--H);border-radius:2px;overflow:hidden;background:var(--c)}
+.hpage{transform:translateZ(calc(var(--ws) / 2 - 1px));background:var(--sheet)}
+.hpage::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(40,32,20,.34),rgba(40,32,20,.10) 6%,rgba(40,32,20,.03) 14%,transparent 24%);opacity:var(--fold,1)}
+.hpage::after{content:"";position:absolute;right:0;top:0;bottom:0;width:1.1em;background:repeating-linear-gradient(90deg,transparent 0 .2em,rgba(0,0,0,.08) .2em .26em);opacity:var(--fold,1)}
+/* 扉页 */
+.tpg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#111;opacity:calc((var(--fold,1) - .5) * 2.4)}
+.tpg small{font:600 1.5em/1 var(--sans);letter-spacing:.32em;padding-left:.32em}
+.tpg b{font:900 9.4em/1.1 var(--serif);margin:.32em 0 .1em;white-space:nowrap}
+.tpg u{display:block;width:5em;height:.5em;background:var(--yl);margin:1.6em 0 1.8em}
+.tpg span{font:600 1.9em/1 var(--sans);letter-spacing:.22em;padding-left:.22em}
+.tlg{display:flex;align-items:center;justify-content:center;gap:1.5em;margin-top:8em}
+.tlg img{display:block;height:4.4em;width:auto}
+.tlg img:first-child{filter:brightness(0)}
+.tlg img:last-child{height:5.6em}
+.tlg i{font:400 2.2em/1 var(--sans);font-style:normal;color:#555}
+.tpg em{font:600 1.3em/1 var(--sans);font-style:normal;letter-spacing:.3em;margin-top:2em;color:#555}
+.hback{transform:rotateY(180deg) translateZ(calc(var(--ws) / 2))}
+.hsp{left:calc(var(--ws) / -2);top:calc(var(--H) / -2);width:var(--ws);height:var(--H);transform:rotateY(-90deg) translateZ(calc(var(--d) / 2));background:var(--c);overflow:hidden;border-radius:2px}
+.hfore{left:calc(var(--ws) / -2);top:calc(var(--H) / -2);width:var(--ws);height:var(--H);transform:rotateY(90deg) translateZ(calc(var(--d) / 2 - 3px));background:linear-gradient(90deg,rgba(0,0,0,.16),transparent 14%,transparent 86%,rgba(0,0,0,.16)),linear-gradient(180deg,rgba(0,0,0,.06),transparent 5%,transparent 95%,rgba(0,0,0,.08)),repeating-linear-gradient(90deg,#f7f4ec 0 2px,#efebe0 2px 3px)}
+.htop,.hbot{left:calc(var(--d) / -2);top:calc(var(--ws) / -2);width:var(--d);height:var(--ws);background:linear-gradient(0deg,rgba(0,0,0,.14),transparent 14%,transparent 86%,rgba(0,0,0,.14)),repeating-linear-gradient(0deg,#f7f4ec 0 2px,#efebe0 2px 3px)}
+.htop{transform:rotateX(90deg) translateZ(calc(var(--H) / 2))}
+.hbot{transform:rotateX(-90deg) translateZ(calc(var(--H) / 2))}
+.hcv{left:calc(var(--d) / -2);top:calc(var(--H) / -2);width:var(--d);height:var(--H);transform-origin:0 50%;transform:translateZ(calc(var(--ws) / 2)) rotateY(calc(var(--co,0) * -1deg));transform-style:preserve-3d;backface-visibility:visible !important}
+.hfront{inset:0;border-radius:2px;overflow:hidden;background:var(--c);box-shadow:0 34px 60px -30px rgba(20,16,10,.6)}
+.hinside{inset:0;border-radius:2px;transform:rotateY(180deg);background:linear-gradient(90deg,rgba(0,0,0,.26),rgba(0,0,0,.05) 12%,transparent 28%),linear-gradient(#f3ba00,#f3ba00);overflow:hidden}
+.hinside::before{content:"";position:absolute;inset:0 0 0 0;border:1.6em solid #ffc400;border-left-width:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.hfront::after,.hsp::after,.hback::after{content:"";position:absolute;inset:0;background:#000;opacity:var(--hs,0);pointer-events:none}
+.hshadow{position:fixed;left:0;top:0;width:10px;height:10px;z-index:9;pointer-events:none;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%,rgba(40,32,20,.34),rgba(40,32,20,.12) 55%,transparent 72%);will-change:transform}
+
+.play{position:fixed;width:42px;height:42px;border-radius:50%;border:1px solid var(--cobalt);background:rgba(236,232,224,.8);z-index:14;pointer-events:none;display:grid;place-items:center;transform:scale(0)}
+.play i{display:block;width:0;height:0;border-left:11px solid var(--cobalt);border-top:6.5px solid transparent;border-bottom:6.5px solid transparent;margin-left:3px}
+
+/* 题名、箭头、时间轴、页脚：退场时往下滑出去 */
+.cap{position:fixed;left:50%;top:calc(var(--cy) + var(--H) / 2 + 4.2vh);transform:translate(-50%,calc(var(--a) * 70vh));display:grid;justify-items:center;gap:10px;z-index:12;pointer-events:none}
+.mask{position:relative;overflow:hidden;width:min(80vw,640px);text-align:center}
+.mask span{position:absolute;left:0;right:0;top:0;display:block;white-space:nowrap}
+.mt{height:calc(clamp(28px,3.4vw,46px) * 1.2);font:700 clamp(28px,3.4vw,46px)/1.2 var(--sans);letter-spacing:-.005em;color:var(--cobalt)}
+.ms{height:14px;font:600 11px/14px var(--sans);letter-spacing:.24em;color:var(--cobalt);text-transform:uppercase}
+.my{height:14px;font:500 11.5px/14px var(--sans);letter-spacing:.08em;color:var(--ink)}
+.rule{display:block;width:18px;height:1px;background:var(--cobalt)}
+.arr{position:fixed;width:44px;height:44px;z-index:13;color:var(--cobalt);display:grid;place-items:center;transform:translate(-50%,-50%) scale(calc(1 - var(--a)))}
+.arr svg{width:25px;height:12px;fill:none;stroke:currentColor;stroke-width:1.2}
+.prev{left:calc(50% - min(19vw,250px))}
+.next{left:calc(50% + min(19vw,250px))}
+.tl{position:fixed;left:36px;right:36px;bottom:64px;height:40px;z-index:12;color:var(--cobalt);transform:translateY(calc(var(--a) * 26vh))}
+.tl .line{position:absolute;left:0;right:0;top:12px;height:1px;background:var(--cobalt);opacity:.75}
+.tl .tk{position:absolute;top:8.5px;width:1px;height:7px;background:var(--cobalt);opacity:.4}
+.tl .tk.maj{top:5.5px;height:13px;opacity:.75}
+.tl .yl{position:absolute;top:26px;font:500 10px/1 var(--sans);letter-spacing:.06em;transform:translateX(-50%)}
+.tl .yl.first{transform:none}
+.tl .yl.last{transform:translateX(-100%)}
+.tl .dot{position:absolute;top:7px;width:11px;height:11px;border-radius:50%;background:var(--yl);box-shadow:0 0 0 1.5px #111;transform:translateX(-5.5px)}
+.foot{position:fixed;left:36px;right:36px;bottom:24px;display:flex;justify-content:space-between;color:var(--cobalt);z-index:12;transform:translateY(calc(var(--a) * 26vh))}
+
+/* 停在《AI 新篇》上时左边的字：一行一行从遮罩里滑上来 */
+.tp{position:fixed;left:8vw;top:0;bottom:0;width:min(42vw,620px);display:flex;flex-direction:column;justify-content:center;z-index:13;pointer-events:none}
+.m{overflow:hidden}
+.m>*{display:block}
+.tp .m>*{transform:translateY(110%);transition:transform .9s var(--ease)}
+.tp.in .m>*{transform:none}
+.tp.in .m:nth-child(2)>*{transition-delay:.07s}
+.tp.in .m:nth-child(3)>*{transition-delay:.14s}
+.tp.in .m:nth-child(4)>*{transition-delay:.24s}
+.tp .lbl{color:var(--cobalt);letter-spacing:.2em}
+.tp h1{font:700 clamp(54px,7.4vw,118px)/1.1 var(--sans);letter-spacing:-.015em;color:var(--cobalt);margin:14px 0 18px}
+.tp h1::after{content:"";display:block;width:1.1em;height:.1em;background:var(--yl);margin-top:.12em}
+.tp p{font:400 clamp(17px,1.5vw,22px)/1.75 var(--serif);max-width:24em}
+.tp .hint{animation:nudge 1.8s var(--ease) infinite}
+.tp .m:last-child{margin-top:46px}
+.tp:not(.in) .m:last-child{visibility:hidden;transition:visibility 0s .5s}
+.tp .m:last-child{padding-bottom:10px}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.tp:not(.in) .hint{animation:none}
+
+/* 鼠标 */
+.cursor{position:fixed;left:0;top:0;width:84px;height:84px;margin:-42px 0 0 -42px;z-index:200;pointer-events:none;display:none}
+body.cur .cursor{display:block}
+.cursor .cr{position:absolute;inset:0;border-radius:50%;border:2px solid var(--ink);transform:scale(.5);transition:transform .5s var(--ease),background-color .4s,border-color .4s}
+.cursor .cd{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px;border-radius:50%;background:var(--ink);transition:transform .4s var(--ease),background-color .4s}
+.cursor span{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#fff;font:600 13px/1.35 var(--sans);letter-spacing:.1em;transform:scale(0);transition:transform .45s var(--ease)}
+.cursor.open .cr{transform:scale(1.45);background:#111;border-color:#111}
+.cursor.open .cd{transform:scale(0)}
+.cursor.open span{transform:scale(1)}
+.cursor.spine .cr{transform:scale(.8)}
+.cursor.btn .cr{transform:scale(.72);background:rgba(255,196,0,.35);border-color:#111}
+.cursor.btn .cd{transform:scale(0)}
+.cursor.inv .cr{border-color:#F3F0EA}
+.cursor.inv .cd{background:#F3F0EA}
+
+/* ===== 大字版 ===== */
+.lbl{font-size:13px}
+.top{height:80px;padding:0 32px}
+.top.solid{height:64px}
+.top .lbl{font-size:14.5px;letter-spacing:.1em}
+.top nav{gap:28px}
+.top .cta{height:38px;padding:0 16px}
+.brand .qm{height:38px}
+.brand .cq{height:34px}
+.ms{height:17px;font-size:13.5px;line-height:17px}
+.my{height:17px;font-size:14px;line-height:17px}
+.tl .yl{font-size:12.5px}
+.hud{font-size:12px}
+.tp .lbl{font-size:14px}
+.tp p{font-size:clamp(20px,1.75vw,26px)}
+.tp .hint{font-size:15px}
+.foot .lbl{font-size:13px}
+
+@media (max-width:900px){
+  .top nav a:not(.cta){display:none}
+  .tp{left:7vw;right:7vw;width:auto;justify-content:flex-end;padding-bottom:12vh}
+}

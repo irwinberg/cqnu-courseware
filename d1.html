@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 1 天 · AI 智能体与办公提效</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/d1.css">
+<link rel="stylesheet" href="assets/lab.css">
+</head>
+<body>
+<!-- 第 1 天的课件。一页一个 <section class="s">，data-ch 是底栏上的章节名。改字直接改这里；成品墙和几个交互的数据在 assets/d1.js 顶部。 -->
+<div class="stage" id="stage">
+
+<section class="s cover" data-ch="开场">
+  <div class="k"><b>第 1 天</b><i></i>WORKBUDDY</div>
+  <h1>AI 智能体<br>与办公提效</h1>
+  <div class="logos"><img src="img/brand/cqnu-ink.png" alt="重庆师范大学"><span>×</span><img src="img/brand/qieman.png" alt="且曼学院"></div>
+  <div class="big">01</div>
+</section>
+
+<section class="s wall" data-ch="先看成品">
+  <div class="hd"><div class="k"><b>先看成品</b><i></i>都是这一个软件做的</div></div>
+  <div class="shelfrow r1" id="r1"></div>
+  <div class="shelfrow r2" id="r2"></div>
+</section>
+
+<section class="s" data-ch="先看成品">
+  <div class="k"><b>今天做三个</b><i></i>由浅入深</div>
+  <h1>读、找、写</h1>
+  <div class="body"><div class="three">
+    <div class="th3" data-open="0"><div class="vb">读</div><h3>一份材料变一页简报</h3><p>给它一份长材料，交回一页</p><div class="fam">同一类：纪要、摘要、学习材料</div><div class="lv">难度 <i class="f"></i><i></i><i></i></div></div>
+    <div class="th3" data-open="1"><div class="vb">找</div><h3>热点早报</h3><p>它自己去外面找，每天定时交</p><div class="fam">同一类：选题、舆情、政策跟踪</div><div class="lv">难度 <i class="f"></i><i class="f"></i><i></i></div></div>
+    <div class="th3" data-open="2"><div class="vb">写</div><h3>向上汇报的稿子</h3><p>给它一堆数据，算出结论，写成稿</p><div class="fam">同一类：总结、新闻稿、方案</div><div class="lv">难度 <i class="f"></i><i class="f"></i><i class="f"></i></div></div>
+  </div></div>
+</section>
+
+<section class="s" data-ch="先看成品">
+  <div class="k"><b>换成你自己的</b><i></i>点一下你的岗位</div>
+  <h1>同一个做法，<em>换材料</em></h1>
+  <div class="body">
+    <div class="roles" id="roles"><button class="on">宣传部</button><button>二级部门</button><button>教学岗</button><button>学生</button></div>
+    <div class="rc" id="rc"></div>
+  </div>
+</section>
+
+<section class="s" data-ch="原理">
+  <div class="k"><b>原理 1</b><i></i>大语言模型</div>
+  <h1>它只做一件事：<em>猜下一个词</em></h1>
+  <div class="body"><div class="nt">
+    <div><div class="ntx" id="ntx"></div><div class="ntv" id="ntv"></div><div class="row" style="margin-top:10px"><button class="btn k2" id="ntauto">让它自己写完</button><button class="btn" id="ntreset">重来</button></div></div>
+    <div><div class="lab2">下一个词的候选（概率为示意）· 点一个</div><div class="cand" id="cand"></div>
+      <div class="temp"><span>稳</span><input type="range" id="temp" min="0.3" max="2" step="0.05" value="1"><span>放得开</span></div>
+      <div class="lab2">温度：越高，小概率的词越容易被选中</div></div>
+  </div></div>
+</section>
+
+<section class="s" data-ch="原理">
+  <div class="k"><b>原理 2</b><i></i>上下文</div>
+  <h1>它只看得见<em>桌上的东西</em></h1>
+  <div class="body"><div class="desk">
+    <div><div class="lab2">点一下，放到桌上</div><div class="pile" id="pile"></div><button class="btn" id="dkreset" style="margin-top:14px">清空桌子</button></div>
+    <div class="dk2"><div class="cap"><span>桌面（大小为示意）</span><span id="dkcap"></span></div><div class="on2" id="dkon"></div><div class="fell" id="fell"><em>放不下的，会从最早的开始掉下去</em></div></div>
+  </div></div>
+</section>
+
+<section class="s" data-ch="原理">
+  <div class="k"><b>原理 3</b><i></i>聊天 AI 和智能体</div>
+  <h1>一个交<em>话</em>，一个交<em>文件</em></h1>
+  <div class="body"><div class="vs">
+    <div><h3>聊天 AI</h3><div class="eq">模型 + 对话框</div><div class="pic"><div class="bx d">你</div><span class="ar">→</span><div class="bx">模型</div><span class="ar">→</span><div class="bx d">你</div></div><div class="out2">找材料、复制、排版、核对：都是你</div></div>
+    <div class="y"><h3>智能体</h3><div class="eq">模型 + 手 + 循环 + 记忆</div><div class="pic"><div class="bx d">你</div><span class="ar">→</span><div class="bx">计划</div><span class="ar">→</span><div class="bx">动手</div><span class="ar">⇄</span><div class="bx">检查</div><span class="ar">→</span><div class="bx d">文件</div></div><div class="out2 row" style="justify-content:space-between">你只说目标<button class="btn k2" data-x="agent">跑一遍看看 ▸</button></div></div>
+  </div></div>
+</section>
+
+<section class="s" data-ch="原理">
+  <div class="k"><b>原理 4</b><i></i>智能体内部</div>
+  <h1>拆开看：<em>它转的每一圈</em></h1>
+  <div class="body"><div class="loop">
+    <div class="ring"><svg viewBox="0 0 520 430"><path d="M360 40 Q470 60 440 170 M420 250 Q440 350 360 380 M160 380 Q70 350 90 250 M90 170 Q70 60 160 40" fill="none" stroke="#111" stroke-width="2" marker-end="url(#ah)"/><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs></svg>
+      <div class="nd n0" data-n="0">模型<small>决定下一步</small></div><div class="nd n1" data-n="1">工具调用<small>它写出要用哪只手</small></div><div class="nd n2" data-n="2">程序执行<small>真正去读、去写</small></div><div class="nd n3" data-n="3">结果放回桌上<small>再交给模型</small></div>
+      <div class="gate" id="gate">检查点：动你的文件之前，先问你</div></div>
+    <div class="log"><div class="lab2">它做“一页简报”时的记录（示意，字段名因产品而异）</div><div class="logl" id="logl"></div>
+      <div class="lab2" style="margin-top:14px">桌面占用</div><div class="meter"><u id="lmeter"></u></div>
+      <div class="row" style="margin-top:16px"><button class="btn" id="lprev">上一步</button><button class="btn y" id="lnext">下一步</button><button class="btn k2" id="lauto">自动</button></div></div>
+  </div></div>
+</section>
+
+<section class="s" data-ch="原理">
+  <div class="k"><b>原理 5</b><i></i>人守检查点</div>
+  <h1>它干得越多，<em>你越要把关</em></h1>
+  <div class="body"><div class="tiles t3">
+    <div class="tile"><svg viewBox="0 0 48 48"><path d="M6 12h14l4 5h18v22H6z"/></svg><h3>只给一个文件夹</h3><p>别把整个 D 盘交给它</p></div>
+    <div class="tile y"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M24 14v12M24 32v2"/></svg><h3>动手之前先问</h3><p>删文件、跑程序、上网，都要你点头</p></div>
+    <div class="tile"><svg viewBox="0 0 48 48"><path d="M10 8h28v32H10z"/><path d="M16 18l3 3 6-6M16 30l3 3 6-6M29 19h4M29 31h4"/></svg><h3>交出来自己核</h3><p>人名、职务、时间、数字、原话</p></div>
+  </div></div>
+</section>
+
+<section class="s" data-ch="WorkBuddy">
+  <div class="k"><b>为什么是它</b><i></i>WORKBUDDY</div>
+  <h1>原理很深，<em>用起来很浅</em></h1>
+  <div class="body"><div class="tiles t4">
+    <div class="tile"><div class="n">1</div><h3>装上就能用</h3><p>微信扫码登录</p></div>
+    <div class="tile"><div class="n">2</div><h3>模型可以换</h3><p>混元、GLM、Kimi、DeepSeek</p></div>
+    <div class="tile"><div class="n">3</div><h3>边界清楚</h3><p>只在你给的文件夹里干活，改之前先备份</p></div>
+    <div class="tile y"><div class="n">4</div><h3>能定时、连手机</h3><p>到点自己跑，结果发到微信</p></div>
+  </div><div class="lim"><span>免费版每月 500 积分</span><span>涉密、未公开的材料不放进去</span></div></div>
+  <div class="note">来源：workbuddy.cn 官方文档（2026 年 11 月查）</div>
+</section>
+
+<section class="s" data-ch="WorkBuddy">
+  <div class="k"><b>装好</b><i></i>三步，做完举手</div>
+  <h1>发一句“你好”，<em>有回复就举手</em></h1>
+  <div class="body"><ol class="steps">
+    <li><b>1</b><div><h3>打开，微信扫码登录</h3><p>没弹出浏览器：点“复制链接”</p></div></li>
+    <li><b>2</b><div><h3>桌面建“我的AI工作台”，解压资料包进去</h3><p>被火绒、360、电脑管家拦了：先临时退出</p></div></li>
+    <li class="y"><b>3</b><div><h3>只把这一个文件夹授权给它</h3><p>让它说出文件夹里有什么，说对了就举手</p></div></li>
+  </ol></div>
+</section>
+
+<section class="s" data-ch="案例一">
+  <div class="k"><b>案例一 · 读</b><i></i>2036 字 → 一页</div>
+  <h1>一份讲话，<em>变一页简报</em></h1>
+  <div class="body" style="display:flex;flex-direction:column"><div class="ba" style="flex:1"><div class="src" id="src"></div><div class="bf" id="bf"></div></div>
+    <div class="chk" id="chk"><button data-c="lead">主旨在哪</button><button data-c="four">四点希望</button><button data-c="nums">数字</button><button data-c="quote">原话</button><button data-c="trap">一个坑</button></div></div>
+</section>
+
+<section class="s" data-ch="案例一">
+  <div class="k"><b>案例一 · 怎么说</b><i></i>点亮五样</div>
+  <h1>你没说的，<em>它只能猜</em></h1>
+  <div class="body"><div class="five" id="five"></div><div class="pbox" id="pbox"></div><div class="gauge"><span>它要猜的部分</span><i><u id="guess"></u></i><span id="guessn"></span></div></div>
+</section>
+
+<section class="s" data-ch="案例二">
+  <div class="k"><b>案例二 · 找</b><i></i>每天 7:30 到手机</div>
+  <h1>它自己去找，<em>到点交</em></h1>
+  <div class="body"><div class="ph">
+    <div class="phone"><div class="hd2">热点早报<small>07:30 · 版式示意</small></div>
+      <div class="sec">学校相关</div><div class="itm"><i></i><i></i><b>原文链接 ›</b></div><div class="itm"><i></i><i></i><b>原文链接 ›</b></div>
+      <div class="sec">高教动态</div><div class="itm"><i></i><i></i><b>原文链接 ›</b></div><div class="itm"><i></i><i></i><b>原文链接 ›</b></div>
+      <div class="sec">理论热点</div><div class="itm"><i></i><i></i><b>原文链接 ›</b></div></div>
+    <div><ol class="steps">
+      <li><b>1</b><div><h3>先让它问你</h3><p>看哪些来源、要几条、什么算重要</p></div></li>
+      <li><b>2</b><div><h3>抽查，把问题写成规则</h3><p>只收 24 小时内的 · 必须附原文链接 · 理论类只引原文</p></div></li>
+      <li class="y"><b>3</b><div><h3>设成定时任务</h3><p>每天 7:30 自己跑，结果发到手机</p></div></li>
+    </ol><div class="row" style="margin-top:18px"><button class="btn k2" data-x="mcp">它怎么够得着外面的东西：MCP ▸</button></div></div>
+  </div></div>
+</section>
+
+<section class="s" data-ch="案例三">
+  <div class="k"><b>案例三 · 写</b><i></i>307 篇推文 → 一份汇报</div>
+  <h1>先算对，<em>再写稿</em></h1>
+  <div class="body"><div class="ba"><div class="bf" id="bf3"></div>
+    <div><ol class="steps">
+      <li><b>算</b><div><h3>只让它算数，列成表</h3><p>几列、多少行、时间范围，先对上</p></div></li>
+      <li class="y"><b>核</b><div><h3>你抽三个数自己算一遍</h3><p>错一个数，后面的结论全错</p></div></li>
+      <li><b>写</b><div><h3>数对了，再让它写</h3><p>每个结论后面都跟一个数字</p></div></li>
+    </ol><div class="lab2" style="margin-top:20px">资料包 · 课后完成</div><ul class="kit"><li>307 篇推文数据表</li><li>汇报稿框架 · 两张提示词卡 · 评分表</li></ul></div>
+  </div></div>
+</section>
+
+<section class="s" data-ch="收尾">
+  <div class="k"><b>存成技能</b><i></i>SKILL</div>
+  <h1>同样的要求，<em>你今天说了三遍</em></h1>
+  <div class="body"><div class="tiles t3">
+    <div class="tile"><div class="n">×3</div><h3>读者是谁、核哪几项、交成什么样</h3><p>三个案例，每次都重说</p></div>
+    <div class="tile y"><div class="n">→1</div><h3>存下来，一句话调用</h3><p>对它说：把刚才的做法存成技能</p><button class="btn k2" data-x="skill" style="margin-top:auto;align-self:flex-start">看区别 ▸</button></div>
+    <div class="tile d"><div class="n">✓</div><h3>怎样算做成</h3><p>换一份材料还能用<br>同事拿去也能用<br>结果你能核</p></div>
+  </div></div>
+</section>
+
+<section class="s" data-ch="收尾">
+  <div class="k"><b>作业</b><i></i>用工牌交</div>
+  <h1>今晚交三样，<em>明早看排名</em></h1>
+  <div class="body"><div class="tiles t3" style="height:auto">
+    <div class="tile"><div class="n">1</div><h3>工牌上点“交作业”</h3><p>屏幕出一个码</p></div>
+    <div class="tile"><div class="n">2</div><h3>微信扫码上传</h3><p>姓名_简报 · 姓名_早报 · 姓名_汇报稿</p></div>
+    <div class="tile y"><div class="n">3</div><h3>明早工牌上看分数</h3><p>排名只公布前三</p></div>
+  </div><div class="lim"><span style="border-color:#111;color:#111">明天带：3–5 张自己单位的照片</span><span style="border-color:#111;color:#111">登录 RunningHub 看一眼积分</span></div></div>
+</section>
+
+<div class="dt" id="dt"><button class="dtx" id="dtx" aria-label="关闭">×</button><div class="dtp" id="dtp"></div><div class="dtm" id="dtm"></div></div>
+<footer class="bar"><i class="prog" id="prog"></i><a class="home" href="index.html#day1"><img src="img/brand/qieman.png" alt="">← 主页</a><nav class="chs" id="chs"></nav><a href="day.html?d=1&notes=1" style="color:#bbb;margin-right:6px">讲稿版</a><span class="cnt" id="cnt"></span><button class="nb" id="pv">←</button><button class="nb" id="nx">→</button></footer>
+</div>
+
+<div class="lab" id="lab" aria-hidden="true">
+  <header class="labh"><span class="lbl">先讲清楚</span><nav class="labt" id="labt"></nav><button type="button" class="labx" id="labx" aria-label="关闭">×</button></header>
+  <div class="labb" id="labb"></div>
+</div>
+<script src="assets/d1.js"></script>
+<script src="assets/lab.js"></script>
+</body>
+</html>

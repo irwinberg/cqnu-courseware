@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>重庆师范大学 · AI 应用实战培训</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/cover.css">
+<link rel="stylesheet" href="assets/acts.css">
+<link rel="stylesheet" href="assets/lab.css">
+</head>
+<body>
+<div class="grain"></div>
+<header class="top">
+  <a class="brand lbl" href="#top"><img class="qm" src="img/brand/qieman.png" alt="且曼学院"><img class="cq" src="img/brand/cqnu-ink.png" alt="重庆师范大学"><i></i><span>AI 应用实战培训</span></a>
+  <nav>
+    <a class="lbl" href="#why">为什么</a>
+    <a class="lbl" href="#needs">需求</a>
+    <a class="lbl" href="#lines">底线</a>
+    <a class="lbl" href="#tools">软件</a>
+    <a class="lbl" href="#scenes">场景</a>
+    <a class="lbl" href="#day1">五天</a>
+    <a class="lbl" href="#rules">玩法</a>
+    <a class="lbl cta" href="day.html?d=1">进入课件 →</a>
+  </nav>
+</header>
+
+<!-- 第一幕：书架。滚一下翻一卷；最后一卷再滚一下（或点封面），停在《AI 新篇》上；再滚一下（或点书），掀开封面 -->
+<canvas class="kanji kl" data-t="校史" aria-hidden="true"></canvas>
+<canvas class="kanji kr" data-t="续新篇" aria-hidden="true"></canvas>
+<div class="hud hl lbl" aria-hidden="true"><i></i>CQNU ARCHIVE<br>1906 — 2026</div>
+<div class="hud hr lbl" aria-hidden="true">VOL.13 / AI<br>NEW CHAPTER<i></i></div>
+<div class="floor" id="floor"></div>
+<section class="shelf" id="shelf"><div class="stage" id="stage"></div></section>
+<div class="play" id="play"><i></i></div>
+<div class="cap" id="cap">
+  <div class="mask mt"></div>
+  <div class="mask ms"></div>
+  <i class="rule"></i>
+  <div class="mask my"></div>
+</div>
+<button class="arr prev" id="prev" aria-label="上一卷"><svg viewBox="0 0 25 12"><path d="M6 1L1 6l5 5M1 6h23"/></svg></button>
+<button class="arr next" id="next" aria-label="下一卷"><svg viewBox="0 0 25 12"><path d="M19 1l5 5-5 5M24 6H1"/></svg></button>
+<div class="tl" id="tl"><i class="line"></i><i class="dot" id="dot"></i></div>
+<footer class="foot"><span class="lbl">© 2026 重庆师范大学 × 且曼学院 · AI 应用实战培训</span><span class="lbl">往下滚 ↓</span></footer>
+
+<!-- 停在《AI 新篇》上时，左边的字 -->
+<section class="tp" id="tp">
+  <div class="m"><span class="lbl">重庆师范大学 × 且曼学院 / 2026</span></div>
+  <div class="m"><h1>AI 新篇</h1></div>
+  <div class="m"><p>五天 · 三个软件 · 每天带走一件作品</p></div>
+  <div class="m"><span class="lbl hint">翻开 ↓</span></div>
+</section>
+
+<!-- 翻开之后的几幕：改文字直接改这里 -->
+<main class="acts" id="acts" tabindex="-1">
+<section class="act" id="why">
+  <span class="ghost" aria-hidden="true">01</span>
+  <header class="ah">
+    <div class="m"><span class="lbl no"><b>01</b><i></i>WHY NOW</span></div>
+    <div class="m"><h2>为什么是今年</h2></div>
+  </header>
+  <div class="whyw">
+   <div class="why">
+    <div class="wc rv" style="--i:0"><h3>国家在推</h3><ul><li><em>2025.08</em><span>国务院“人工智能+”行动</span></li><li><em>2026.04</em><span>教育部：教师智能素养标准、师范生培养改革</span></li></ul></div>
+    <div class="wc rv" style="--i:1"><h3>规则已立</h3><ul><li><em>2025.09</em><span>AI 生成的内容，发布必须标识</span></li><li><em>2026.09</em><span>最高法：擅用他人形象构成侵权</span></li></ul></div>
+    <div class="wc rv" style="--i:2"><h3>同行已动</h3><ul><li><em>北京大学</em><span>AI 宣传片《举火》</span></li><li><em>上海交大</em><span>AIGC 短片入选网信办年度精品</span></li></ul></div>
+   </div>
+  </div>
+  <p class="punch rv" style="--i:4">师范院校宣传部门公开的 AIGC 作品还很少：<b>空白，也是机会。</b></p>
+</section>
+<section class="act pin" id="needs">
+ <div class="sticky">
+  <span class="ghost" aria-hidden="true">02</span>
+  <header class="ah">
+    <div class="m"><span class="lbl no"><b>02</b><i></i>NEEDS</span></div>
+    <div class="m"><h2>26 条需求，其实是四类事</h2></div>
+  </header>
+  <div class="sw"><button type="button" class="on" data-v="a">原来的六类</button><button type="button" data-v="b">四类</button><span class="lbl">标签 = 第几天解决 · 往下滚自动重排</span></div>
+  <div class="nd" id="nd" data-v="a">
+   <div class="lay la on">
+    <div class="grp a1"><div class="gh"><span>一 · 底线规范</span><b>3</b></div><div class="gl" data-slot="a1"><span class="chip" data-b="b5"><i>红线与保密</i><em>每天</em></span><span class="chip" data-b="b5"><i>版权与标识</i><em>D2</em></span><span class="chip" data-b="b5"><i>风险案例</i><em>D1</em></span></div></div>
+    <div class="grp a2"><div class="gh"><span>二 · 基础工具入门</span><b>3</b></div><div class="gl" data-slot="a2"><span class="chip" data-b="b1"><i>提示词写法</i><em>每天</em></span><span class="chip" data-b="b1"><i>润色、摘要、纪要</i><em>D1</em></span><span class="chip" data-b="b4"><i>工具对比与台账</i><em>D1</em></span></div></div>
+    <div class="grp a3"><div class="gh"><span>三 · 新闻稿件、通稿、采访素材</span><b>12</b></div><div class="gl" data-slot="a3"><span class="chip" data-b="b1"><i>新闻初稿与导语</i><em>D1</em></span><span class="chip" data-b="b1"><i>采访提纲</i><em>D4</em></span><span class="chip" data-b="b1"><i>事实校验</i><em>D4</em></span><span class="chip" data-b="b4"><i>新闻问答机器人</i><em>D5</em></span><span class="chip" data-b="b4"><i>AI 选题库</i><em>D4</em></span><span class="chip" data-b="b1"><i>推文与短视频脚本</i><em>D1</em></span><span class="chip" data-b="b2"><i>配图与海报</i><em>D2</em></span><span class="chip" data-b="b3"><i>字幕与辅助剪辑</i><em>D3</em></span><span class="chip" data-b="b3"><i>数字人、配音、配乐</i><em>D3</em></span><span class="chip" data-b="b4"><i>全流程方法</i><em>D4</em></span><span class="chip" data-b="b2"><i>素材审核与标识</i><em>D2</em></span><span class="chip" data-b="b2"><i>VI 规范初审</i><em>D5</em></span></div></div>
+    <div class="grp a4"><div class="gh"><span>四 · 公文、通知、台账、会务</span><b>3</b></div><div class="gl" data-slot="a4"><span class="chip" data-b="b1"><i>方案、总结、通知</i><em>D1</em></span><span class="chip" data-b="b1"><i>表格与台账</i><em>D1</em></span><span class="chip" data-b="b1"><i>公文格式</i><em>D1</em></span></div></div>
+    <div class="grp a5"><div class="gh"><span>五 · 理论学习、理论宣讲</span><b>3</b></div><div class="gl" data-slot="a5"><span class="chip" data-b="b1"><i>宣讲稿与提纲</i><em>D1</em></span><span class="chip" data-b="b1"><i>学习简报</i><em>D1</em></span><span class="chip" data-b="b1"><i>表述校对</i><em>D4</em></span></div></div>
+    <div class="grp a6"><div class="gh"><span>六 · 舆情风控</span><b>2</b></div><div class="gl" data-slot="a6"><span class="chip" data-b="b4"><i>涉校信息研判</i><em>D5</em></span><span class="chip" data-b="b1"><i>处置预案与推演</i><em>D4</em></span></div></div>
+   </div>
+   <div class="lay lb">
+    <div class="grp b1"><div class="gh"><u>文</u><span>文本类</span><b>13</b></div><div class="gl" data-slot="b1"></div></div>
+    <div class="grp b2"><div class="gh"><u>图</u><span>图片类</span><b>3</b></div><div class="gl" data-slot="b2"></div></div>
+    <div class="grp b3"><div class="gh"><u>影</u><span>视频类</span><b>2</b></div><div class="gl" data-slot="b3"></div></div>
+    <div class="grp b4"><div class="gh"><u>码</u><span>代码类</span><b>5</b></div><div class="gl" data-slot="b4"></div></div>
+    <div class="grp b5"><div class="gh"><span>底线规范</span><b>3</b></div><div class="gl" data-slot="b5"></div></div>
+   </div>
+  </div>
+  <p class="punch pb">四类学会了，<b>所有工作都能套，教学也一样。</b></p>
+ </div>
+</section>
+<section class="act dark" id="lines">
+  <span class="ghost" aria-hidden="true">03</span>
+  <header class="ah">
+    <div class="m"><span class="lbl no"><b>03</b><i></i>RULES</span></div>
+    <div class="m"><h2>先说底线</h2></div>
+  </header>
+  <ol class="ln">
+    <li class="rv" style="--i:0"><svg viewBox="0 0 48 48"><rect x="9" y="21" width="30" height="20"/><path d="M15 21v-6a9 9 0 0 1 18 0v6M24 28v6"/></svg><h3>保密</h3><p>涉密、未公开、个人信息，不进联网 AI</p></li>
+    <li class="rv" style="--i:1"><svg viewBox="0 0 48 48"><path d="M8 12h32v20H22l-8 7v-7H8z"/><path d="M16 20h16M16 26h10"/></svg><h3>表述</h3><p>以权威原文为准，标出处</p></li>
+    <li class="rv" style="--i:2"><svg viewBox="0 0 48 48"><path d="M10 8h28v32H10z"/><path d="M16 18l3 3 6-6M16 30l3 3 6-6M29 19h4M29 31h4"/></svg><h3>事实</h3><p>人名、职务、时间、数字，逐条核</p></li>
+    <li class="rv" style="--i:3"><svg viewBox="0 0 48 48"><circle cx="24" cy="18" r="8"/><path d="M9 41c1-9 7-13 15-13s14 4 15 13"/><path d="M36 8l4 4M40 8l-4 4"/></svg><h3>版权和肖像</h3><p>校徽用官方文件；真人形象要本人同意</p></li>
+    <li class="rv" style="--i:4"><svg viewBox="0 0 48 48"><path d="M8 8h16l17 17-16 16L8 24z"/><circle cx="17" cy="17" r="3"/></svg><h3>标识</h3><p>对外发布，加 AI 标识</p></li>
+  </ol>
+  <p class="punch rv" style="--i:6">AI 出初稿，<b>人来核对和拍板。</b></p>
+</section>
+<section class="act" id="tools">
+  <span class="ghost" aria-hidden="true">04</span>
+  <header class="ah">
+    <div class="m"><span class="lbl no"><b>04</b><i></i>TOOLS</span></div>
+    <div class="m"><h2>四类事，三个软件就够</h2></div>
+  </header>
+  <div class="map" id="map">
+   <div class="tyr">
+    <div class="tn rv" style="--i:0" data-t="t1"><u>文</u><span>文本类</span><em>13 条</em></div>
+    <div class="tn rv" style="--i:1" data-t="t2"><u>图</u><span>图片类</span><em>3 条</em></div>
+    <div class="tn rv" style="--i:2" data-t="t3"><u>影</u><span>视频类</span><em>2 条</em></div>
+    <div class="tn rv" style="--i:3" data-t="t4"><u>码</u><span>代码类</span><em>5 条</em></div>
+   </div>
+   <svg class="wires" id="wires" aria-hidden="true"></svg>
+   <div class="tlr">
+    <div class="tc rv" style="--i:5" data-from="t1 t4"><figure class="shot"><img src="img/tool/wb-site.jpg" alt="WorkBuddy 官网截图"></figure><div class="th"><img class="lg" src="img/tool/wb.svg" alt=""><h3>WorkBuddy</h3><span class="lbl">第 1、4 天</span></div><p class="what">腾讯出的 AI 办公助手。说一句话，它自己动手，交付文档、表格、PPT。</p><ul class="can"><li>读写文件夹</li><li>技能</li><li>定时任务</li><li>手机派活</li></ul></div>
+    <div class="tc rv" style="--i:6" data-from="t2 t3"><figure class="shot"><img src="img/tool/rh-site.jpg" alt="RunningHub 官网截图"></figure><div class="th"><img class="lg" src="img/tool/rh.png" alt=""><h3>RunningHub</h3><span class="lbl">第 2、3 天</span></div><p class="what">国内的云端出图、出视频平台。</p><ul class="can"><li>海报配图</li><li>图生视频</li><li>数字人、配音</li></ul></div>
+    <div class="tc rv" style="--i:7" data-from="t4"><figure class="shot"><img src="img/tool/ds-site.jpg" alt="DeepSeek Harness 官网截图"></figure><div class="th"><img class="lg" src="img/tool/ds.png" alt=""><h3>DeepSeek Harness</h3><span class="lbl">第 5 天</span></div><p class="what">深度求索开源的智能体工作台，装在自己电脑上。</p><ul class="can"><li>本地工作区</li><li>插件</li><li>自己的工作台</li></ul></div>
+   </div>
+  </div>
+</section>
+<section class="act" id="scenes">
+  <span class="ghost" aria-hidden="true">05</span>
+  <header class="ah">
+    <div class="m"><span class="lbl no"><b>05</b><i></i>SCENES</span></div>
+    <div class="m"><h2>学一个，会一类</h2></div>
+  </header>
+  <div class="scs">
+   <div class="scc rv" style="--i:0"><div class="sci n1"><img src="img/day/d1.jpg" alt="" loading="lazy"></div><div class="lt"><u>文</u><h3>文本类</h3></div><p><b>课上做</b>一页简报 · 热点早报 · 汇报稿</p><p><b>之后自己能做</b>新闻稿、推文、纪要、公文、教案</p></div>
+   <div class="scc rv" style="--i:1"><div class="sci n3"><img src="img/poster/p03.jpg" alt="" loading="lazy"><img src="img/poster/p04.jpg" alt="" loading="lazy"><img src="img/poster/p09.jpg" alt="" loading="lazy"></div><div class="lt"><u>图</u><h3>图片类</h3></div><p><b>课上做</b>活动海报 · 老照片修复</p><p><b>之后自己能做</b>表情包、节气海报、绘本、课件配图</p></div>
+   <div class="scc rv" style="--i:2"><div class="sci n2"><img src="img/video/v1.jpg" alt="" loading="lazy"><img src="img/video/v2.jpg" alt="" loading="lazy"></div><div class="lt"><u>影</u><h3>视频类</h3></div><p><b>课上做</b>15 秒校园短片</p><p><b>之后自己能做</b>宣传片、今昔对比、数字人播报、微课</p></div>
+   <div class="scc rv" style="--i:3"><div class="sci n3"><img src="img/works/album-shelf.jpg" alt="" loading="lazy"><img src="img/works/neuron.jpg" alt="" loading="lazy"><img src="img/works/lushan.jpg" alt="" loading="lazy"></div><div class="lt"><u>码</u><h3>代码类</h3></div><p><b>课上做</b>活动出整套 · 数字员工</p><p><b>之后自己能做</b>选题提醒、教学小游戏、互动课件</p></div>
+  </div>
+  <a class="cases rv" style="--i:5" href="https://cqnu-ai-cases.vercel.app" target="_blank" rel="noopener">
+   <div class="ct"><b class="cu" data-to="100">0</b><sup>+</sup><strong>课后还有 100 多个案例</strong><span class="lbl">打开案例库 →</span></div>
+   <div class="mq"><div class="mr"><img src="img/works/album-shelf.jpg" alt="" loading="lazy"><img src="img/works/neuron.jpg" alt="" loading="lazy"><img src="img/works/invite-poster.jpg" alt="" loading="lazy"><img src="img/works/lushan.jpg" alt="" loading="lazy"><img src="img/works/sketchbook.jpg" alt="" loading="lazy"><img src="img/works/root-lab.jpg" alt="" loading="lazy"><img src="img/works/grad-poster-1.jpg" alt="" loading="lazy"><img src="img/works/album-shelf.jpg" alt="" loading="lazy"><img src="img/works/neuron.jpg" alt="" loading="lazy"><img src="img/works/invite-poster.jpg" alt="" loading="lazy"><img src="img/works/lushan.jpg" alt="" loading="lazy"><img src="img/works/sketchbook.jpg" alt="" loading="lazy"><img src="img/works/root-lab.jpg" alt="" loading="lazy"><img src="img/works/grad-poster-1.jpg" alt="" loading="lazy"></div><div class="mr rev"><img src="img/works/album-open.jpg" alt="" loading="lazy"><img src="img/works/orbital.jpg" alt="" loading="lazy"><img src="img/works/poster-formal.jpg" alt="" loading="lazy"><img src="img/works/train-lab.jpg" alt="" loading="lazy"><img src="img/works/lushan-2.jpg" alt="" loading="lazy"><img src="img/works/neuron-soma.jpg" alt="" loading="lazy"><img src="img/works/album-wall.jpg" alt="" loading="lazy"><img src="img/works/album-open.jpg" alt="" loading="lazy"><img src="img/works/orbital.jpg" alt="" loading="lazy"><img src="img/works/poster-formal.jpg" alt="" loading="lazy"><img src="img/works/train-lab.jpg" alt="" loading="lazy"><img src="img/works/lushan-2.jpg" alt="" loading="lazy"><img src="img/works/neuron-soma.jpg" alt="" loading="lazy"><img src="img/works/album-wall.jpg" alt="" loading="lazy"></div></div>
+  </a>
+</section>
+<section class="act day" id="day1">
+  <div class="dw">
+   <div class="dl">
+    <div class="m"><span class="lbl no"><b>第 1 天</b><i></i><img class="lg" src="img/tool/wb.svg" alt="">WorkBuddy</span></div>
+    <div class="m"><h2>AI 智能体与办公提效</h2></div>
+    <div class="con rv" style="--i:1"><span class="lbl">先讲清楚</span><button type="button" data-x="agent">Agent<i>▸</i></button><button type="button" data-x="mcp">MCP<i>▸</i></button><button type="button" data-x="skill">Skill<i>▸</i></button></div>
+    <div class="rl rv" style="--i:2"><span class="lbl">带着做</span><button type="button" data-r="0" class="on">宣传部</button><button type="button" data-r="1">二级部门</button><button type="button" data-r="2">教学岗</button><button type="button" data-r="3">学生</button></div>
+    <ol class="cs3">
+     <li class="rv" style="--i:3"><b>01</b><h3>一份材料变一页简报</h3><p><em data-r="0" class="on">讲话稿、活动通稿</em><em data-r="1">本单位的通知、总结</em><em data-r="2">一节课的教案或一篇课文</em><em data-r="3">一篇论文或课程笔记</em></p></li>
+     <li class="rv" style="--i:4"><b>02</b><h3>热点早报</h3><p><em data-r="0" class="on">宣传和理论热点</em><em data-r="1">本领域动态（学工、教务、科研）</em><em data-r="2">本学科的教研动态</em><em data-r="3">教资、考研、招聘信息</em></p></li>
+     <li class="rv" style="--i:5"><b>03</b><h3>向上汇报的稿子</h3><p><em data-r="0" class="on">公众号年度运营汇报</em><em data-r="1">本单位账号数据或年度工作总结</em><em data-r="2">学期教学总结、成绩分析</em><em data-r="3">实习总结、社团或学生会述职</em></p></li>
+     <li class="rv" style="--i:6"><b>04</b><h3>把自己的写法存成技能</h3><p><em data-r="0" class="on">学校新闻稿的写法</em><em data-r="1">本单位通知的格式</em><em data-r="2">自己的教案模板</em><em data-r="3">课程论文的格式</em></p></li>
+    </ol>
+    <div class="out rv" style="--i:7"><span class="lbl">带走</span>每天推到手机的早报 · 一个自己的写作技能</div>
+    <a class="lbl go1 rv" style="--i:8" href="day.html?d=1">打开第 1 天的课件 →</a>
+   </div>
+   <div class="dr"><img src="img/day/d1.jpg" alt="" loading="lazy"><b class="dn">01</b><span class="lbl dk">DAY 1 / 5</span><span class="lbl dt2"><img class="lg" src="img/tool/wb.svg" alt="">WorkBuddy</span></div>
+  </div>
+</section>
+<section class="act day" id="day2">
+  <div class="dw">
+   <div class="dl">
+    <div class="m"><span class="lbl no"><b>第 2 天</b><i></i><img class="lg" src="img/tool/rh.png" alt="">RunningHub</span></div>
+    <div class="m"><h2>AIGC 视觉创作</h2></div>
+    <div class="con rv" style="--i:1"><span class="lbl">先讲清楚</span><button type="button" data-x="diffuse">生图原理<i>▸</i></button><button type="button" data-x="prompt">提示词六要素<i>▸</i></button></div>
+    <div class="rl rv" style="--i:2"><span class="lbl">带着做</span><button type="button" data-r="0" class="on">宣传部</button><button type="button" data-r="1">二级部门</button><button type="button" data-r="2">教学岗</button><button type="button" data-r="3">学生</button></div>
+    <ol class="cs3">
+     <li class="rv" style="--i:3"><b>01</b><h3>活动海报</h3><p><em data-r="0" class="on">新闻宣传活动月</em><em data-r="1">本单位的讲座、会议</em><em data-r="2">课程封面、公开课</em><em data-r="3">社团招新、班会</em></p></li>
+     <li class="rv" style="--i:4"><b>02</b><h3>老照片修复上色</h3><p><em data-r="0" class="on">校史老照片</em><em data-r="1">院系老照片</em><em data-r="2">学科史料图片</em><em data-r="3">家里的老照片</em></p></li>
+     <li class="rv" style="--i:5"><b>03</b><h3>一图读懂</h3><p><em data-r="0" class="on">讲话要点</em><em data-r="1">办事流程、指南</em><em data-r="2">一节课的知识点</em><em data-r="3">课程笔记</em></p></li>
+     <li class="rv" style="--i:6"><b>04</b><h3>节日海报、表情包</h3><p><em data-r="0" class="on">学校官方账号</em><em data-r="1">本单位公众号</em><em data-r="2">班级群</em><em data-r="3">社团账号</em></p></li>
+    </ol>
+    <div class="out rv" style="--i:7"><span class="lbl">带走</span>一张能发的海报 · 一组修复好的老照片</div>
+    <a class="lbl go1 rv" style="--i:8" href="day.html?d=2">打开第 2 天的课件 →</a>
+   </div>
+   <div class="dr"><img src="img/day/d2.jpg" alt="" loading="lazy"><b class="dn">02</b><span class="lbl dk">DAY 2 / 5</span><span class="lbl dt2"><img class="lg" src="img/tool/rh.png" alt="">RunningHub</span></div>
+  </div>
+</section>
+<section class="act day" id="day3">
+  <div class="dw">
+   <div class="dl">
+    <div class="m"><span class="lbl no"><b>第 3 天</b><i></i><img class="lg" src="img/tool/rh.png" alt="">RunningHub · 剪映</span></div>
+    <div class="m"><h2>AIGC 视频创作</h2></div>
+    <div class="con rv" style="--i:1"><span class="lbl">先讲清楚</span><button type="button" data-x="vtypes">视频生成的几类<i>▸</i></button><button type="button" data-x="camera">镜头语言<i>▸</i></button></div>
+    <div class="rl rv" style="--i:2"><span class="lbl">带着做</span><button type="button" data-r="0" class="on">宣传部</button><button type="button" data-r="1">二级部门</button><button type="button" data-r="2">教学岗</button><button type="button" data-r="3">学生</button></div>
+    <ol class="cs3">
+     <li class="rv" style="--i:3"><b>01</b><h3>三张照片，变 15 秒短片</h3><p><em data-r="0" class="on">校园风景</em><em data-r="1">本单位活动照片</em><em data-r="2">课堂、实验照片</em><em data-r="3">社团活动照片</em></p></li>
+     <li class="rv" style="--i:4"><b>02</b><h3>老照片动起来</h3><p><em data-r="0" class="on">校史老照片</em><em data-r="1">院系老照片</em><em data-r="2">学科人物、史料</em><em data-r="3">毕业合影</em></p></li>
+     <li class="rv" style="--i:5"><b>03</b><h3>数字人播报</h3><p><em data-r="0" class="on">一条校园新闻</em><em data-r="1">一则通知</em><em data-r="2">微课开场</em><em data-r="3">自我介绍</em></p></li>
+     <li class="rv" style="--i:6"><b>04</b><h3>活动快剪</h3><p><em data-r="0" class="on">开学典礼</em><em data-r="1">本单位的一场活动</em><em data-r="2">公开课片段</em><em data-r="3">晚会、比赛</em></p></li>
+    </ol>
+    <div class="out rv" style="--i:7"><span class="lbl">带走</span>一条 15 秒短片 · 一条自选短片</div>
+    <a class="lbl go1 rv" style="--i:8" href="day.html?d=3">打开第 3 天的课件 →</a>
+   </div>
+   <div class="dr"><img src="img/day/d3.jpg" alt="" loading="lazy"><b class="dn">03</b><span class="lbl dk">DAY 3 / 5</span><span class="lbl dt2"><img class="lg" src="img/tool/rh.png" alt="">RunningHub · 剪映</span></div>
+  </div>
+</section>
+<section class="act day" id="day4">
+  <div class="dw">
+   <div class="dl">
+    <div class="m"><span class="lbl no"><b>第 4 天</b><i></i><img class="lg" src="img/tool/wb.svg" alt="">WorkBuddy · RunningHub</span></div>
+    <div class="m"><h2>宣传工作流与自动化</h2></div>
+    <div class="con rv" style="--i:1"><span class="lbl">先讲清楚</span><button type="button" data-x="flow">工作流和检查点<i>▸</i></button></div>
+    <div class="rl rv" style="--i:2"><span class="lbl">带着做</span><button type="button" data-r="0" class="on">宣传部</button><button type="button" data-r="1">二级部门</button><button type="button" data-r="2">教学岗</button><button type="button" data-r="3">学生</button></div>
+    <ol class="cs3">
+     <li class="rv" style="--i:3"><b>01</b><h3>一场活动的宣传，一次出齐</h3><p><em data-r="0" class="on">办学 120 周年、美术展开幕式</em><em data-r="1">本单位的一场活动</em><em data-r="2">一堂公开课</em><em data-r="3">一场社团活动</em></p></li>
+     <li class="rv" style="--i:4"><b>02</b><h3>数字员工</h3><p><em data-r="0" class="on">早报、校历选题提醒</em><em data-r="1">周报、截止日期提醒</em><em data-r="2">备课资料、作业提醒</em><em data-r="3">考试、报名提醒</em></p></li>
+     <li class="rv" style="--i:5"><b>03</b><h3>黑客松</h3><p><em class="on">抽命题，现场做</em></p></li>
+    </ol>
+    <div class="out rv" style="--i:7"><span class="lbl">带走</span>“活动出整套”技能 · 一个自动跑的数字员工</div>
+    <a class="lbl go1 rv" style="--i:8" href="day.html?d=4">打开第 4 天的课件 →</a>
+   </div>
+   <div class="dr"><img src="img/day/d4.jpg" alt="" loading="lazy"><b class="dn">04</b><span class="lbl dk">DAY 4 / 5</span><span class="lbl dt2"><img class="lg" src="img/tool/wb.svg" alt="">WorkBuddy · RunningHub</span></div>
+  </div>
+</section>
+<section class="act day" id="day5">
+  <div class="dw">
+   <div class="dl">
+    <div class="m"><span class="lbl no"><b>第 5 天</b><i></i><img class="lg" src="img/tool/ds.png" alt="">DeepSeek Harness</span></div>
+    <div class="m"><h2>综合应用与成果展示</h2></div>
+    <div class="con rv" style="--i:1"><span class="lbl">先讲清楚</span><button type="button" data-x="harness">模型和底盘<i>▸</i></button></div>
+    <div class="rl rv" style="--i:2"><span class="lbl">带着做</span></div>
+    <ol class="cs3">
+     <li class="rv" style="--i:3"><b>01</b><h3>内容工作台</h3><p><em class="on">演示</em></p></li>
+     <li class="rv" style="--i:4"><b>02</b><h3>我教你一招</h3><p><em class="on">每人 3 分钟</em></p></li>
+     <li class="rv" style="--i:5"><b>03</b><h3>路演和颁奖</h3><p><em class="on">每组一位</em></p></li>
+    </ol>
+    <div class="out rv" style="--i:7"><span class="lbl">带走</span>个人作品集 · “AI 种子教师”工牌</div>
+    <a class="lbl go1 rv" style="--i:8" href="day.html?d=5">打开第 5 天的课件 →</a>
+   </div>
+   <div class="dr"><img src="img/day/d5.jpg" alt="" loading="lazy"><b class="dn">05</b><span class="lbl dk">DAY 5 / 5</span><span class="lbl dt2"><img class="lg" src="img/tool/ds.png" alt="">DeepSeek Harness</span></div>
+  </div>
+</section>
+<section class="act" id="rules">
+ <div class="pw">
+  <div class="pleft">
+  <header class="ah">
+    <div class="m"><span class="lbl no"><b>07</b><i></i>PLAY</span></div>
+    <div class="m"><h2>怎么玩</h2></div>
+  </header>
+   <ol class="pl" id="pl">
+    <li class="rv on" style="--i:1" data-v="0"><b>01</b><h3>AI 工牌</h3><p>课表、提醒、交作业、看分数</p></li>
+    <li class="rv" style="--i:2" data-v="1"><b>02</b><h3>组队</h3><p>第 2 或第 3 天，4–5 人一组</p></li>
+    <li class="rv" style="--i:3" data-v="2"><b>03</b><h3>比赛</h3><p>当天作品 + 限时挑战卡</p></li>
+    <li class="rv" style="--i:4" data-v="3"><b>04</b><h3>排名</h3><p>评委打分 + 观众投票，只公布前三</p></li>
+    <li class="rv" style="--i:5" data-v="4"><b>05</b><h3>奖惩</h3><p>垫底转趣味转盘；交齐作品，解锁“AI 种子教师”</p></li>
+   </ol>
+  </div>
+  <div class="hang" id="hang">
+   <div class="lany"><i class="s1"><em>QIEMAN · CQNU AI · QIEMAN · CQNU AI · QIEMAN · CQNU AI · QIEMAN · CQNU AI</em></i><i class="s2"><em>CQNU AI · QIEMAN · CQNU AI · QIEMAN · CQNU AI · QIEMAN · CQNU AI · QIEMAN</em></i><i class="buckle"></i><i class="ring"></i><i class="hook"></i></div>
+   <div class="pp3" id="pp3"><div class="pp" id="pp">
+     <i class="ppb"></i><i class="ppe e1"></i><i class="ppe e2"></i><i class="ppe e3"></i><i class="ppe e4"></i><i class="ppe e5"></i>
+     <div class="ppf">
+      <i class="scw a"></i><i class="scw b"></i><i class="scw c"></i><i class="scw d"></i><i class="led"></i><i class="knob"></i><i class="usb"></i><i class="wire"></i>
+      <div class="bez"><div class="scr" id="scr">
+       <div class="st"><b>09:40</b><span>MON</span><em><u></u>85%</em></div>
+       <div class="vw on" data-v="0"><div class="who"><img src="img/badge/avatar.png" alt=""><div><strong>示例学员</strong><span>Token值</span><b>666</b><i><u></u></i><small>/ 40000</small></div></div><div class="tiles"><span class="on">GAME<svg viewBox="0 0 24 24"><path d="M6 3l15 9-15 9z"/></svg></span><span>IMAGE<svg viewBox="0 0 24 24"><path d="M2 4h20v16H2z M5 17l5-6 4 4 2-2 3 4z"/></svg></span></div></div>
+       <div class="vw" data-v="1"><div class="vh">TEAM 03</div><div class="team"><i></i><i></i><i></i><i></i><i class="add">+</i></div><div class="vs">4 / 5 人</div><div class="vb">等待队友加入</div></div>
+       <div class="vw" data-v="2"><div class="vh">限时挑战</div><div class="clock">14:59</div><div class="vs">今日命题</div><div class="vb y">活动海报</div></div>
+       <div class="vw" data-v="3"><div class="vh">RANK</div><ol class="rank"><li><b>1</b><i style="--w:96%"></i></li><li><b>2</b><i style="--w:82%"></i></li><li><b>3</b><i style="--w:71%"></i></li></ol><div class="vs">只公布前三</div></div>
+       <div class="vw" data-v="4"><div class="vh">UNLOCKED</div><div class="wheel"></div><div class="vb y">AI 种子教师</div></div>
+      </div></div>
+      <div class="plate"><i></i><span>The Open Wearable AI Passport</span></div><i class="spk"></i>
+     </div>
+     <div class="ppg"><i class="slot"></i><i class="sbtn b1"></i><i class="sbtn b2"></i><i class="sbtn b3"></i></div>
+   </div></div>
+  </div>
+ </div>
+</section>
+<section class="act" id="take">
+  <span class="ghost" aria-hidden="true">08</span>
+  <header class="ah">
+    <div class="m"><span class="lbl no"><b>08</b><i></i>AFTER</span></div>
+    <div class="m"><h2>五天之后，带走这些</h2></div>
+  </header>
+  <div class="tk6">
+   <div class="tkc rv" style="--i:0"><b>01</b><h3>作品集</h3><p>每人一个能分享的链接</p></div>
+   <div class="tkc rv" style="--i:1"><b>02</b><h3>技能和数字员工</h3><p>回去接着用</p></div>
+   <div class="tkc rv" style="--i:2"><b>03</b><h3>工牌和证书</h3><p>“AI 种子教师”</p></div>
+   <div class="tkc rv" style="--i:3"><b>04</b><h3>100+ 案例库</h3><p>照着扩展，持续更新</p></div>
+   <div class="tkc rv" style="--i:4"><b>05</b><h3>内容工作台</h3><p>结业当天装进电脑</p></div>
+   <div class="tkc rv" style="--i:5"><b>06</b><h3>班级群</h3><p>资料、回放、答疑</p></div>
+  </div>
+  <div class="by rv" style="--i:6"><img src="img/brand/cqnu-ink.png" alt="重庆师范大学"><i>×</i><img src="img/brand/qieman.png" alt="且曼学院"></div>
+  <a class="go rv" style="--i:7" href="day.html?d=1"><span class="lbl">开始上课</span><strong>进入第 1 天</strong><i>→</i></a>
+</section>
+</main>
+
+<!-- 概念图示：点“先讲清楚”后面的词打开 -->
+<div class="lab" id="lab" aria-hidden="true">
+  <header class="labh"><span class="lbl">先讲清楚</span><nav class="labt" id="labt"></nav><button type="button" class="labx" id="labx" aria-label="关闭">×</button></header>
+  <div class="labb" id="labb"></div>
+</div>
+
+<div class="cursor" id="cursor"><i class="cr"></i><i class="cd"></i><span>OPEN<br>翻开</span></div>
+<div class="probe" id="probe"></div>
+<script src="assets/shelf-data.js"></script>
+<script src="assets/cover.js"></script>
+<script src="assets/acts.js"></script>
+<script src="assets/lab.js"></script>
+</body>
+</html>

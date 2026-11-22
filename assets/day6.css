@@ -1,0 +1,52 @@
+/* “资料”页签的版式，配 assets/day6.js。类名 d6- 开头；公共小件（d-n、d-pill、d-k）来自 day1.css。 */
+.d6 .conx{display:none}
+.d6-ic{width:64px;height:64px;border-radius:50%;background:var(--yl);display:grid;place-items:center;flex:none}
+.d6-ic svg{width:32px;height:32px}
+.d6-md{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;width:100%}
+.d6-m{background:#fff;border-radius:28px;padding:30px 22px 28px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;box-shadow:0 16px 36px -22px rgba(0,0,0,.35);transition:transform .5s,box-shadow .5s,opacity .5s;opacity:.55;cursor:pointer}
+.d6-m.on{opacity:1;transform:translateY(-10px);box-shadow:0 26px 48px -22px rgba(0,0,0,.5)}
+.d6-m h3{font:700 30px/1.2 var(--sans)}
+.d6-m p{font:400 19px/1.55 var(--sans);color:#555;min-height:58px}
+.d6-bd{width:170px;height:236px;border-radius:26px;background:#161616;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:inset 0 0 0 2px #333}
+.d6-bl{width:44px;height:7px;border-radius:4px;background:#333}
+.d6-sc{flex:1;width:100%;border-radius:14px;background:#f4efe1;padding:10px;display:flex;transition:background-color .5s}
+.d6-m.on .d6-sc{background:var(--yl)}
+.d6-bg4{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+.d6-bg4 span{background:#fff;border-radius:10px;display:grid;place-items:center;font:600 15px/1.2 var(--sans);color:#111;text-align:center;padding:4px}
+.d6-bgs{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.d6-bgs i{width:62px;height:62px;border-radius:50%;background:#111}
+.d6-bgs b{font:700 18px/1 var(--sans)}.d6-bgs em{font:600 14px/1 var(--sans);font-style:normal;background:#111;color:var(--yl);border-radius:999px;padding:6px 10px}
+.d6-keys{display:flex;gap:14px;justify-content:center;margin-top:36px}
+.d6-rl{display:flex;align-items:stretch;gap:0;width:100%}
+.d6-r{flex:1;background:#fff;border-radius:28px;padding:28px 24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 16px 36px -22px rgba(0,0,0,.35)}
+.d6-r h3{font:700 28px/1.2 var(--sans);margin-top:6px}
+.d6-r b{font:600 19px/1.4 var(--sans);color:#111;background:var(--yl);border-radius:999px;padding:6px 14px;align-self:flex-start}
+.d6-r p{font:400 19px/1.55 var(--sans);color:#555}
+.d6-ar{width:34px;flex:none;align-self:center;height:3px;background:#111;position:relative;margin:0 4px}
+.d6-ar:after{content:"";position:absolute;right:-1px;top:-6px;border-left:11px solid #111;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.d6-sco{display:flex;align-items:center;gap:22px;margin-top:40px;width:100%}
+.d6-sco .d-k{font-size:20px;color:#555;white-space:nowrap}
+.d6-bar{flex:1;display:flex;height:64px;border-radius:999px;overflow:hidden;background:#fff;box-shadow:0 10px 24px -14px rgba(0,0,0,.35)}
+.d6-bar div{display:flex;align-items:center;justify-content:center;gap:12px;font:600 21px/1 var(--sans);background:#111;color:#fff}
+.d6-bar div.y{background:var(--yl);color:#111}
+.d6-bar b{font-weight:700}
+.d6-pk{display:grid;grid-template-columns:auto 1fr;gap:120px;align-items:center;justify-content:center;width:100%;padding:0 60px}
+.d6-pk-l{display:flex;flex-direction:column;align-items:center;gap:26px}
+.d6-wx{height:100%;background:#ededed;display:flex;flex-direction:column}
+.d6-wxh{background:#f7f7f7;padding:44px 0 12px;text-align:center;font:600 16px/1 var(--sans);border-bottom:1px solid #ddd}
+.d6-wxm{padding:22px 14px;display:flex;gap:10px;align-items:flex-start}
+.d6-wxm>i{width:38px;height:38px;border-radius:8px;background:#111;flex:none}
+.d6-fc{background:#fff;border-radius:8px;padding:10px;display:flex;gap:10px;align-items:center;width:178px}
+.d6-fc b{display:block;font:600 15px/1.3 var(--sans)}.d6-fc small{font:400 12px/1.3 var(--sans);color:#888}
+.d6-fz{width:42px;height:50px;border-radius:6px;background:var(--yl);display:grid;place-items:center;font:700 13px/1 "Inter Tight",var(--sans);flex:none}
+.d6-pk-r{list-style:none;display:flex;flex-direction:column;gap:20px;padding:0;margin:0}
+.d6-pk-r li{display:flex;align-items:center;gap:22px}
+.d6-pk-r h3{font:700 32px/1.2 var(--sans)}
+.d6-end{margin-top:6px}
+.d6-pre{display:grid;grid-template-columns:repeat(6,1fr);gap:24px;width:100%}
+.d6-pc{grid-column:span 2;background:#fff;border-radius:28px;padding:30px 28px;display:flex;flex-direction:column;gap:12px;box-shadow:0 16px 36px -22px rgba(0,0,0,.35)}
+.d6-pc:nth-child(n+4){grid-column:span 3}
+.d6-pc h3{font:700 30px/1.2 var(--sans);margin-top:4px}
+.d6-pc p{font:400 20px/1.6 var(--sans);color:#555}
+.gbtn.cases{background:var(--yl);color:#111;border:0;border-radius:999px;padding:9px 16px;margin-right:12px;text-decoration:none;font-weight:700}
+.gbtn.cases:hover{background:#111;color:var(--yl)}

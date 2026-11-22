@@ -1,0 +1,8 @@
+/* 字体：Inter Tight（拉丁和数字）、阿里巴巴普惠体（中文无衬线）、Noto Serif SC（书脊和封面题名、详情正文）。
+   都按页面实际用字裁过，改了文字后在 课件/ 下跑 python3 tools/make_fonts.py。 */
+@font-face{font-family:"Inter Tight";src:url(../fonts/intertight.woff2) format("woff2");font-weight:100 900;font-display:swap;unicode-range:U+0000-024F,U+2000-206F,U+2190-21FF}
+@font-face{font-family:"CQ Sans";src:url(../fonts/sans-400.woff2) format("woff2");font-weight:100 500;font-display:swap}
+@font-face{font-family:"CQ Sans";src:url(../fonts/sans-700.woff2) format("woff2");font-weight:600 900;font-display:swap}
+@font-face{font-family:"CQ Big";src:url(../fonts/sans-900.woff2) format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:"CQ Serif";src:url(../fonts/serif-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"CQ Serif";src:url(../fonts/serif-900.woff2) format("woff2");font-weight:900;font-display:swap}
