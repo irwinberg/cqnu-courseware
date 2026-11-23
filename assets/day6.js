@@ -8,10 +8,10 @@
 
   /* ---------- 一、工牌 ---------- */
   var MODES = [
-    ['学员', '课表 · 交作业 · 通知 · 设置', '第 1 天起：课前提醒，微信扫码交作业', ['课表', '交作业', '通知', '设置']],
+    ['学员', '课表 · 交作业 · 通知 · 设置', '第一节起：课前提醒，微信扫码交作业', ['课表', '交作业', '通知', '设置']],
     ['参赛', '积分 · 排行榜 · 加分码 · 设置', '分组之后：看本组排名，评委扫码加分', ['我的积分', '排行榜', '加分码', '设置']],
     ['游客', '展品 · 投票 · 通知 · 设置', '首映会、路演：给作品投票', ['看展品', '我的投票', '通知', '设置']],
-    ['种子教师', '结业解锁的称号', '第 5 天颁奖：名字、头像、称号', null]];
+    ['种子教师', '结业解锁的称号', '第五节颁奖：名字、头像、称号', null]];
   function badge(m) {
     var scr = m[3] ? '<div class="d6-bg4">' + m[3].map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div>'
       : '<div class="d6-bgs"><i></i><b>你的名字</b><em>AI 种子教师</em></div>';
@@ -25,18 +25,18 @@
   };
 
   /* ---------- 二、比赛 ---------- */
-  var RULE = [['分组', '第 2 或 3 天', '4–5 人一组，起队名、喊口号'], ['每轮比两样', '当天作品 + 限时挑战卡', '15–20 分钟，如“出一张节日海报”'], ['评选', '晚 19:00 或次日开场', '只公布前三名'], ['第 5 天路演', '评委 + 观众', '评委四项各 1–10 分，加观众人气']];
+  var RULE = [['分组', '第 2 或 3 天', '4–5 人一组，起队名、喊口号'], ['每轮比两样', '这节课作品 + 限时挑战卡', '15–20 分钟，如“出一张节日海报”'], ['评选', '晚 19:00 或下节课开场', '只公布前三名'], ['第五节路演', '评委 + 观众', '评委四项各 1–10 分，加观众人气']];
   VIZ['比赛规则'] = function (el) {
     el.innerHTML = '<div class="d6-rl">' + RULE.map(function (r, i) { return '<div class="d6-r in" style="--i:' + i + '"><span class="d-n">' + (i + 1) + '</span><h3>' + r[0] + '</h3><b>' + r[1] + '</b><p>' + r[2] + '</p></div>'; }).join('<i class="d6-ar in"></i>') + '</div>' +
       '<div class="d6-sco in" style="--i:6"><span class="d-k">个人分</span><div class="d6-bar"><div style="width:70%"><b>作业</b>约 70%</div><div style="width:30%" class="y"><b>组赛</b>约 30%</div></div></div>';
   };
 
   /* ---------- 三、资料包 ---------- */
-  var PK = [['今天学了什么', '<path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/>'], ['用到的提示词', '<path d="M4 5h16v11H10l-5 4v-4H4z"/>'], ['明天教什么', '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'], ['明天的课前准备', '<path d="M5 4h14v16H5z"/><path d="M8 9l2 2 3-3M8 15l2 2 3-3"/>'], ['作业怎么交', '<path d="M12 16V4M7 9l5-5 5 5M5 20h14"/>']];
-  VIZ['每天的资料包'] = function (el) {
-    var chat = '<div class="d6-wx"><div class="d6-wxh">班级群</div><div class="d6-wxm"><i></i><div class="d6-fc"><span class="d6-fz">ZIP</span><div><b>第 1 天资料包</b><small>今天的资料</small></div></div></div></div>';
-    el.innerHTML = '<div class="d6-pk"><div class="d6-pk-l in" style="--i:0">' + VK.pho(chat, 250) + '<span class="d-pill y">每天下课发到班级群</span></div><ul class="d6-pk-r">' +
-      PK.map(function (p, i) { return '<li class="in" style="--i:' + (i + 1) + '">' + ico(p[1]) + '<h3>' + p[0] + '</h3></li>'; }).join('') + '<li class="in d6-end" style="--i:7"><span class="d-pill k">五天结束，合成一本</span></li></ul></div>';
+  var PK = [['这节课学了什么', '<path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/>'], ['用到的指令', '<path d="M4 5h16v11H10l-5 4v-4H4z"/>'], ['下节课教什么', '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'], ['下节课的课前准备', '<path d="M5 4h14v16H5z"/><path d="M8 9l2 2 3-3M8 15l2 2 3-3"/>'], ['作业怎么交', '<path d="M12 16V4M7 9l5-5 5 5M5 20h14"/>']];
+  VIZ['每节课的资料包'] = function (el) {
+    var chat = '<div class="d6-wx"><div class="d6-wxh">班级群</div><div class="d6-wxm"><i></i><div class="d6-fc"><span class="d6-fz">ZIP</span><div><b>第一节资料包</b><small>这节课的资料</small></div></div></div></div>';
+    el.innerHTML = '<div class="d6-pk"><div class="d6-pk-l in" style="--i:0">' + VK.pho(chat, 250) + '<span class="d-pill y">每节课下课发到班级群</span></div><ul class="d6-pk-r">' +
+      PK.map(function (p, i) { return '<li class="in" style="--i:' + (i + 1) + '">' + ico(p[1]) + '<h3>' + p[0] + '</h3></li>'; }).join('') + '<li class="in d6-end" style="--i:7"><span class="d-pill k">五节课结束，合成一本</span></li></ul></div>';
   };
 
   /* ---------- 四、课前准备 ---------- */
@@ -46,8 +46,8 @@
   };
 
   /* ---------- 五、课程素材包（下载） ---------- */
-  var DLS = [['第 1 天', 'WorkBuddy', '一页简报 · 热点早报 · 汇报材料', '第1天_WorkBuddy'], ['第 2 天', 'RunningHub 生图', '老照片修复 · 活动海报 · 吉祥物', '第2天_RunningHub'], ['第 3 天', 'RunningHub 视频', '老照片动起来 · 校园短片 · 苏轼讲课', '第3天_RunningHub视频'], ['第 4 天', '活动出整套', '活动出整套 · 数字员工 · 黑客松', '第4天_活动出整套与黑客松'], ['第 5 天', 'DeepSeek Harness', 'AI 宠物', '第5天_DeepSeek_Harness']];
+  var DLS = [['第一节', 'WorkBuddy', '一页简报 · 热点早报 · 汇报材料', '第一节_WorkBuddy'], ['第二节', 'RunningHub 生图', '老照片修复 · 活动海报 · 吉祥物', '第二节_RunningHub'], ['第三节', 'RunningHub 视频', '老照片动起来 · 校园短片 · 苏轼讲课', '第三节_RunningHub视频'], ['第四节', '活动出整套', '活动出整套 · 数字员工 · 黑客松', '第四节_活动出整套与黑客松'], ['第五节', 'DeepSeek Harness', 'AI 宠物', '第五节_DeepSeek_Harness']];
   VIZ['课程素材包'] = function (el) {
-    el.innerHTML = '<div style="width:100%"><div class="d6-dl">' + DLS.map(function (d, i) { return '<a class="d6-dl-i in" style="--i:' + i + '" href="downloads/' + d[3] + '.zip" download><span class="d-k">' + d[0] + '</span><h3>' + d[1] + '</h3><p>' + d[2] + '</p><b>下载 ↓</b></a>'; }).join('') + '</div><div class="d6-dl-b in" style="--i:6"><div class="d-chips" style="justify-content:flex-start"><span class="d-pill">素材</span><span class="d-pill">成品</span><span class="d-pill">提示词</span></div><a class="d-btn" href="downloads/全部课程素材.zip" download>下载全部 ↓</a></div></div>';
+    el.innerHTML = '<div style="width:100%"><div class="d6-dl">' + DLS.map(function (d, i) { return '<a class="d6-dl-i in" style="--i:' + i + '" href="downloads/' + d[3] + '.zip" download><span class="d-k">' + d[0] + '</span><h3>' + d[1] + '</h3><p>' + d[2] + '</p><b>下载 ↓</b></a>'; }).join('') + '</div><div class="d6-dl-b in" style="--i:6"><div class="d-chips" style="justify-content:flex-start"><span class="d-pill">素材</span><span class="d-pill">成品</span><span class="d-pill">指令</span></div><a class="d-btn" href="downloads/全部课程素材.zip" download>下载全部 ↓</a></div></div>';
   };
 })();

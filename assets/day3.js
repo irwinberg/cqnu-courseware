@@ -1,8 +1,8 @@
-/* 第 3 天每一页的画面（AI 视频）。键 = “章名｜页标题”或“页标题”，和 课程内容_v1.md 卷三的标题一一对应。
-   公共部件：viz-kit.js（VK）、day1.js 的 window.DK、day2.js 的 window.D2K（RunningHub 界面、分步提示词、核对卡片）。版式在 day3.css。
+/* 第三节每一页的画面（AI 视频）。键 = “章名｜页标题”或“页标题”，和 课程内容_v1.md 卷三的标题一一对应。
+   公共部件：viz-kit.js（VK）、day1.js 的 window.DK、day2.js 的 window.D2K（RunningHub 界面、分步指令、核对卡片）。版式在 day3.css。
    视频都在 img/d3/：两条教学短片是团队做好的真实成片；其余是 ffmpeg 用照片加运镜做的示意（ref/d3-make.py），
-   团队用 RunningHub 实跑后用同名 .mp4 覆盖即可，封面图同名 .jpg。清单见《第3天_待准备素材.md》。
-   第 3 天只用 RunningHub；提示词都在 PROMPT 里，和《第3天_提示词.md》是同一份。 */
+   团队用 RunningHub 实跑后用同名 .mp4 覆盖即可，封面图同名 .jpg。清单见《第三节_待准备素材.md》。
+   第三节只用 RunningHub；指令都在 PROMPT 里，和《第三节_指令.md》是同一份。 */
 (function () {
   'use strict';
   var DAY = +(new URLSearchParams(location.search).get('d')) || 0;
@@ -17,7 +17,7 @@
   var ROLE = [['校史展览、纪念日推送', '活动预告、专业宣传短片', '校史人物讲校史'], ['院史回顾、学院年会', '学院招生短片', '院史人物讲解'], ['课堂导入、历史课素材', '课程预告片', '课文作者讲课文'], ['家庭老照片', '社团招新短片', '社团活动讲解']];
   var MOVES = [['推', '镜头向前推近，突出主体', 'm-in'], ['拉', '镜头向后拉远，交代环境', 'm-out'], ['摇', '机位不动，镜头左右转动', 'm-pan'], ['移', '机位平移，画面横向展开', 'm-truck'], ['升', '机位升高，视野逐渐打开', 'm-up']];
 
-  /* ================= 提示词（实测后在这里改） ================= */
+  /* ================= 指令（实测后在这里改） ================= */
   var PROMPT = {
     p1move: '镜头缓慢向前推进，画面中的人物自然地小幅走动，树叶随风轻轻摆动。保持建筑、人物外貌和服装不变，不添加新的人物和物体，保留老照片的色调和质感。时长 5 秒。',
     p1still: '人物保持静止，只有镜头缓慢推进，天空中的云和树叶轻微移动。',
@@ -52,7 +52,7 @@
   var WORKS = [
     { cls: 'ci', cover: '苏轼的一生', art: cvv('v-sushi'), name: '《苏轼的一生》', from: '团队编写的讲稿，年份逐条核对', say: '93 秒教学短片，用于课堂导入。', tags: ['图生视频', '配音', '字幕'], v: 'v-sushi' },
     { cls: 'ci', cover: '桃花源记', art: cvv('v-taohua'), name: '《桃花源记》', from: '课文原文', say: '60 秒课文短片，字幕与原文一致。', tags: ['图生视频', '配音', '字幕'], v: 'v-taohua' },
-    { cls: 'ci', cover: '老照片<br>动起来', art: cvv('v-old1'), today: 1, name: '老照片动起来', from: '第 2 天修复的校史老照片', say: '镜头缓慢推进，画面自然动起来。', tags: ['图生视频'], v: 'v-old1' },
+    { cls: 'ci', cover: '老照片<br>动起来', art: cvv('v-old1'), today: 1, name: '老照片动起来', from: '第二节修复的校史老照片', say: '镜头缓慢推进，画面自然动起来。', tags: ['图生视频'], v: 'v-old1' },
     { cls: 'ci', cover: '15 秒<br>校园短片', art: cvv('v-short'), today: 1, name: '15 秒校园短片', from: '三张校园照片', say: '三个镜头，三种运镜。', tags: ['多图参考', '运镜'], v: 'v-short' },
     { cls: 'ci w', cover: '苏轼开口<br>讲课', art: cvv('v-sushi-talk'), today: 1, name: '苏轼讲《水调歌头》', from: '苏轼形象图、15 秒讲稿', say: '配音后用数字人应用驱动口型。', tags: ['语音合成', '数字人'], v: 'talk' },
     { cls: 'ci', cover: '从清晨<br>到黄昏', art: cvv('v-ff'), name: '从清晨到黄昏', from: '两张校园照片：泛月桥、教学楼', say: '首尾帧：给定开头和结尾，模型补出中间。', tags: ['首尾帧'], v: 'v-ff' },
@@ -62,21 +62,21 @@
     var m = VK.modal(el, '<div class="d3-mo">' + (w.v === 'talk' ? talk('big') : '<video src="' + P3(w.v + '.mp4') + '" poster="' + P3(w.v + '.jpg') + '" controls autoplay playsinline></video>') + '</div>'); bindTalk(m); var v = q('video', m); if (v && w.v === 'talk') v.play(); }
 
   /* ================= 篇一 成果展示 ================= */
-  VIZ['今日安排'] = function (el) {
-    var A = [['上午', [['10:00', '成果展示', '作业回顾与成果一览'], ['10:20', 'AI 视频的关键', '原理、镜头语言与规范'], ['11:00', 'RunningHub 视频功能', '模型、应用与计费']]], ['下午', [['14:00', '案例一', '老照片动起来'], ['14:40', '案例二', '15 秒校园短片'], ['15:40', '案例三', '让吉祥物开口说话'], ['16:30', '首映会与总结', '观看投票、作业']]]];
+  VIZ['本节安排'] = function (el) {
+    var A = [['前半节', [['10:00', '成果展示', '作业回顾与成果一览'], ['10:20', 'AI 视频的关键', '原理、镜头语言与规范'], ['11:00', 'RunningHub 视频功能', '模型、应用与计费']]], ['后半节', [['14:00', '案例一', '老照片动起来'], ['14:40', '案例二', '15 秒校园短片'], ['15:40', '案例三', '让吉祥物开口说话'], ['16:30', '首映会与总结', '观看投票、作业']]]];
     el.innerHTML = '<div class="d-ag">' + A.map(function (r, k) { return '<div class="d-ag-r in" style="--i:' + k * 2 + '"><span class="d-ag-k">' + r[0] + '</span><div class="d-ag-l">' + r[1].map(function (t) { return '<div class="d-ag-i"><b>' + t[0] + '</b><h3>' + t[1] + '</h3><p>' + t[2] + '</p></div>'; }).join('') + '</div></div>'; }).join('') +
-      '<div class="d-ag-o in" style="--i:5"><span class="d-k">今日成果</span><span class="d-pill y">动起来的老照片</span><span class="d-pill y">15 秒校园短片</span><span class="d-pill y">苏轼讲课</span><span class="d-pill k">首映会</span></div></div>';
+      '<div class="d-ag-o in" style="--i:5"><span class="d-k">本节成果</span><span class="d-pill y">动起来的老照片</span><span class="d-pill y">15 秒校园短片</span><span class="d-pill y">苏轼讲课</span><span class="d-pill k">首映会</span></div></div>';
   };
-  VIZ['第 2 天作业回顾'] = function (el) {
+  VIZ['第二节作业回顾'] = function (el) {
     var P = [[2, '第 2 名', 'hw-2'], [1, '第 1 名', 'hw-1'], [3, '第 3 名', 'hw-3']];
-    el.innerHTML = '<div class="d2-pd">' + P.map(function (p, i) { return '<div class="d2-pd-c in r' + p[0] + '" style="--i:' + i + '"><div class="d2-pd-i">' + VK.slot(p[2], '第 2 天作业截图（前三名）', '<div class="d2-pd-ph">' + ic('photo') + '</div>').replace('img/d1/', 'img/d3/') + '</div><div class="d2-pd-b"><b>' + p[0] + '</b><span>' + p[1] + '</span></div></div>'; }).join('') + '</div><div class="d-line in" style="--i:4;margin-top:26px">每份作业由作者用 <b>1 分钟</b>说明做法</div>';
+    el.innerHTML = '<div class="d2-pd">' + P.map(function (p, i) { return '<div class="d2-pd-c in r' + p[0] + '" style="--i:' + i + '"><div class="d2-pd-i">' + VK.slot(p[2], '第二节作业截图（前三名）', '<div class="d2-pd-ph">' + ic('photo') + '</div>').replace('img/d1/', 'img/d3/') + '</div><div class="d2-pd-b"><b>' + p[0] + '</b><span>' + p[1] + '</span></div></div>'; }).join('') + '</div><div class="d-line in" style="--i:4;margin-top:26px">每份作业由作者用 <b>1 分钟</b>说明做法</div>';
     qa('.slot', el).forEach(function (s) { var n = s.getAttribute('data-slot'), im = new Image(); im.onload = function () { im.className = 'slot-i'; s.appendChild(im); s.classList.add('ok'); }; im.src = P3(n + '.jpg'); });
   };
   VIZ['视频创作成果展示'] = function (el) {
     VK.wall(el, WORKS, ['成果展示', '视频创作成果展示', ''], function (i) { openWork(el, i); });
     qa('.alb', el).forEach(function (a) { var v = q('.af .cvv', a); if (!v) return; a.addEventListener('pointerenter', function () { v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function () {}); v.classList.add('on'); }); a.addEventListener('pointerleave', function () { if (!a.classList.contains('act')) { v.pause(); v.classList.remove('on'); } }); });
   };
-  VIZ['今日实操案例'] = function (el) {
+  VIZ['本节实操案例'] = function (el) {
     var D = [vid('v-old1'), vid('v-short'), talk()], T = ['照片变成 5 秒动态画面', '三张照片合成一条短片', '配音加口型驱动'];
     el.innerHTML = '<div class="d3-tri">' + D.map(function (d, i) { return '<div class="d3-tri-c in" style="--i:' + i + '"><div class="d3-tri-v' + (i === 2 ? ' w' : '') + '">' + d + '</div><div class="d-tri-t"><i>' + CASE[i][0] + '</i><div><h3>' + CASE[i][1] + '</h3><p>' + T[i] + '</p></div></div></div>'; }).join('') + '</div>';
     bindTalk(el);
@@ -94,7 +94,7 @@
     VK.steps(el, 3, function (i) { q('.d3-two', el).setAttribute('data-s', i); });
   };
   VIZ['视频生成的原理'] = function (el) {
-    var S = [['一段视频，是一张张连续的画面', '每秒约 25 张。5 秒的镜头，就是 125 张画面。'], ['图生视频：第一张是你给的照片', '画面里的建筑、人物、颜色，都从这一张出发。'], ['后面每一张，都参照前一张', '既要接近上一张，又要朝提示词描述的动作变化一点。'], ['时间越长，偏差越大', '每一张的小偏差会累积，人脸、建筑可能慢慢走样。单个镜头控制在 5 秒左右。']];
+    var S = [['一段视频，是一张张连续的画面', '每秒约 25 张。5 秒的镜头，就是 125 张画面。'], ['图生视频：第一张是你给的照片', '画面里的建筑、人物、颜色，都从这一张出发。'], ['后面每一张，都参照前一张', '既要接近上一张，又要朝指令描述的动作变化一点。'], ['时间越长，偏差越大', '每一张的小偏差会累积，人脸、建筑可能慢慢走样。单个镜头控制在 5 秒左右。']];
     el.innerHTML = '<div class="d3-pr"><div class="d3-fs">' + [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return '<div class="d3-fm" style="--i:' + i + '"><img src="' + P3('f' + i + '.jpg') + '" alt=""><span>' + (i ? '第 ' + (i * 15 + 1) + ' 张' : '第 1 张') + '</span><i>→</i></div>'; }).join('') + '</div><div class="d3-pr-b"><div class="d3-fr s">' + vid('v-short') + '</div><div><h3></h3><p class="d-p"></p></div></div></div>';
     VK.steps(el, S.length, function (i) { var r = q('.d3-pr', el); r.setAttribute('data-s', i); q('.d3-pr-b h3', el).textContent = S[i][0]; q('.d3-pr-b .d-p', el).textContent = S[i][1]; });
   };
@@ -104,9 +104,9 @@
     var box = q('.d3-mv', el), s = VK.steps(el, MOVES.length, function (i) { qa('.d3-mt button', el).forEach(function (b, k) { b.classList.toggle('on', k === i); }); setMove(box, null, MOVES[i][2]); });
     qa('.d3-mt button', el).forEach(function (b) { b.addEventListener('click', function () { s.go(+b.getAttribute('data-i')); }); });
   };
-  VIZ['一个镜头的提示词'] = function (el) {
+  VIZ['一个镜头怎么描述'] = function (el) {
     var E = [['主体', '重庆师范大学图书馆和门前的湖面'], ['动作', '湖面泛起微波，树叶随风轻轻摆动'], ['运镜', '镜头缓慢向前推进'], ['氛围', '清晨，柔和的阳光'], ['时长', '5 秒']];
-    el.innerHTML = '<div class="d3-sp"><div class="d3-fr">' + vid('s1') + '</div><div class="d3-sp-r"><div class="d-k">一个镜头的五要素</div><div class="d3-sp-l">' + E.map(function (e, i) { return '<div data-i="' + i + '"><b>' + e[0] + '</b><span>' + e[1] + '</span></div>'; }).join('') + '</div><div class="d3-sp-p"><span class="d-k">完整提示词</span><p></p></div></div></div>';
+    el.innerHTML = '<div class="d3-sp"><div class="d3-fr">' + vid('s1') + '</div><div class="d3-sp-r"><div class="d-k">一个镜头的五要素</div><div class="d3-sp-l">' + E.map(function (e, i) { return '<div data-i="' + i + '"><b>' + e[0] + '</b><span>' + e[1] + '</span></div>'; }).join('') + '</div><div class="d3-sp-p"><span class="d-k">完整指令</span><p></p></div></div></div>';
     var s = VK.steps(el, E.length, function (i) { qa('.d3-sp-l>div', el).forEach(function (d, k) { d.classList.toggle('on', k <= i); d.classList.toggle('nw', k === i); }); q('.d3-sp-p p', el).innerHTML = E.slice(0, i + 1).map(function (e, k) { return '<span class="' + (k === i ? 'nw' : '') + '">' + e[1] + '</span>'; }).join('，') + '。'; });
     qa('.d3-sp-l>div', el).forEach(function (d) { d.addEventListener('click', function () { s.go(+d.getAttribute('data-i')); }); });
   };
@@ -135,14 +135,14 @@
     el.innerHTML = '<div class="d-2"><div class="in"><div class="d-stage" style="--b:340px">' + VK.lap(VK.shot(P3('rh-dv_sd.jpg'), 1), 600) + '</div><h3>多图参考</h3><p>上传几张图，在一条视频中依次用到，适合把几张照片串成短片。</p></div><div class="in" style="--i:1"><div class="d3-ff"><div><img src="img/campus/c09.jpg" alt=""><span class="d-pill">首帧</span></div><div class="d3-ff-m">' + vid('v-ff') + '<span class="d-pill y">模型补出中间过程</span></div><div><img src="img/campus/c12.jpg" alt=""><span class="d-pill">尾帧</span></div></div><h3>首尾帧</h3><p>给定开头和结尾两张图，由模型补出中间的过程。</p></div></div>';
   };
   VIZ['数字人与配音'] = function (el) {
-    el.innerHTML = '<div class="d-ws"><div>' + VK.lap(rh({ title: '数字人对口型', tags: '音频生成 · 图生视频 · 数字人', star: 12, like: 3, runs: '299', fields: [['音频', '苏轼讲课配音.mp3', 'aud'], ['图片', 'img/d3/sushi-portrait.jpg'], ['文案', PROMPT.p3script, 'txt']], res: [talk()] }), 760, 1440) + '</div><div class="d-rw">' + [['photo', '一张形象图', '优先使用虚拟形象，例如第 2 天的吉祥物'], ['say', '一段配音', '用语音合成应用生成，也可以上传录音'], ['loop', '口型驱动', '模型让形象的口型跟着声音动起来']].map(function (r, i) { return '<div class="in" style="--i:' + i + '">' + ic(r[0]) + '<div><h3>' + r[1] + '</h3><p>' + r[2] + '</p></div></div>'; }).join('') + '</div></div>';
+    el.innerHTML = '<div class="d-ws"><div>' + VK.lap(rh({ title: '数字人对口型', tags: '音频生成 · 图生视频 · 数字人', star: 12, like: 3, runs: '299', fields: [['音频', '苏轼讲课配音.mp3', 'aud'], ['图片', 'img/d3/sushi-portrait.jpg'], ['文案', PROMPT.p3script, 'txt']], res: [talk()] }), 760, 1440) + '</div><div class="d-rw">' + [['photo', '一张形象图', '优先使用虚拟形象，例如第二节的吉祥物'], ['say', '一段配音', '用语音合成应用生成，也可以上传录音'], ['loop', '口型驱动', '模型让形象的口型跟着声音动起来']].map(function (r, i) { return '<div class="in" style="--i:' + i + '">' + ic(r[0]) + '<div><h3>' + r[1] + '</h3><p>' + r[2] + '</p></div></div>'; }).join('') + '</div></div>';
     bindTalk(el);
   };
   VIZ['计费方式'] = function (el) {
     el.innerHTML = '<div class="d2-sm">' + [['clock', '按时长计费', '生成的视频越长，费用越高'], ['star', '先试 5 秒', '效果满意后，再生成完整长度'], ['check', '运行前查看', '每个应用都有“计费说明”']].map(function (c, i) { return '<div class="in" style="--i:' + i + '">' + ic(c[0]) + '<h3>' + c[1] + '</h3><p>' + c[2] + '</p></div>'; }).join('') + '</div><div class="d-line in" style="--i:4;margin-top:40px">时长越长，费用越高，<b>也越容易走样</b>。</div>';
     q('.d2-sm', el).classList.add('d3-ic3');
   };
-  VIZ['收藏今日应用'] = function (el) { el.innerHTML = '<div class="d-ok"><div>' + cks(['老照片动起来（图生视频）', '多图参考视频（Seedance 2.5 多模态）', '语音合成', '数字人对口型']) + '</div><div class="d-ok-b"><button class="d-big" data-g="timer:5" data-gt="收藏今日应用" data-gn="搜索并收藏四个应用">计时<small>5 分钟</small></button></div></div>'; bindCk(el); };
+  VIZ['收藏本节应用'] = function (el) { el.innerHTML = '<div class="d-ok"><div>' + cks(['老照片动起来（图生视频）', '多图参考视频（Seedance 2.5 多模态）', '语音合成', '数字人对口型']) + '</div><div class="d-ok-b"><button class="d-big" data-g="timer:5" data-gt="收藏本节应用" data-gn="搜索并收藏四个应用">计时<small>5 分钟</small></button></div></div>'; bindCk(el); };
 
   /* ================= 篇四 案例一：老照片动起来 ================= */
   var C1 = '案例一：老照片动起来｜';
@@ -150,7 +150,7 @@
     el.innerHTML = '<div class="d3-in"><div class="d3-in-a in"><img class="zimg" src="img/d2/old1-after.jpg" alt=""><span class="d-pill">修复后的老照片</span></div><div class="d-arr in" style="--i:1">→</div><div class="d3-in-b in" style="--i:2"><div class="d3-fr">' + vid('v-old1') + '</div><span class="d-pill y">5 秒动态画面</span></div></div>';
   };
   VIZ[C1 + '应用场景'] = function (el) { useFor(el, 0, '一张照片 → 5 秒', '同类任务：校史展览、纪念日推送、课堂导入'); };
-  VIZ[C1 + '操作步骤'] = function (el) { el.innerHTML = '<div class="d-hw"><div>' + st([['搜索“老照片动起来”，打开应用', '先看运行次数和示例作品'], ['上传第 2 天修复后的照片'], ['填写动作和运镜', '复制右侧的提示词'], ['选择 5 秒，点击“立即运行”', '在“我的生成”中播放、下载', 1]]) + '</div>' + pr('填写到应用的提示词框', PROMPT.p1move, 'b') + '</div>'; q('.d-pr', el).style.cssText = 'flex:none;align-self:center'; bind(el); };
+  VIZ[C1 + '操作步骤'] = function (el) { el.innerHTML = '<div class="d-hw"><div>' + st([['搜索“老照片动起来”，打开应用', '先看运行次数和示例作品'], ['上传第二节修复后的照片'], ['填写动作和运镜', '和大家一起梳理要求'], ['选择 5 秒，点击“立即运行”', '在“我的生成”中播放、下载', 1]]) + '</div>' + pr('填写到应用的指令框', PROMPT.p1move, 'b') + '</div>'; (q('.d-pr', el) || { style: {} }).style.cssText = 'flex:none;align-self:center'; bind(el); };
   VIZ[C1 + '课堂实操'] = function (el) { doNow(el, 10, '完成一段 5 秒动态画面', ['“我的生成”中出现视频', '人物和建筑没有变形', '已下载到本机'], VK.lap(rh({ title: '老照片动起来', tags: '图生视频', star: 7, like: 1, runs: '186', fields: [['image', 'img/d2/old2-after.jpg'], ['text', PROMPT.p1move, 'txt']], res: [vid('v-old2')] }), 760, 1440)); };
   VIZ[C1 + '成果核对'] = function (el) { check(el, [['脸', '人物面部', '五官没有变形、没有“换脸”'], ['楼', '建筑', '线条没有扭曲、没有融化'], ['增', '有无添加', '没有出现原图中没有的人和物'], ['动', '动作', '动作自然、幅度适中']]); };
   VIZ[C1 + '迭代优化'] = function (el) { var U = [['动作幅度调小', PROMPT.p1slow], ['只动镜头', PROMPT.p1still], ['换一个应用对比', '同一张照片，在另一个“图生视频”应用中再生成一次，挑选更自然的一段']];
@@ -163,12 +163,12 @@
     el.innerHTML = '<div class="d3-in"><div class="in">' + board() + '</div><div class="d-arr in" style="--i:1">→</div><div class="d3-in-b in" style="--i:2"><div class="d3-fr">' + vid('v-short') + '</div><span class="d-pill y">15 秒短片</span></div></div>';
   };
   VIZ[C2 + '应用场景'] = function (el) { useFor(el, 1, '3 张照片 → 15 秒', '同类任务：专业介绍、活动预告、招生短片'); };
-  VIZ[C2 + '操作步骤'] = function (el) { flow(el, [['写分镜表', '镜号、画面、运镜、时长，每个镜头一种运镜', '<div class="in">' + board() + '<div class="d-tip" style="margin-top:14px"><b>要点</b>一个镜头只做一件事，5 秒左右。</div></div>'], ['上传三张照片，填写提示词', 'Seedance 2.5 多模态应用：按顺序上传图 1、图 2、图 3', '第二步 · 填写到多图参考应用', PROMPT.p2film, 'b'], ['核对后下载', '对照分镜表检查镜头顺序', '<div class="d2-ck4 in"><div class="d3-fr s">' + vid('v-short') + '</div><div>' + cks(['镜头顺序与分镜一致', '建筑与实景一致', '画面中没有乱码文字']) + '</div></div>']]); };
-  VIZ[C2 + '课堂实操'] = function (el) { doNow(el, 15, '完成一条 15 秒短片', ['分镜表已写好', '三个镜头按顺序出现', '已下载到本机'], VK.lap(rh({ title: 'Seedance2.5多模态视频', tags: '视频生视频 · 图生视频', star: 128, like: 39, runs: '3547', mode: 'Lite', fields: [['上传图片1', 'img/campus/c01.jpg'], ['提示词', PROMPT.p2film, 'txt']], res: [vid('v-short')] }), 760, 1440)); };
+  VIZ[C2 + '操作步骤'] = function (el) { flow(el, [['写分镜表', '镜号、画面、运镜、时长，每个镜头一种运镜', '<div class="in">' + board() + '<div class="d-tip" style="margin-top:14px"><b>要点</b>一个镜头只做一件事，5 秒左右。</div></div>'], ['上传三张照片，填写指令', 'Seedance 2.5 多模态应用：按顺序上传图 1、图 2、图 3', '第二步 · 填写到多图参考应用', PROMPT.p2film, 'b'], ['核对后下载', '对照分镜表检查镜头顺序', '<div class="d2-ck4 in"><div class="d3-fr s">' + vid('v-short') + '</div><div>' + cks(['镜头顺序与分镜一致', '建筑与实景一致', '画面中没有乱码文字']) + '</div></div>']]); };
+  VIZ[C2 + '课堂实操'] = function (el) { doNow(el, 15, '完成一条 15 秒短片', ['分镜表已写好', '三个镜头按顺序出现', '已下载到本机'], VK.lap(rh({ title: 'Seedance2.5多模态视频', tags: '视频生视频 · 图生视频', star: 128, like: 39, runs: '3547', mode: 'Lite', fields: [['上传图片1', 'img/campus/c01.jpg'], ['指令', PROMPT.p2film, 'txt']], res: [vid('v-short')] }), 760, 1440)); };
   VIZ[C2 + '成果核对'] = function (el) { check(el, [['景', '建筑与实景', '与照片中的学校建筑一致'], ['序', '镜头顺序', '与分镜表一致，过渡自然'], ['字', '画面文字', '没有出现乱码文字'], ['乐', '配乐', '确认可以用于对外发布']]); };
   VIZ[C2 + '迭代优化'] = function (el) { var U = [['只改一个镜头', PROMPT.p2one], ['换一种配乐', PROMPT.p2music], ['改为竖版', PROMPT.p2vert]];
     el.innerHTML = '<div class="d-up d2-up-w">' + U.map(function (u, i) { return '<div class="in" style="--i:' + i + '"><h3><span class="d-n">' + (i + 1) + '</span>' + u[0] + '</h3><div class="d-ub" data-raw="' + raw(u[1]) + '">' + mark(u[1]) + '<button type="button" class="d-cp">复制</button></div></div>'; }).join('') + '</div>'; bind(el); };
-  VIZ[C2 + '沉淀为模板'] = function (el) { el.innerHTML = '<div class="d-hw"><div>' + st([['把会变的部分标出来', '照片数量、时长、主题、运镜、配乐'], ['收藏多图参考应用'], ['下次换照片，只改【】里的内容', '镜头结构保持一致', 1]]) + '</div>' + pr('分镜提示词模板 · 【】里换成新内容', PROMPT.p2tpl, 's') + '</div>'; q('.d-pr', el).style.cssText = 'flex:none;align-self:center'; bind(el); };
+  VIZ[C2 + '沉淀为模板'] = function (el) { el.innerHTML = '<div class="d-hw"><div>' + st([['把会变的部分标出来', '照片数量、时长、主题、运镜、配乐'], ['收藏多图参考应用'], ['下次换照片，只改【】里的内容', '镜头结构保持一致', 1]]) + '</div>' + pr('分镜要求清单 · 【】里换成新内容', PROMPT.p2tpl, 's') + '</div>'; (q('.d-pr', el) || { style: {} }).style.cssText = 'flex:none;align-self:center'; bind(el); };
 
   /* ================= 篇六 案例三：让苏轼开口讲课 ================= */
   var C3 = '案例三：让苏轼开口讲课｜';
@@ -183,7 +183,7 @@
 
   /* ================= 篇七 首映会与总结 ================= */
   VIZ['首映会'] = function (el) { el.innerHTML = '<div class="d-ok"><div><div class="d-k" style="margin-bottom:14px">每部作品播放一遍</div>' + cks(['作者用一句话介绍作品', '看完用工牌投票，每人每部一票']) + '<div style="display:flex;gap:10px;margin-top:28px"><button class="d-btn w" data-g="timer:1" data-gt="作者介绍">计时</button></div></div><div class="d-ok-b"><button class="d-big" data-g="wheel:num" data-gt="抽取下一部作品">抽取<small>播放顺序</small></button></div></div>'; bindCk(el); };
-  VIZ['今日小结'] = function (el) { el.innerHTML = '<div><div class="d3-sm3">' + [vid('v-old1'), vid('v-short'), talk()].map(function (d, i) { return '<div class="in" style="--i:' + i + '"><div class="d3-sm3-v">' + d + '</div><h3>' + ['动起来的老照片', '15 秒校园短片', '苏轼讲课'][i] + '</h3><p>' + ['图生视频', '多图参考', '配音 + 口型驱动'][i] + '</p></div>'; }).join('') + '</div><div class="d-six in" style="--i:4"><span class="d-k" style="align-self:center;margin-right:6px">一个镜头的五要素</span>' + ['主体', '动作', '运镜', '氛围', '时长'].map(function (s) { return '<span class="d-pill">' + s + '</span>'; }).join('') + '</div></div>'; bindTalk(el); };
-  VIZ['课后作业'] = function (el) { el.innerHTML = '<div class="d-hm"><div class="d-hm-n in"><b>3</b><span>段视频</span></div><div><div class="d-chips in" style="--i:1;justify-content:flex-start;margin-bottom:22px;padding-left:10px"><span class="d-pill">姓名_老照片</span><span class="d-pill">姓名_校园短片</span><span class="d-pill">姓名_讲解</span></div>' + st([['在工牌上选择“交作业”', '屏幕显示上传二维码'], ['微信扫码，上传文件', '提示上传成功'], ['次日上课前查看工牌', '显示成绩与排名', 1]]) + '</div></div>'; };
-  VIZ['次日准备'] = function (el) { el.innerHTML = '<div><div class="d-sm" style="grid-template-columns:1fr 1fr;max-width:1000px;margin:0 auto">' + [['doc', '想好一场活动', '本单位最近举办或即将举办的'], ['folder', '带上活动材料', '通知或新闻稿、几张现场照片']].map(function (c, i) { return '<div class="in" style="--i:' + i + '">' + ic(c[0]) + '<h3>' + c[1] + '</h3><p>' + c[2] + '</p></div>'; }).join('') + '</div><div class="d-line in" style="--i:3;margin-top:44px"><b>第 4 天</b>一场活动的宣传，一次出齐</div></div>'; };
+  VIZ['本节小结'] = function (el) { el.innerHTML = '<div><div class="d3-sm3">' + [vid('v-old1'), vid('v-short'), talk()].map(function (d, i) { return '<div class="in" style="--i:' + i + '"><div class="d3-sm3-v">' + d + '</div><h3>' + ['动起来的老照片', '15 秒校园短片', '苏轼讲课'][i] + '</h3><p>' + ['图生视频', '多图参考', '配音 + 口型驱动'][i] + '</p></div>'; }).join('') + '</div><div class="d-six in" style="--i:4"><span class="d-k" style="align-self:center;margin-right:6px">一个镜头的五要素</span>' + ['主体', '动作', '运镜', '氛围', '时长'].map(function (s) { return '<span class="d-pill">' + s + '</span>'; }).join('') + '</div></div>'; bindTalk(el); };
+  VIZ['课后作业'] = function (el) { el.innerHTML = '<div class="d-hm"><div class="d-hm-n in"><b>3</b><span>段视频</span></div><div><div class="d-chips in" style="--i:1;justify-content:flex-start;margin-bottom:22px;padding-left:10px"><span class="d-pill">姓名_老照片</span><span class="d-pill">姓名_校园短片</span><span class="d-pill">姓名_讲解</span></div>' + st([['在工牌上选择“交作业”', '屏幕显示上传二维码'], ['微信扫码，上传文件', '提示上传成功'], ['下节课上课前查看工牌', '显示成绩与排名', 1]]) + '</div></div>'; };
+  VIZ['下节准备'] = function (el) { el.innerHTML = '<div><div class="d-sm" style="grid-template-columns:1fr 1fr;max-width:1000px;margin:0 auto">' + [['doc', '想好一场活动', '本单位最近举办或即将举办的'], ['folder', '带上活动材料', '通知或新闻稿、几张现场照片']].map(function (c, i) { return '<div class="in" style="--i:' + i + '">' + ic(c[0]) + '<h3>' + c[1] + '</h3><p>' + c[2] + '</p></div>'; }).join('') + '</div><div class="d-line in" style="--i:3;margin-top:44px"><b>第四节</b>一场活动的宣传，一次出齐</div></div>'; };
 })();

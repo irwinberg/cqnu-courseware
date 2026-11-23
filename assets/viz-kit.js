@@ -26,7 +26,7 @@
   };
 
   /* ---------- 样机 ---------- */
-  VK.lap = function (inner, w, vw) { return '<div class="lap" style="--wn:' + w + (vw ? ';--vw:' + vw : '') + '"><div class="lap-s"><div class="lap-c"><div class="vp">' + inner + '</div></div></div><div class="lap-b"></div></div>'; };
+  VK.lap = function (inner, w, vw, ar) { return '<div class="lap" style="--wn:' + w + (vw ? ';--vw:' + vw : '') + (ar ? ';--ar:' + ar : '') + '"><div class="lap-s"><div class="lap-c"><div class="vp">' + inner + '</div></div></div><div class="lap-b"></div></div>'; };
   VK.win = function (inner, w) { return '<div class="winf" style="--wn:' + w + '"><div class="vp">' + inner + '</div></div>'; };
   VK.pho = function (inner, w) { return '<div class="pho" style="--wn:' + w + '"><div class="pho-c"><div class="vp">' + inner + '</div></div></div>'; };
   VK.shot = function (src, fit, pos) { return '<img class="vshot' + (fit ? ' fit' : '') + '" src="' + src + '" alt=""' + (pos ? ' style="object-position:' + pos + '"' : '') + '>'; };
@@ -86,8 +86,8 @@
       var per = Math.ceil(W.length / 2), col = i % per, row = (i / per) | 0, gap = (1260 - per * S) / (per - 1), x = 170 + col * (S + gap), B = row ? 772 : 432;
       var cover = '<div class="cv ' + w.cls + '"><h4>' + w.cover + '</h4>' + w.art + '</div>';
       var d = document.createElement('div'); d.className = 'alb'; d.style.cssText = 'left:' + x + 'px;top:' + (B - S) + 'px;opacity:0';
-      d.innerHTML = '<i class="alb-sh"></i><div class="alb-rf">' + cover + '</div><div class="alb-b"><div class="af">' + cover + '<i class="gl"></i>' + (w.today ? '<span class="stk" style="clip-path:var(--stk)"><span>今日<br>实操</span></span>' : '') + '</div>' +
-        '<div class="ab"><h4>' + w.name + '</h4><dl><dt>输入材料</dt><dd>' + w.from + '</dd><dt>任务指令</dt><dd class="q">“' + w.say + '”</dd><dt>用到的能力</dt><dd class="tg">' + w.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</dd></dl><div class="ft"><span>' + (w.today ? '今日实操案例' : '课后拓展案例') + '</span><b>0' + (i + 1) + '</b></div></div>' +
+      d.innerHTML = '<i class="alb-sh"></i><div class="alb-rf">' + cover + '</div><div class="alb-b"><div class="af">' + cover + '<i class="gl"></i>' + (w.today ? '<span class="stk" style="clip-path:var(--stk)"><span>本节<br>实操</span></span>' : '') + '</div>' +
+        '<div class="ab"><h4>' + w.name + '</h4><dl><dt>输入材料</dt><dd>' + w.from + '</dd><dt>任务指令</dt><dd class="q">“' + w.say + '”</dd><dt>用到的能力</dt><dd class="tg">' + w.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</dd></dl><div class="ft"><span>' + (w.today ? '本节实操案例' : '课后拓展案例') + '</span><b>0' + (i + 1) + '</b></div></div>' +
         '<i class="ae l"></i><i class="ae r"></i><i class="ae t"></i><i class="ae d"></i></div><div class="alb-go"><button data-a="open">查看成果</button><button data-a="info">详情</button></div>';
       sc.appendChild(d);
       var a = { el: d, b: q('.alb-b', d), i: i, cx: x + S / 2, cy: B - S / 2, y: sp(70, 13, -90), z: sp(70, 13), rx: sp(80, 6, 6), ry: sp(80, 8), fl: sp(42, 12.5), dx: sp(55, 13), dy: sp(55, 13), s: sp(60, 13, .7), hov: false, tx: 0, ty: 0, flip: false };
@@ -116,7 +116,7 @@
   };
 
   /* ---------- 课堂游戏 ---------- */
-  var TASKS = ['分享今天遇到的一个问题', '用一句话总结今天的收获', '说出最实用的一项要素', '投屏展示你的成果', '朗读一段 AI 生成的开场白', '再抽一次', '指定一位同事回答', '免答，掌声通过'];   // “小任务”转盘上的内容，可以改
+  var TASKS = ['分享这节课遇到的一个问题', '用一句话总结这节课的收获', '说出最实用的一项要素', '投屏展示你的成果', '朗读一段 AI 生成的开场白', '再抽一次', '指定一位同事回答', '免答，掌声通过'];   // “小任务”转盘上的内容，可以改
   var LS = function (k, d) { try { var v = localStorage.getItem(k); return v == null ? d : +v; } catch (e) { return d; } }, LSS = function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} };
   var gm = null;
   function shell() { if (gm) return gm; gm = document.createElement('div'); gm.className = 'gm'; gm.innerHTML = '<div class="gm-h"></div><div class="gm-b"></div><div class="gm-f"></div>'; document.body.appendChild(gm); return gm; }
@@ -173,3 +173,11 @@
   document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-g]'); if (!b) return; var k = b.getAttribute('data-g').split(':'); VK.game(k[0], { mode: k[1], min: +k[1] || undefined, title: b.getAttribute('data-gt') || undefined, note: b.getAttribute('data-gn') || undefined }); });
   window.addEventListener('keydown', function (e) { if (!document.body.classList.contains('gaming')) return; e.stopImmediatePropagation(); e.preventDefault(); if (e.key === 'Escape') closeGame(); else if (gm && gm._key) gm._key(e.key); }, true);
 })();
+
+/* 工牌真实效果（样式在 badge.css）：VK.badge({ w: 宽度, lany: 带挂绳, still: 不转, name: 名字, view: 屏幕内容 HTML（不给就是主页：头像、名字、Token 值） }) */
+window.VK.badge = function (o) {
+  o = o || {}; var w = o.w || 300;
+  var home = '<div class="who"><img src="img/badge/avatar.png" alt=""><div><strong>' + (o.name || '示例学员') + '</strong><span>Token值</span><b>' + (o.token || 666) + '</b><i><u></u></i><small>/ 40000</small></div></div><div class="tiles"><span class="on">GAME<svg viewBox="0 0 24 24"><path d="M6 3l15 9-15 9z"/></svg></span><span>IMAGE<svg viewBox="0 0 24 24"><path d="M2 4h20v16H2z M5 17l5-6 4 4 2-2 3 4z"/></svg></span></div>';
+  var lany = o.lany ? '<div class="lany"><i class="s1"><em>QIEMAN · CQNU AI · QIEMAN · CQNU AI · QIEMAN · CQNU AI</em></i><i class="s2"><em>CQNU AI · QIEMAN · CQNU AI · QIEMAN · CQNU AI · QIEMAN</em></i><i class="buckle"></i><i class="ring"></i><i class="hook"></i></div>' : '';
+  return '<div class="bdg' + (o.still ? ' still' : '') + '" style="--bw:' + w + 'px"><div class="' + (o.lany ? 'hang' : 'hang0') + '">' + lany + '<div class="pp3"><div class="pp"><i class="ppb"></i><i class="ppe e1"></i><i class="ppe e2"></i><i class="ppe e3"></i><i class="ppe e4"></i><i class="ppe e5"></i><div class="ppf"><i class="scw a"></i><i class="scw b"></i><i class="scw c"></i><i class="scw d"></i><i class="led"></i><i class="knob"></i><i class="usb"></i><i class="wire"></i><div class="bez"><div class="scr"><div class="st"><b>' + (o.time || '09:40') + '</b><span>MON</span><em><u></u>85%</em></div><div class="vw on">' + (o.view || home) + '</div></div></div><div class="plate"><i></i><span>The Open Wearable AI Passport</span></div><i class="spk"></i></div><div class="ppg"><i class="slot"></i><i class="sbtn b1"></i><i class="sbtn b2"></i><i class="sbtn b3"></i></div></div></div></div></div>';
+};

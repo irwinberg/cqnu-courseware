@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>AI 积分看板 · 重庆师范大学 AI 应用实战培训</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><b>AI 积分看板</b><span>各平台能免费领的额度，集中在一张表上</span></div>
+  <div class="acts"><button id="btnReport" class="ghost">提报一条</button><button id="btnHow" class="ghost">怎么算</button></div>
+</header>
+
+<section class="stats">
+  <div class="st big"><span>今天还能领</span><b id="sToday">0</b><em id="sTodayV"></em></div>
+  <div class="st"><span>本月已领</span><b id="sMonth">0</b><em>项</em></div>
+  <div class="st"><span>下次刷新</span><b id="sNext">--:--</b><em>每天 0 点</em></div>
+</section>
+
+<section class="album">
+  <div class="sh"><h2>我的卡册</h2><span id="albumInfo"></span></div>
+  <div class="cards" id="cards"></div>
+  <p class="legend">连续领满 7 天升<b class="lv1">蓝卡</b>，15 天<b class="lv2">金卡</b>，30 天<b class="lv3">闪卡</b>；活动结束后，领过的卡盖上“绝版”章。</p>
+</section>
+
+<section class="tools">
+  <input id="q" type="search" placeholder="搜平台或用途">
+  <label class="chip"><input type="checkbox" id="fApi"> 能当 API 用</label>
+  <label class="chip"><input type="checkbox" id="fTodo"> 只看今天没领的</label>
+</section>
+
+<main id="list"></main>
+
+<footer class="foot">
+  <p>数据整理自各平台公开的官方活动页，每条写明核实日期；以官网为准。领取需本人登录、手动完成。</p>
+  <p>思路参考：数字生命卡兹克《我做了一个监控全网免费Token的网站》。数据更新：<span id="upd"></span></p>
+</footer>
+
+<dialog id="dlg"><form method="dialog"><div id="dlgBody"></div><menu><button value="ok">好的</button></menu></form></dialog>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-/* 第 5 天每一页的画面（DeepSeek Harness 演示 · 路演 · 颁奖）。键 = “章名｜页标题”或“页标题”，和 课程内容_v1.md 卷五一一对应。
+/* 第五节每一页的画面（DeepSeek Harness 演示 · 路演 · 颁奖）。键 = “章名｜页标题”或“页标题”，和 课程内容_v1.md 卷五一一对应。
    公共部件：viz-kit.js（VK）、day1.js 的 DK、day2.js 的 D2K。版式在 day5.css（d5- 开头）。
    DeepSeek Harness 的界面是按官方说明画的示意，团队装好课堂锁定的版本后，截图放 img/d5/ 同名替换（dsh-*.jpg）。 */
 (function () {
@@ -29,10 +29,10 @@
   }
 
   /* ================= 篇一 开场 ================= */
-  VIZ['今日安排'] = function (el) {
-    var A = [['上午', [['10:00', '开场', '三维校园'], ['10:15', 'DeepSeek', '开源模型怎么选'], ['10:55', 'Harness', '六个核心部件']]], ['下午', [['14:00', '案例', '做一只 AI 宠物'], ['15:20', '路演', '每组 3 分钟'], ['16:00', '成果与颁奖', '合影'], ['16:35', '课后', '怎么继续用']]]];
+  VIZ['本节安排'] = function (el) {
+    var A = [['前半节', [['10:00', '开场', '三维校园'], ['10:15', 'DeepSeek', '开源模型怎么选'], ['10:55', 'Harness', '六个核心部件']]], ['后半节', [['14:00', '案例', '做一只 AI 宠物'], ['15:20', '路演', '每组 3 分钟'], ['16:00', '成果与颁奖', '合影'], ['16:35', '课后', '怎么继续用']]]];
     el.innerHTML = '<div class="d-ag">' + A.map(function (r, k) { return '<div class="d-ag-r in" style="--i:' + k * 2 + '"><span class="d-ag-k">' + r[0] + '</span><div class="d-ag-l">' + r[1].map(function (t) { return '<div class="d-ag-i"><b>' + t[0] + '</b><h3>' + t[1] + '</h3><p>' + t[2] + '</p></div>'; }).join('') + '</div></div>'; }).join('') +
-      '<div class="d-ag-o in" style="--i:5"><span class="d-k">今日成果</span><span class="d-pill y">AI 宠物</span><span class="d-pill y">路演作品</span><span class="d-pill k">AI 种子教师</span></div></div>';
+      '<div class="d-ag-o in" style="--i:5"><span class="d-k">本节成果</span><span class="d-pill y">AI 宠物</span><span class="d-pill y">路演作品</span><span class="d-pill k">AI 种子教师</span></div></div>';
   };
   VIZ['代码已经能做到这一步'] = function (el) {
     var U = 'https://cqnu-ai-cases.vercel.app/cqnu-3d-campus/index.html';
@@ -40,13 +40,13 @@
     q('[data-live]', el).addEventListener('click', function (e) { e.stopPropagation(); q('.d5-3d-f .vp', el).innerHTML = '<iframe src="' + U + '" allow="fullscreen" style="width:100%;height:100%;border:0"></iframe>'; });
   };
 
-  /* ================= 篇二 DeepSeek：模型（内容同 BRP 第 3 天前半段） ================= */
+  /* ================= 篇二 DeepSeek：模型（内容同 BRP 第三节前半段） ================= */
   function lst(L, cls) { return '<div class="d5-cc ' + (cls || '') + '" style="--n:' + L.length + '">' + L.map(function (c, i) { return '<div class="in" style="--i:' + i + '">' + (c[2] ? ic(c[2]) : '<span class="d-n">' + (i + 1) + '</span>') + '<h3>' + c[0] + '</h3><p>' + c[1] + '</p></div>'; }).join('') + '</div>'; }
   function two(a, b) { return '<div class="d5-two">' + [a, b].map(function (c, i) { return '<div class="d5-two-c in ' + (i ? 'k' : '') + '" style="--i:' + i + '"><span class="d-k">' + c[0] + '</span><h3>' + c[1] + '</h3>' + c[2].map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>'; }).join('<div class="d-arr in" style="--i:1">+</div>') + '</div>'; }
   function tbl(H, R, note, hi) { return '<div style="width:100%"><div class="d5-tb in" style="--c:' + H.length + '"><div class="h">' + H.map(function (h) { return '<span>' + h + '</span>'; }).join('') + '</div>' + R.map(function (r, i) { return '<div' + (hi === i ? ' class="y"' : '') + '>' + r.map(function (c) { return '<span>' + c + '</span>'; }).join('') + '</div>'; }).join('') + '</div>' + (note ? '<div class="d-line in" style="--i:3;margin-top:22px">' + note + '</div>' : '') + '</div>'; }
   function quote(t, s) { return '<div class="d5-qt in"><b>' + t + '</b>' + (s ? '<span>' + s + '</span>' : '') + '</div>'; }
   VIZ['DeepSeek Harness，拆成两半讲'] = function (el) { el.innerHTML = two(['前半段 · The Model', 'DeepSeek', ['深度求索做的大模型', '负责“想”：理解你的话、给出回答', '讲清：开源闭源、为什么选它、装在哪']], ['后半段 · The Harness', 'Harness', ['套在模型外面的一层框架', '负责“做”：读文件、跑命令、接系统', '讲清：一个 Agent 由哪 6 个部件撑起来']]); };
-  VIZ['前四天学开车，今天看引擎和底盘'] = function (el) { el.innerHTML = lst([['前四天', 'WorkBuddy、RunningHub 是做好的产品，开箱就用', 'star'], ['今天往下看一层', '产品背后的引擎（模型）怎么选，底盘（Harness）怎么搭', 'bolt'], ['不是谁替代谁', '个人提效用好成品；涉及学校数据的事，要自己搭', 'check']]); };
+  VIZ['前几节学开车，这节看引擎和底盘'] = function (el) { el.innerHTML = lst([['前四节课', 'WorkBuddy、RunningHub 是做好的产品，开箱就用', 'star'], ['这节课往下看一层', '产品背后的引擎（模型）怎么选，底盘（Harness）怎么搭', 'bolt'], ['不是谁替代谁', '个人提效用好成品；涉及学校数据的事，要自己搭', 'check']]); };
   VIZ['DeepSeek 一路走来'] = function (el) {
     var T = [['2024.12', 'V3', 'MoE 路线确立，训练成本大幅下降'], ['2025.01', 'R1', '推理模型，极低成本接近国际顶尖，“DeepSeek 时刻”'], ['2026.04', 'V4-Pro / V4-Flash', '1M 上下文、MoE、MIT 开源'], ['2026.07–08', 'V4 迭代版', 'V4-Flash-0731、V4-Pro-0813'], ['2026.10', 'V4.1-Flash', '现在 API 默认模型，支持图文，Agent 能力明显提升']];
     el.innerHTML = '<div class="d4-tl d5-tl" style="grid-template-columns:repeat(5,1fr)">' + T.map(function (t, i) { return '<div class="d4-tl-i in' + (i === 4 ? ' k' : '') + '" style="--i:' + i + '"><b>' + t[0] + '</b><i></i><h3>' + t[1] + '</h3><p>' + t[2] + '</p></div>'; }).join('') + '</div>';
@@ -59,7 +59,7 @@
     el.innerHTML = '<div class="d5-q4"><span></span><b>海外</b><b>国产</b><b>闭源<small>只能租接口</small></b><div class="in">GPT、Grok</div><div class="in" style="--i:1">国内厂商的接口</div><b>开源<small>能下载、能自己装</small></b><div class="in" style="--i:2">gpt-oss 等</div><div class="in y" style="--i:3">DeepSeek、Qwen、Kimi、GLM、MiniMax</div></div><div class="d5-q4n in" style="--i:4"><span class="d-pill">开源 / 闭源：能不能装在自己机器上</span><span class="d-pill">国产 / 海外：合规、数据出境、会不会断供</span></div>';
   };
   VIZ['国产开源模型的三个优势'] = function (el) { el.innerHTML = lst([['用得起', '同档次单价更便宜；装在自己机器上，调用几乎只剩电费', 'star'], ['数据不出校', '模型装在学校机器上，未公开稿件、舆情数据留在校内', 'save'], ['自主可控', '权重在自己手里，不怕涨价、停服、断供，也能微调', 'check']]); };
-  VIZ['同档次比价'] = function (el) { el.innerHTML = tbl(['模型', '输入', '输出', '备注'], [['DeepSeek V4.1-Flash', '0.30', '1.20', '高峰价；其余时段半价'], ['xAI Grok 4.7', '2.00', '6.00', '提示词超过 20 万 token 翻倍'], ['OpenAI GPT-5.5', '5.00', '30.00', '输入超过 27.2 万 token 为 10 / 45'], ['OpenAI GPT-6.2-astra', '8.00', '40.00', 'OpenAI 最贵的旗舰档']], '美元 / 每百万 token。按输出价，GPT-5.5 约是 DeepSeek 的 <b>25 倍</b>', 0); };
+  VIZ['同档次比价'] = function (el) { el.innerHTML = tbl(['模型', '输入', '输出', '备注'], [['DeepSeek V4.1-Flash', '0.30', '1.20', '高峰价；其余时段半价'], ['xAI Grok 4.7', '2.00', '6.00', '指令超过 20 万 token 翻倍'], ['OpenAI GPT-5.5', '5.00', '30.00', '输入超过 27.2 万 token 为 10 / 45'], ['OpenAI GPT-6.2-astra', '8.00', '40.00', 'OpenAI 最贵的旗舰档']], '美元 / 每百万 token。按输出价，GPT-5.5 约是 DeepSeek 的 <b>25 倍</b>', 0); };
   VIZ['国产模型格局'] = function (el) { el.innerHTML = tbl(['厂商', '当前旗舰', '规模', '公认强项', '许可证'], [['DeepSeek', 'V4.1-Flash / V4-Pro', '763B / 1.6T', '性价比、推理与编码', 'MIT，可商用'], ['阿里 Qwen', 'Qwen3.8', '2.4T', '多语言、生态最全、适合微调', '过往为 Apache 2.0'], ['月之暗面 Kimi', 'K3 / K3.1-Pro', '2.8T', '长时间 Agent 任务', '有营收与署名门槛'], ['智谱 GLM', 'GLM-5.3 / 5.3-Flash', '753B / 321B', '工具调用与 Agent', '逐个核对'], ['MiniMax', 'M3 / M3.1-Flash', '427B / 220B', '长上下文、多模态', '商用需单独协议']], '', 0); };
   VIZ['参数大，算得少'] = function (el) { el.innerHTML = lst([['MoE 混合专家', 'V4-Flash 总参数 284B，每个 token 只激活 13B', 'bolt'], ['低精度权重', '专家参数用 FP4、其余用 FP8 发布，官方权重本身就小', 'save'], ['1M 上下文', '一次能读入整套制度文件，长文本成本也低', 'doc']]); };
   VIZ['内存决定能跑多大的模型'] = function (el) { el.innerHTML = '<div style="width:100%">' + lst([['整个装进显存', '独立显卡看显存；Mac 和 AI 迷你主机是统一内存，看内存', 'store'], ['量化', '每个参数用更少的位存储；4 位量化内存需求约减半，质量轻微下降', 'loop'], ['跑“小一号”的模型', '如 Qwen3.6-35B-A3B、Qwen3.8-27B；8 位量化时 64GB 是实用门槛', 'star']]) + '<div class="d-line in" style="--i:4;margin-top:34px">DeepSeek 本体太大：V4-Flash 2 位量化也要约 <b>85GB</b>，不适合个人电脑</div></div>'; };
@@ -67,12 +67,12 @@
   VIZ['本地 + 云端搭配'] = function (el) { el.innerHTML = lst([['涉及校内数据的任务', '一律交给本地模型', 'save'], ['不含校内数据的通用任务', '查公开资料、写通用文案，用 DeepSeek 云端接口', 'web'], ['用顺了再扩', '部门都想用时，再评估部门级服务器', 'store']]); };
   VIZ['闭源能租，开源能进机房'] = function (el) { el.innerHTML = quote('闭源：能租，不能有；<br>开源：能买断，能进机房。'); };
 
-  /* ================= 篇三 Harness：六个核心部件（内容同 BRP 第 3 天后半段） ================= */
+  /* ================= 篇三 Harness：六个核心部件（内容同 BRP 第三节后半段） ================= */
   var HS = function (n) { return 'img/d5/harness/' + n + '.svg'; };
   function shot(el, n, cap, L, need) { el.innerHTML = '<div class="d5-hs"><div class="d5-hs-i in"><img class="zimg" src="' + HS(n) + '" alt=""></div><div class="d5-hs-t"><span class="d-k in">' + cap + '</span>' + L.map(function (p, i) { return '<p class="in" style="--i:' + (i + 1) + '">' + p + '</p>'; }).join('') + (need ? '<div class="d5-hs-n in" style="--i:4"><b>' + need[0] + '</b>' + need[1] + '</div>' : '') + '</div></div>'; }
   VIZ['Harness 原意是挽具'] = function (el) { el.innerHTML = '<div class="d5-hr">' + [['模型是马', '有劲，但自己不会拉车，也不知道往哪走', 'bolt'], ['Harness 是挽具', '套上以后，马能拉车、听指挥、不乱跑', 'loop'], ['Agent 是套好挽具的马', '模型出力，Harness 管方向、管边界', 'star']].map(function (c, i) { return (i ? '<div class="d-arr in" style="--i:' + (i * 2 - 1) + '">' + (i === 1 ? '+' : '=') + '</div>' : '') + '<div class="d5-hr-i in' + (i === 2 ? ' y' : '') + '" style="--i:' + i * 2 + '">' + ic(c[2]) + '<h3>' + c[0] + '</h3><p>' + c[1] + '</p></div>'; }).join('') + '</div>'; };
   VIZ['买了模型，不等于有了 Agent'] = function (el) { el.innerHTML = lst([['模型只会输出文字', 'Harness 把文字变成动作：读文件、跑命令、调系统', 'say'], ['同一个模型，换个 Harness，表现差很多', '国产模型的差距，有一部分能靠 Harness 补回来', 'loop'], ['模型握在手里还不够', 'Harness 也要能自己搭、自己管，学校才真正可控', 'check']]); };
-  VIZ['Harness 是一类东西'] = function (el) { el.innerHTML = tbl(['Harness', '谁做的', '今天怎么用'], [['DeepSeek Harness', '深度求索', '今天下午用它做案例'], ['Codex', 'OpenAI', '同类产品'], ['Claude Code', 'Anthropic', '业内常拿来对照'], ['learn-claude-code', '开源教学版', '今天的原理图都出自它']], '做法各家不同，骨架都差不多', 0); };
+  VIZ['Harness 是一类东西'] = function (el) { el.innerHTML = tbl(['Harness', '谁做的', '这节课怎么用'], [['DeepSeek Harness', '深度求索', '后半节用它做案例'], ['Codex', 'OpenAI', '同类产品'], ['Claude Code', 'Anthropic', '业内常拿来对照'], ['learn-claude-code', '开源教学版', '这节课的原理图都出自它']], '做法各家不同，骨架都差不多', 0); };
   VIZ['Harness 全景图'] = function (el) { shot(el, 'system-architecture', '一个完整 Harness 的全部零件', ['这是一个完整 Harness 拆开以后的样子。', '十几个零件，全都挂在中间同一个循环上。']); };
   VIZ['六个部件'] = function (el) { el.innerHTML = tbl(['#', '部件', '一句话', '为什么关键'], [['1', '循环', '一个循环 + 一个工具，就是最小的 Agent', '刹车就是成本控制和失控保护'], ['2', '工具', '加一个能力 = 加一个工具，循环不用改', '能做什么，全看给了哪些工具'], ['3', '权限', '先定边界，再给自由', '安全、合规、审计的第一道门'], ['4', '上下文管理', '压缩腾出空间，记忆留下该记的', '决定长任务质量和成本'], ['5', '技能', '写给 Agent 的操作说明书，用到才展开', '制度、流程、话术沉淀下来反复用'], ['6', 'MCP', '用标准协议外接工具', '接办公系统、知识库的通用办法']], '前 4 个是重点；技能前几天用过，放最后带过'); };
   VIZ['循环：转到做完为止'] = function (el) { shot(el, 'agent-loop', '一圈一圈转，直到模型不再要工具', ['模型想一步；要用工具，程序就去做，结果交回模型，再想下一步。', '模型不再要工具，这一圈才停。'], ['要定的', '刹车：最多几步、花多少钱、多久超时。']); };
@@ -80,7 +80,7 @@
   VIZ['权限：先过三道闸门'] = function (el) { shot(el, 'permission-pipeline', '先看绝对禁止，再看要不要问人', ['模型每要用一次工具，先过闸门：', '绝对禁止的，直接拒绝；危险的，先问人；其余直接放行。'], ['要定的', '哪些绝对禁止，哪些必须先问人。']); };
   VIZ['上下文：快满了就压缩'] = function (el) { shot(el, 'compact-overview', '把旧对话浓缩成摘要，腾出空间', ['上下文是它干活时的“工作台”，总会堆满。', '快满时，把旧对话浓缩成摘要，腾出地方接着干。'], ['为什么关键', '直接决定长任务的质量和花费。']); };
   VIZ['记忆：重启以后还记得'] = function (el) { shot(el, 'memory-overview', '该记的写进文件，下次开工先读', ['对话会被压缩、会重启；该长期记住的，写进记忆文件。', '下次开工，先挑相关的读进来。'], ['要定的', '哪些能记、记多久、谁能看。']); };
-  VIZ['技能：用到才展开'] = function (el) { shot(el, 'skill-overview', '平时只给目录，用到哪本再展开哪本', ['第 1 天、第 4 天保存过技能。这里只看原理：', '平时只给它看目录，用到哪本再展开哪本，不占工作台。'], ['要定的', '制度、话术写成技能，谁写、谁审、多久更新。']); };
+  VIZ['技能：用到才展开'] = function (el) { shot(el, 'skill-overview', '平时只给目录，用到哪本再展开哪本', ['第一节、第四节保存过技能。这里只看原理：', '平时只给它看目录，用到哪本再展开哪本，不占工作台。'], ['要定的', '制度、话术写成技能，谁写、谁审、多久更新。']); };
   VIZ['MCP：统一的外接插口'] = function (el) { shot(el, 'mcp-architecture', '外部系统按统一协议把工具亮出来', ['校内系统按统一的协议把工具亮出来，Agent 连上就能用，', '和自带工具进同一个工具池。']); };
   VIZ['上午带走'] = function (el) { el.innerHTML = lst([['国产模型怎么选', '国产开源模型已进第一梯队：用得起、数据不出校、可控', 'star'], ['本地部署要什么', '内存决定能跑多大的模型；先小成本用起来', 'store'], ['Agent 管住哪几处', '刹车、工具、权限先定好；不是所有事都该交给 Agent', 'check']], 'g'); };
 
@@ -120,26 +120,26 @@
   };
 
   /* ================= 篇六 成果汇报 ================= */
-  VIZ['五天的成果'] = function (el) {
+  VIZ['五节课的成果'] = function (el) {
     var N = [['学员作品', '份'], ['技能', '个'], ['短片', '部'], ['海报', '张']], key = 'cq-d5-num';
     var v = {}; try { v = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
-    el.innerHTML = '<div class="d5-nm">' + N.map(function (n, i) { return '<div class="in" style="--i:' + i + '"><b contenteditable="true" spellcheck="false" data-k="' + i + '">' + (v[i] || '—') + '</b><span>' + n[0] + '<small>' + n[1] + '</small></span></div>'; }).join('') + '</div><div class="d-line in" style="--i:5;margin-top:50px"><b>5 天</b>· 3 样工具 · 每天 3 个案例</div>';
+    el.innerHTML = '<div class="d5-nm">' + N.map(function (n, i) { return '<div class="in" style="--i:' + i + '"><b contenteditable="true" spellcheck="false" data-k="' + i + '">' + (v[i] || '—') + '</b><span>' + n[0] + '<small>' + n[1] + '</small></span></div>'; }).join('') + '</div><div class="d-line in" style="--i:5;margin-top:50px"><b>5 天</b>· 3 样工具 · 每节课 3 个案例</div>';
     qa('[data-k]', el).forEach(function (b) { b.addEventListener('keydown', function (e) { e.stopPropagation(); if (e.key === 'Enter') { e.preventDefault(); b.blur(); } }); b.addEventListener('click', function (e) { e.stopPropagation(); }); b.addEventListener('blur', function () { v[b.getAttribute('data-k')] = b.textContent.trim(); try { localStorage.setItem(key, JSON.stringify(v)); } catch (e) {} }); });
   };
 
   /* ================= 篇七 颁奖 ================= */
-  var HAB = [['先让它提问', '大一点的任务，先让 AI 问清楚'], ['给它材料', '事实来自材料，不靠它编'], ['结果自己核对', '人名、数字、原话逐项核对'], ['问题变成规则', '把发现的问题写进提示词'], ['做通一次，固定下来', '保存为技能，下次一句话调用']];
-  VIZ['五天里反复用到的方法'] = function (el) {
+  var HAB = [['先让它提问', '大一点的任务，先让 AI 问清楚'], ['给它材料', '事实来自材料，不靠它编'], ['结果自己核对', '人名、数字、原话逐项核对'], ['问题变成规则', '把发现的问题写进指令'], ['做通一次，固定下来', '保存为技能，下次一句话调用']];
+  VIZ['这几节课反复用到的方法'] = function (el) {
     el.innerHTML = '<div class="d5-hb">' + HAB.map(function (h, i) { return '<div class="d5-hb-i"><span class="d-n">' + (i + 1) + '</span><h3>' + h[0] + '</h3><p>' + h[1] + '</p></div>'; }).join('') + '</div>';
     VK.steps(el, HAB.length, function (i) { qa('.d5-hb-i', el).forEach(function (h, k) { h.classList.toggle('on', k <= i); }); });
   };
   VIZ['它叫“提示词工程”'] = function (el) {
-    el.innerHTML = '<div class="d5-pe"><div class="d5-pe-s">' + HAB.map(function (h) { return '<span class="d-pill">' + h[0] + '</span>'; }).join('') + '</div><div class="d5-pe-q">这五天反复使用的方法，有一个名字</div><div class="d5-pe-a"><b>提示词工程</b><span>Prompt Engineering</span></div></div>';
+    el.innerHTML = '<div class="d5-pe"><div class="d5-pe-s">' + HAB.map(function (h) { return '<span class="d-pill">' + h[0] + '</span>'; }).join('') + '</div><div class="d5-pe-q">这五节课反复使用的方法，有一个名字</div><div class="d5-pe-a"><b>提示词工程</b><span>Prompt Engineering</span></div></div>';
     VK.steps(el, 2, function (i) { q('.d5-pe', el).classList.toggle('on', i === 1); });
   };
   VIZ['颁奖'] = function (el) {
     var P = [[2, '个人第 2 名'], [1, '个人第 1 名'], [3, '个人第 3 名']];
-    el.innerHTML = '<div class="d5-aw"><div><div class="d5-pod">' + P.map(function (p, i) { return '<div class="r' + p[0] + ' in" style="--i:' + i + '"><div class="d5-pod-a">' + ic('star') + '</div><div class="d5-pod-b"><b>' + p[0] + '</b><span>' + p[1] + '</span></div></div>'; }).join('') + '</div><div class="d-chips in" style="--i:4;margin-top:24px"><span class="d-pill k">组赛冠军</span><span class="d-pill">按组赛积分</span></div></div><div class="d5-aw-r"><div class="d6-m on nozoom" style="opacity:1;transform:none"><div class="d6-bd"><div class="d6-bl"></div><div class="d6-sc"><div class="d6-bgs"><i></i><b>你的名字</b><em>AI 种子教师</em></div></div></div></div><div class="d5-aw-t"><span class="d-k">交齐五天作品</span><b>工牌解锁“AI 种子教师”</b></div></div></div>';
+    el.innerHTML = '<div class="d5-aw"><div><div class="d5-pod">' + P.map(function (p, i) { return '<div class="r' + p[0] + ' in" style="--i:' + i + '"><div class="d5-pod-a">' + ic('star') + '</div><div class="d5-pod-b"><b>' + p[0] + '</b><span>' + p[1] + '</span></div></div>'; }).join('') + '</div><div class="d-chips in" style="--i:4;margin-top:24px"><span class="d-pill k">组赛冠军</span><span class="d-pill">按组赛积分</span></div></div><div class="d5-aw-r"><div class="d6-m on nozoom" style="opacity:1;transform:none"><div class="d6-bd"><div class="d6-bl"></div><div class="d6-sc"><div class="d6-bgs"><i></i><b>你的名字</b><em>AI 种子教师</em></div></div></div></div><div class="d5-aw-t"><span class="d-k">交齐五节课的作品</span><b>工牌解锁“AI 种子教师”</b></div></div></div>';
     VK.steps(el, 2, function (i) { q('.d5-aw-r', el).classList.toggle('on', i === 1); });
   };
 
@@ -151,7 +151,7 @@
     el.innerHTML = '<div class="d-sm">' + [['folder', '作品集', '保存在自己的电脑上'], ['clock', '账号余额', '到期前决定是否续费'], ['save', '技能文件', '自行备份一份']].map(function (c, i) { return '<div class="in" style="--i:' + i + '">' + ic(c[0]) + '<h3>' + c[1] + '</h3><p>' + c[2] + '</p></div>'; }).join('') + '</div>';
   };
   VIZ['课后资源'] = function (el) {
-    el.innerHTML = '<div class="d5-rs2"><a class="d5-site in" href="' + SITE + '" target="_blank" rel="noopener">' + VK.lap(slot5('site', 'AI 案例库网站首页截图', '<div class="d5-site-f"><b>AI 案例库</b><span>cqnu-ai-cases.vercel.app</span></div>'), 760, 1440) + '<span class="d-pill y">AI 案例库网站 ↗</span></a><div class="d5-rs2-r">' + [['folder', '五天资料包', '提示词、素材和操作步骤'], ['say', '班级群', '答疑、作品分享']].map(function (c, i) { return '<div class="d5-pl in" style="--i:' + (i + 1) + '">' + ic(c[0]) + '<div><h3>' + c[1] + '</h3><p>' + c[2] + '</p></div></div>'; }).join('') + '</div></div>';
+    el.innerHTML = '<div class="d5-rs2"><a class="d5-site in" href="' + SITE + '" target="_blank" rel="noopener">' + VK.lap(slot5('site', 'AI 案例库网站首页截图', '<div class="d5-site-f"><b>AI 案例库</b><span>cqnu-ai-cases.vercel.app</span></div>'), 760, 1440) + '<span class="d-pill y">AI 案例库网站 ↗</span></a><div class="d5-rs2-r">' + [['folder', '五节课的资料包', '指令、素材和操作步骤'], ['say', '班级群', '答疑、作品分享']].map(function (c, i) { return '<div class="d5-pl in" style="--i:' + (i + 1) + '">' + ic(c[0]) + '<div><h3>' + c[1] + '</h3><p>' + c[2] + '</p></div></div>'; }).join('') + '</div></div>';
     fill5(el);
   };
   VIZ['带动同事'] = function (el) {

@@ -1,0 +1,162 @@
+{
+ "updated": "2026-11-23",
+ "title": "AI 积分看板",
+ "summary": "今天能领 14 项每日积分，本月可领 10 项",
+ "daily": [
+  {
+   "platform": "华为果办",
+   "amount": "50 积分",
+   "title": "华为果办 OfficeAce 免费版每日登录送 50 积分",
+   "link": "https://activity.huaweicloud.com/officeace.html#section-3"
+  },
+  {
+   "platform": "华为云码道",
+   "amount": "1000 积分",
+   "title": "华为码道 Skill 创新赛每日签到领 1000 积分",
+   "link": "https://support.huaweicloud.com/offers-codeartsagent/codeartsagent_offers_0008.html"
+  },
+  {
+   "platform": "华为云码道",
+   "amount": "100 积分",
+   "title": "华为云码道免费版每日签到领 100 积分",
+   "link": "https://support.huaweicloud.com/offers-codeartsagent/codeartsagent_offers_0004.html"
+  },
+  {
+   "platform": "秒悟 Meoo",
+   "amount": "2000 积分",
+   "title": "秒悟每天登录领 2000 积分",
+   "link": "https://docs.meoo.com/pricing"
+  },
+  {
+   "platform": "魔搭社区",
+   "amount": "200 魔粒",
+   "title": "魔搭社区每天送 200 魔粒调模型 API",
+   "link": "https://www.modelscope.cn/posts/435591"
+  },
+  {
+   "platform": "ACE Music",
+   "amount": "20 积分",
+   "title": "ACE Music 每天 20 积分，最多生成 10 首歌",
+   "link": "https://acemusic.ai/zh/help/articles/credits-usage/"
+  },
+  {
+   "platform": "科大讯飞 AStudio",
+   "amount": "100 积分",
+   "title": "AStudio 体验版每天登录领 100 积分",
+   "link": "https://agent.xfyun.cn/studio-guide/pricing"
+  },
+  {
+   "platform": "Cloudflare",
+   "amount": "1 万 Neurons",
+   "title": "Cloudflare Workers AI 每天免费 1 万 Neurons",
+   "link": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+  },
+  {
+   "platform": "百度文心",
+   "amount": "50 次",
+   "title": "ERNIE 5.5 Flash Preview 限免",
+   "link": "https://openrouter.ai/baidu/ernie-5.5-flash-preview:free"
+  },
+  {
+   "platform": "MiniMax",
+   "amount": "400 积分",
+   "title": "MiniMax Code 每天签到领 400 积分",
+   "link": "https://agent.minimax.cn/docs/code/account/usage"
+  },
+  {
+   "platform": "移动云 MobileClaw",
+   "amount": "100 万 Token",
+   "title": "MobileClaw 每日登录领 100 万 Token",
+   "link": "https://ecloud.10086.cn/mobilecloud/act/2026-double11"
+  },
+  {
+   "platform": "阿里云 Qoder",
+   "amount": "100 Credits",
+   "title": "Qoder 国内版免费试用期每天领 100 Credits",
+   "link": "https://docs.qoder.cn/events/100credits"
+  },
+  {
+   "platform": "TRAE",
+   "amount": "100 积分",
+   "title": "TRAE 每天签到领 100 积分",
+   "link": "https://docs.trae.cn/ide_plans-and-billing"
+  },
+  {
+   "platform": "WorkBuddy",
+   "amount": "免费",
+   "title": "WorkBuddy Hy4 flash 限时免费",
+   "link": "https://hunyuan.tencent.com/research/100145?langVersion=zh"
+  }
+ ],
+ "monthly": [
+  {
+   "platform": "Rime",
+   "amount": "≈¥334",
+   "title": "Rime 每月 50 美元语音模型额度",
+   "link": "https://www.rime.ai/pricing"
+  },
+  {
+   "platform": "Nace AI",
+   "amount": "≈¥33",
+   "title": "Drex 每月 5 美元模型调用额度",
+   "link": "https://console.nace.ai/docs/drex/reference/pricing"
+  },
+  {
+   "platform": "LiveKit",
+   "amount": "≈¥17",
+   "title": "LiveKit 每月送 2.50 美元模型推理额度",
+   "link": "https://livekit.com/pricing"
+  },
+  {
+   "platform": "蚂蚁百灵",
+   "amount": "¥10",
+   "title": "蚂蚁百灵每月 1 日送 10 元抵扣券",
+   "link": "https://developer.ant-ling.com/zh-CN/docs/getting-started/changelog/billing-upgrade/"
+  },
+  {
+   "platform": "腾讯 EdgeOne",
+   "amount": "≈¥0.3",
+   "title": "EdgeOne Makers 每月 50 万 Token",
+   "link": "https://pages.edgeone.ai/zh/document/limits-and-quotas"
+  },
+  {
+   "platform": "腾讯云 ADP",
+   "amount": "1.5 万 PU",
+   "title": "腾讯云 ADP 体验版每月送 15,000 PU",
+   "link": "https://cloud.tencent.com/document/product/1759/139268"
+  },
+  {
+   "platform": "ElevenLabs",
+   "amount": "1 万 积分",
+   "title": "ElevenLabs 免费档每月 1 万积分",
+   "link": "https://elevenlabs.io/pricing"
+  },
+  {
+   "platform": "移动云 MobileClaw",
+   "amount": "1000 万 Token",
+   "title": "MobileClaw 每月登录领 1000 万 Token",
+   "link": "https://ecloud.10086.cn/mobilecloud/act/2026-double11"
+  },
+  {
+   "platform": "TRAE",
+   "amount": "500 积分",
+   "title": "TRAE 国内版每月 500 积分",
+   "link": "https://www.trae.cn/pricing"
+  },
+  {
+   "platform": "Zed",
+   "amount": "≈¥67",
+   "title": "Zed 在读大学生每月 10 美元 AI 额度，持续一年",
+   "link": "https://zed.dev/education"
+  }
+ ],
+ "badge_lines": [
+  "今天能领 14 项",
+  "华为果办 50 积分",
+  "华为云码道 1000 积分",
+  "华为云码道 100 积分",
+  "秒悟 Meoo 2000 积分",
+  "魔搭社区 200 魔粒",
+  "ACE Music 20 积分"
+ ]
+}

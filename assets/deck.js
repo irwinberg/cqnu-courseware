@@ -1,5 +1,5 @@
-/* 每天的课件。数据还是 data/course.js（由 课程内容_v1.md 生成）：卷 = 一天，篇 = 一章，页 = 一页；每章前面自动加一页章节封面。
-   地址：day.html?d=0（开课）… d=5（第 5 天）、d=6（资料）；#n 是第几页。键盘：← → 翻页，F 全屏，N 备课标注。 */
+/* 每节课的课件。数据还是 data/course.js（由 课程内容_v1.md 生成）：卷 = 一天，篇 = 一章，页 = 一页；每章前面自动加一页章节封面。
+   地址：day.html?d=0（开课）… d=5（第五节）、d=6（资料）；#n 是第几页。键盘：← → 翻页，F 全屏，N 备课标注。 */
 (function () {
   'use strict';
   var C = window.COURSE, V = C.vols, B = C.books, by = {};
@@ -7,12 +7,12 @@
   var $ = function (s) { return document.querySelector(s); };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var two = function (n) { return (n < 10 ? '0' : '') + n; };
-  var TABS = [['开课', 1], ['第 1 天', 2], ['第 2 天', 3], ['第 3 天', 4], ['第 4 天', 5], ['第 5 天', 6], ['资料', 7]];
+  var TABS = [['开课', 1], ['第一节', 2], ['第二节', 3], ['第三节', 4], ['第四节', 5], ['第五节', 6], ['资料', 7]];
   var d = Math.max(0, Math.min(TABS.length - 1, +(new URLSearchParams(location.search).get('d')) || 0));
   if (d === 0) { location.replace('day.html?d=1'); return; }
   document.body.classList.add('d' + d);                       // “开课”这一块不要了，主页已经讲过
   var vol = V[TABS[d][1]], chapters = vol.books.map(function (i) { return B[i]; });
-  if (d === 6) chapters = chapters.filter(function (b) { return ['工牌怎么玩', '比赛规则', '每天的资料包', '学员课前准备', '课程素材包'].indexOf(b.name) >= 0; });   // 资料页签只留这四页
+  if (d === 6) chapters = chapters.filter(function (b) { return ['工牌怎么玩', '比赛规则', '每节课的资料包', '学员课前准备', '课程素材包'].indexOf(b.name) >= 0; });   // 资料页签只留这四页
 
   var slides = [];
   chapters.forEach(function (b, ci) {
@@ -25,10 +25,10 @@
   /* 顶栏、侧栏 */
   $('#tabs').innerHTML = TABS.map(function (t, i) { return i === 0 ? '' : '<a href="day.html?d=' + i + '"' + (i === d ? ' class="on"' : '') + '>' + t[0] + '</a>'; }).join('');
   $('#dayK').textContent = TABS[d][0];
-  var DL = ['', '第1天_WorkBuddy', '第2天_RunningHub', '第3天_RunningHub视频', '第4天_活动出整套与黑客松', '第5天_DeepSeek_Harness'];   // 课程素材包：tools/pack.py 打包到 downloads/
+  var DL = ['', '第一节_WorkBuddy', '第二节_RunningHub', '第三节_RunningHub视频', '第四节_活动出整套与黑客松', '第五节_DeepSeek_Harness'];   // 课程素材包：tools/pack.py 打包到 downloads/
   if ($('#dlBtn')) { if (d >= 1 && d <= 5) { $('#dlBtn').href = 'downloads/' + DL[d] + '.zip'; $('#dlBtn').setAttribute('download', ''); } else { $('#dlBtn').href = 'downloads/全部课程素材.zip'; $('#dlBtn').textContent = '下载全部素材 ↓'; } }
-  $('#dayT').textContent = d === 0 ? '为什么办 · 学什么 · 五天做什么' : d === 6 ? '工牌、比赛、课前准备' : vol.title;
-  $('#dayS').textContent = d === 0 ? '第 1 天 10:00–11:00' : d === 6 ? '课上和课后用得到的资料' : vol.sub.replace(/ · 第 \d 天/, '');
+  $('#dayT').textContent = d === 0 ? '为什么办 · 学什么 · 五节课做什么' : d === 6 ? '工牌、比赛、课前准备' : vol.title;
+  $('#dayS').textContent = d === 0 ? '' : d === 6 ? '课上和课后用得到的资料' : vol.sub.replace(/ · 第[一二三四五]节/, '');
   $('#chs').innerHTML = chapters.map(function (b, ci) {
     return '<li data-ci="' + ci + '"><div class="ch"><b>' + two(ci) + '</b><span>' + esc(b.name) + '</span>' + (b.time ? '<small>' + esc(b.time.split('，')[0]) + '</small>' : '') + '</div><div class="pg">' +
       b.pages.map(function (id) { return '<a data-id="' + esc(id) + '">' + esc(by[id].title) + '</a>'; }).join('') + '</div></li>';
@@ -95,7 +95,7 @@
   }
   function fit() {
     var m = $('#main'), el = $('#slide'), full = document.body.classList.contains('full');
-    el.style.transform = 'scale(' + Math.min(m.clientWidth / 1600, m.clientHeight / 900) * (full ? 1 : .94) + ')';
+    el.style.transform = 'scale(' + Math.min(m.clientWidth / 1600, m.clientHeight / 900) * (full ? 1 : .98) + ')';
     var bd = el.querySelector('.bd'), h2 = el.querySelector('.sl:not(.cover) h2');
     if (h2) { var ts = 1; h2.style.setProperty('--ts', 1); while (h2.scrollHeight > 170 && ts > .6) { ts -= .05; h2.style.setProperty('--ts', ts); } }
     if (!bd || bd.classList.contains('doc')) return;

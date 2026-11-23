@@ -76,3 +76,7 @@
 .d6-dl-i h3{font:800 26px/1.25 var(--sans)}.d6-dl-i p{font:400 17px/1.5 var(--sans);color:#666;flex:1}
 .d6-dl-i b{align-self:flex-start;background:var(--yl);border-radius:999px;padding:10px 18px;font:700 17px/1 var(--sans);margin-top:10px}
 .d6-dl-b{display:flex;justify-content:space-between;align-items:center;margin-top:36px}
+
+/* 不写具体时间：本节安排只显示顺序 */
+.d-ag-i b{display:none}
+.side .ch small{display:none}

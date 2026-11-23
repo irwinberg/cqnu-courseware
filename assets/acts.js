@@ -57,7 +57,7 @@
     });
   });
 
-  /* ---------- 五天：换岗位，四天的案例一起换 ---------- */
+  /* ---------- 五节课：换岗位，四节课的案例一起换 ---------- */
   $$('.rl button[data-r]', acts).forEach(function (b) {
     b.addEventListener('click', function () {
       var r = b.getAttribute('data-r');
