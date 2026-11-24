@@ -65,7 +65,7 @@
     { cls: 'ci', cover: '节气海报', art: '<div class="cvp">' + poster('poster-base') + '</div>', today: 1, name: '节气海报', from: '活动新闻稿、官方校徽文件', say: '生成带标题的海报，再叠加官方校徽。', tags: ['文生图', '图像编辑'], poster: 1 },
     { cls: 'ci w', cover: '学院<br>吉祥物', art: cv('mascot'), today: 1, name: '吉祥物与表情包', from: '学院简介、学校标准色', say: '先定形象，再以定妆图为参考生成表情包。', tags: ['文生图', '参考图一致性'], big: ['mascot-emoji'] },
     { cls: 'ci w', cover: '表情包', art: cv('mascot-emoji'), name: '表情包', from: '吉祥物定妆图', say: '同一个角色，8 个常用表情。', tags: ['参考图一致性'], big: ['mascot-emoji'] },
-    { cls: 'ci', cover: '冬至<br>节气海报', art: cv('solar-dongzhi'), name: '节气海报', from: '校历、校园实景', say: '冬至主题，上方留白放标题。', tags: ['文生图', '系列化'], big: ['solar-dongzhi'] },
+    { cls: 'ci', cover: '国风<br>校园长图', art: cv('campus-guofeng'), name: '国风校园长图', from: '校园地标实景照片、官方校名与校徽', say: '多处校园地标合成一张国风水彩长图，校名与校徽使用官方文件。', tags: ['多图参考', '风格控制'], big: ['campus-guofeng'] },
     { cls: 'ci', cover: '绘本插画', art: cv('book-page'), name: '6 页绘本', from: '团队编写的故事', say: '同一个角色，连续生成 6 页插画。', tags: ['参考图一致性', '分镜'], big: ['book-page'] },
     { cls: 'ci', cover: '古诗<br>场景图', art: cv('poem-lushan'), name: '古诗场景图', from: '《望庐山瀑布》原诗', say: '水墨风格，用于课堂导入。', tags: ['文生图', '风格控制'], big: ['poem-lushan'] },
     { cls: 'ci', cover: '校园插画', art: cv('i2i-water'), name: '校园插画', from: '校园航拍照片', say: '保持构图，转为水彩风格。', tags: ['图生图'], big: ['scene1', 'i2i-water'] }];
